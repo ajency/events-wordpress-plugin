@@ -18,6 +18,8 @@ class Ajency_Events_Config {
     public function add_settings_page() {
 
         $template = new Ajency_Events_Render_Template('dashboard/templates/template-settings.php', []);
+
+        
         print $template->render();
 
     }
