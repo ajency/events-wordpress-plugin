@@ -1,6 +1,6 @@
 <?php
 
-class Ajency_Events_Render_Shortcode_Template {
+class Ajency_Events_Render_Template {
 
         private $args;
         private $file;
@@ -19,9 +19,9 @@ class Ajency_Events_Render_Shortcode_Template {
         }
 
         public function render() {
-
                 //Better way of not hardcoding path?
-                $template = plugin_dir_path( dirname( __FILE__ ) ) . 'shortcodes/templates/'.$this->file;
+                $template = plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/' . $this->file;
+                print $template;
                 include( $template );
         }
 }

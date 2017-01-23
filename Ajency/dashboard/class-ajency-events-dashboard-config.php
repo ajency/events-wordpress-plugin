@@ -3,8 +3,9 @@
 class Ajency_Events_Config {
 
     public function load_dashboard_config_menu(){
+
         add_submenu_page(
-            'edit.php?post_type=ajency-events',
+            'edit.php?post_type=ajency_event',
             __( 'Ajency Events Settings', 'ajency-events' ),
             __( 'Setings', 'ajency-events' ),
             'manage_options',
@@ -15,11 +16,9 @@ class Ajency_Events_Config {
 
 
     public function add_settings_page() {
-        ?>
-        <div class="wrap">
-            <h1><?php _e( 'Event Settigns', 'ajency-events' ); ?></h1>
-            <p><?php _e( 'Customize event settings', 'ajency-events' ); ?></p>
-        </div>
-        <?php
+
+        $template = new Ajency_Events_Render_Template('dashboard/templates/template-settings.php', []);
+        print $template->render();
+
     }
 }

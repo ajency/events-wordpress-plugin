@@ -77,10 +77,10 @@ class Ajency_Events {
 		$this->define_public_hooks();
 
 
+        $this->load_dashboard();
         $this->load_shortcodes();
         $this->register_custom_post_types();
         $this->load_templates();
-		$this->load_dashboard();
 	}
 
 	/**
@@ -128,10 +128,12 @@ class Ajency_Events {
         /**
          *
          */
+
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/class-ajency-events-render-template.php';
+
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/custom_post_types/class-ajency-events-custom-post-types.php';
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/shortcodes/class-ajency-events-shortcodes.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/shortcodes/class-ajency-events-render-shortcode-template.php';
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/dashboard/class-ajency-events-dashboard-config.php';
 

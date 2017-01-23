@@ -15,7 +15,7 @@
  * @wordpress-plugin
  * Plugin Name:       Ajency Events
  * Plugin URI:        http://ajency.in/
- * Description:       Event Mangement With Wordpress.
+ * Description:       Event Management With Wordpress.
  * Version:           1.0.0
  * Author:            Ajency.in
  * Author URI:        http://ajency.in/

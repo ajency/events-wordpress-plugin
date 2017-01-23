@@ -47,7 +47,7 @@ class Ajency_Events_Shortcodes {
             ['sdfsdf','4534534','3453t43','ymymy'],
             ['asdasdsdfsvsd','dfgdfgdfg','sdfsdrqeq','hj,jhk,hj']
         ];
-        $template = new Ajency_Events_Render_Shortcode_Template('test.php', [ 'data' => $data, 'headers' => $headers]);
+        $template = new Ajency_Events_Render_Template('shortcodes/templates/test.php', [ 'data' => $data, 'headers' => $headers]);
         return $template->render();
     }
 
