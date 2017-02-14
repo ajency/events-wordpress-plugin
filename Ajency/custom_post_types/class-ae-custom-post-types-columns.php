@@ -14,8 +14,8 @@ class Ajency_Events_Custom_Post_Types_Columns {
         );
         $new_columns = array(
             'featured_image' => __('Featured Image', $ae->get_plugin_name()),
-            'event_enddate' => __('Startdate', $ae->get_plugin_name()),
             'event_startdate' => __('Enddate', $ae->get_plugin_name()),
+            'event_enddate' => __('Startdate', $ae->get_plugin_name()),
             'location' => __('Location', $ae->get_plugin_name()),
             'event_featured' => __('Featured', $ae->get_plugin_name()),
         );
@@ -86,7 +86,7 @@ class Ajency_Events_Custom_Post_Types_Columns {
 
         }  else if ($column_name == 'event_featured') {
 
-            if(isset($meta_values[$post_ID]['_event_featured']) && $meta_values[$post_ID]['_event_featured'] == 1){
+            if($meta_values[$post_ID]['_event_featured'] == 1) {
                 echo "Yes";
             } else {
                 echo "No";

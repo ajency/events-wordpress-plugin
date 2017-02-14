@@ -51,13 +51,11 @@ class Ajency_Events_Custom_Post_Types {
     }
 
     function ae_register_metaboxes() {
-
         $ae = Ajency_Events::getInstance();
         add_meta_box( 'ae_register_metabox_dates', 'Event Duration', array( &$this,'ae_register_metabox_dates'), $ae->get_custom_post_type_name(), 'side', 'default', array( 'id' => '_start') );
         add_meta_box( 'ae_register_metabox_location', 'Event Location', array( &$this,'ae_register_metabox_location'), $ae->get_custom_post_type_name(), 'side', 'default', array('id'=>'_end') );
         add_meta_box( 'ae_register_metabox_featured_event', 'Event Featured', array( &$this,'ae_register_metabox_featured_event'), $ae->get_custom_post_type_name(), 'side', 'default', array('id'=>'_3132') );
-        add_meta_box( 'ae_register_metabox_edited_location', 'Edit Location', array( &$this,'ae_register_metabox_edited_location'), $ae->get_custom_post_type_name(), 'side', 'default', array('id'=>'_3132') );
-
+        add_meta_box( 'ae_register_metabox_display_address', 'Display Address', array( &$this,'ae_register_metabox_display_address'), $ae->get_custom_post_type_name(), 'side', 'default', array('id'=>'_3132') );
     }
 
     function ae_register_admin_notices() {
@@ -90,22 +88,20 @@ class Ajency_Events_Custom_Post_Types {
 
         $event_featured = get_post_meta( $post->ID, Ajency_Events_Custom_Fields::FEATURED, true );
 
-        echo '<label for="_event_featured">Feature Event:</label>';
-        echo '<input type="checkbox" id="_event_featured" name="_event_featured" value="'.$event_featured.'" />';
+        echo '<label for="_event_featured">Feature This Event : </label>';
+
+        $checked = isset($event_featured) && $event_featured == 1 ? 'checked' : 0;
+
+        echo '<input type="checkbox" name="_event_featured" value="1" '.$checked.' />';
 
     }
 
 
-    function ae_register_metabox_edited_location($post, $args) {
-
+    function ae_register_metabox_display_address($post, $args) {
         global $post;
-
         wp_nonce_field( plugin_basename( __FILE__ ), 'ae_nonce' );
         $event_loc_edited = get_post_meta( $post->ID, Ajency_Events_Custom_Fields::LOCATION_EDITED, true );
-
-
-        echo '<label for="_event_featured">Edit Location :</label>';
-        echo '<textarea width="100%" id="_event_loc_edited" name="_event_loc_edited">'.$event_loc_edited.'</textarea>';
+        echo '<textarea rows="4" id="_event_loc_edited" name="_event_loc_edited">'.$event_loc_edited.'</textarea>';
 
     }
 
@@ -116,12 +112,12 @@ class Ajency_Events_Custom_Post_Types {
         wp_nonce_field( plugin_basename( __FILE__ ), 'ae_nonce' );
 
         $event_startdate = get_post_meta( $post->ID, '_event_startdate', true );
-        $event_enddate = get_post_meta( $post->ID, '_event_startdate', true );
+        $event_enddate = get_post_meta( $post->ID, '_event_enddate', true );
 
-        echo '<label for="_event_startdate">Start Date Time:</label>';
+        echo '<label for="_event_startdate">Start Date Time : </label>';
         echo '<input id="_event_startdate" name="_event_startdate" value="'.$event_startdate.'" />';
 
-        echo '<br><label for="_event_enddate">End Date Time:</label>';
+        echo '<br><label for="_event_enddate">End Date Time : </label>';
         echo '<input id="_event_enddate" name="_event_enddate" value="'.$event_enddate.'" />';
 
     }
@@ -133,7 +129,7 @@ class Ajency_Events_Custom_Post_Types {
         wp_nonce_field( plugin_basename( __FILE__ ), 'ae_nonce' );
 
 
-        $event_loc_obj = unserialize(get_post_meta( $post->ID, Ajency_Events_Custom_Fields::LOCATION_OBJECT, true ));
+        $event_loc_obj = get_post_meta( $post->ID, Ajency_Events_Custom_Fields::LOCATION_OBJECT, true );
 
         $event_loc  = get_post_meta( $post->ID, Ajency_Events_Custom_Fields::LOCATION, true );
 
@@ -143,9 +139,9 @@ class Ajency_Events_Custom_Post_Types {
         $event_loc_cordinates[Ajency_Events_Custom_Fields::LNG_EDITED] = get_post_meta( $post->ID, Ajency_Events_Custom_Fields::LNG_EDITED, true );
 
 
-        echo '<label for="event_location">Location Search :</label>';
+        echo '<label for="event_location">Location Search : </label>';
 
-        echo '<input type="text" id="_event_loc" name="_event_loc" value="' . $event_loc  . '" />';
+        echo '<input width="100%" type="text" id="_event_loc" name="_event_loc" value="' . $event_loc  . '" />';
 
         $event_loc_fields = Ajency_Events_Location_Object_Fields::getConstants();
         foreach ($event_loc_fields as $field) {
@@ -172,13 +168,14 @@ class Ajency_Events_Custom_Post_Types {
         set_transient( 'ae_errors', get_settings_errors(), 30 );
     }
 
-    function ae_validate_meta_box_input($post){
+    function ae_meta_box_input_valid($post){
 
-        /*if(self::ae_validate_meta_box_dates_input($post['_event_startdate'],$post['_event_enddate']))
+        $valid = false;
+        if(self::ae_validate_meta_box_dates_input($post['_event_startdate'],$post['_event_enddate']))
         {
-
-        }*/
-        return false;
+            $valid = true;
+        }
+        return $valid;
     }
 
     function ae_validate_meta_box_required_fields($required_fields,$post_object){
@@ -189,14 +186,14 @@ class Ajency_Events_Custom_Post_Types {
 
         if(empty($startdate)){
             //TODO move out in a lang file
-            self::ae_display_error('start-greater-end','Start Date is required');
+            self::ae_display_error('start-greater-end','Your event requires a startdate');
             return false;
         }
 
         if(!empty($enddate) && (strtotime($startdate) >= strtotime($enddate)))
         {
             //TODO move out in a lang file
-            self::ae_display_error('start-greater-end','Start Date is greater than end Date');
+            self::ae_display_error('start-greater-end','Your event cannot start after it ends');
             return false;
         }
 
@@ -217,20 +214,21 @@ class Ajency_Events_Custom_Post_Types {
             return;
 
         //Save only if all validation rules pass
-        if(!self::ae_validate_meta_box_input($_POST))
+        if(self::ae_meta_box_input_valid($_POST))
         {
             $metabox_ids = Ajency_Events_Custom_Fields::getConstants();
-
 
             foreach ($metabox_ids as $key ) {
 
                 $write_meta = false;
                 $value = $_POST[$key];
 
+                //Ensures date format
                 if(!empty($value) && ($key == Ajency_Events_Custom_Fields::STARTDATE || $key == Ajency_Events_Custom_Fields::ENDDATE)) {
                     $value = date('Y-m-d H:i:s',strtotime($value));
                 }
 
+                //Ensures no value keys are removed from location object
                 if($key == Ajency_Events_Custom_Fields::LOCATION_OBJECT) {
                     foreach (Ajency_Events_Location_Object_Fields::getConstants() as $field) {
 
@@ -240,6 +238,13 @@ class Ajency_Events_Custom_Post_Types {
                         }
                     }
 
+                }
+
+
+                //TODO handle this to remove the meta
+                if($key == Ajency_Events_Custom_Fields::FEATURED && empty($value)) {
+                    delete_post_meta( $post->ID, $key );
+                    $write_meta = false; // handle it with its own unset because of the way checkboxes pass data from HTML
                 }
 
                 if (!empty($value)) {

@@ -32,11 +32,11 @@
 
     jQuery(document).ready(function(){
         jQuery('#_event_enddate').datetimepicker({
-            format:'d-M-Y H:i:s',
+            format:'Y-m-d H:i:s',
 		});
 
         jQuery('#_event_startdate').datetimepicker({
-            format:'d-M-Y H:i:s',
+            format:'Y-m-d H:i:s',
         });
 
 
@@ -126,7 +126,7 @@
 
             map.setCenter(newlatlong);
             marker.setPosition(newlatlong);
-            map.setZoom(12);
+            map.setZoom(19);
         });
 
 
