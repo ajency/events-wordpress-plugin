@@ -31,14 +31,29 @@
 
 
     jQuery(document).ready(function(){
-        jQuery('#_event_enddate').datetimepicker({
-            format:'Y-m-d H:i:s',
-		});
-
         jQuery('#_event_startdate').datetimepicker({
             format:'Y-m-d H:i:s',
+            onChangeDateTime:function( ct ){
+
+                var startDate = jQuery('#_event_startdate').val();
+                var endDate = jQuery('#_event_enddate').val();
+                
+
+
+                jQuery('#_event_enddate').val('');
+            },
         });
 
+
+        jQuery('#_event_enddate').datetimepicker({
+            format:'Y-m-d H:i:s',
+            onShow:function( ct ){
+                var def = '9999-01-01 00:00:00';
+                this.setOptions({
+                    minDate:jQuery('#_event_startdate').val()?jQuery('#_event_startdate').val():def,
+                })
+            },
+        });
 
 
         //Autocomplete variables

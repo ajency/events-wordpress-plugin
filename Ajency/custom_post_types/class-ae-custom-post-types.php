@@ -67,9 +67,13 @@ class Ajency_Events_Custom_Post_Types {
             return;
         }
         // Otherwise, build the list of errors that exist in the settings errores
-        $message = '<div id="acme-message" class="error below-h2"><p><ul>';
+
+
+        $message = '<div id="message" class="error below-h2"><p><ul>';
+        $errors = array_column($errors,'message','setting');
+
         foreach ( $errors as $error ) {
-            $message .= '<li>' . __($error['message'],$ae->get_custom_post_type_name()) . '</li>';
+            $message .= '<li>' . __($error,$ae->get_custom_post_type_name()) . '</li>';
         }
         $message .= '</ul></p></div><!-- #error -->';
         // Write them out to the screen
@@ -168,32 +172,22 @@ class Ajency_Events_Custom_Post_Types {
         set_transient( 'ae_errors', get_settings_errors(), 30 );
     }
 
-    function ae_meta_box_input_valid($post){
-
-        $valid = false;
-        if(self::ae_validate_meta_box_dates_input($post['_event_startdate'],$post['_event_enddate']))
-        {
-            $valid = true;
-        }
-        return $valid;
-    }
-
     function ae_validate_meta_box_required_fields($required_fields,$post_object){
 
     }
 
-    function ae_validate_meta_box_dates_input($startdate,$enddate){
+    function ae_validate_meta_box_startdate_input($startdate,$enddate){
 
         if(empty($startdate)){
             //TODO move out in a lang file
-            self::ae_display_error('start-greater-end','Your event requires a startdate');
+            self::ae_display_error('start-date-missing','Your event requires a startdate');
             return false;
         }
 
         if(!empty($enddate) && (strtotime($startdate) >= strtotime($enddate)))
         {
             //TODO move out in a lang file
-            self::ae_display_error('start-greater-end','Your event cannot start after it ends');
+            self::ae_display_error('end-date-greater','Your event cannot start after it ends');
             return false;
         }
 
@@ -214,22 +208,42 @@ class Ajency_Events_Custom_Post_Types {
             return;
 
         //Save only if all validation rules pass
-        if(self::ae_meta_box_input_valid($_POST))
-        {
-            $metabox_ids = Ajency_Events_Custom_Fields::getConstants();
 
-            foreach ($metabox_ids as $key ) {
+        $metabox_ids = Ajency_Events_Custom_Fields::getConstants();
 
-                $write_meta = false;
-                $value = $_POST[$key];
+        foreach ($metabox_ids as $key ) {
 
-                //Ensures date format
-                if(!empty($value) && ($key == Ajency_Events_Custom_Fields::STARTDATE || $key == Ajency_Events_Custom_Fields::ENDDATE)) {
-                    $value = date('Y-m-d H:i:s',strtotime($value));
-                }
+            $value = $_POST[$key];
 
-                //Ensures no value keys are removed from location object
-                if($key == Ajency_Events_Custom_Fields::LOCATION_OBJECT) {
+            switch ($key) {
+                case Ajency_Events_Custom_Fields::STARTDATE:
+
+                    if(self::ae_validate_meta_box_startdate_input($_POST[Ajency_Events_Custom_Fields::STARTDATE],$_POST[Ajency_Events_Custom_Fields::ENDDATE]))
+                    {
+                            $value = date('Y-m-d H:i:s', strtotime($value));
+                    } else {
+                        $value = false;
+                    }
+
+
+                    break;
+                case Ajency_Events_Custom_Fields::ENDDATE:
+
+
+                    /*print "<pre>";
+                    print_r($_POST);*/
+
+                    if(self::ae_validate_meta_box_startdate_input($_POST[Ajency_Events_Custom_Fields::STARTDATE],$_POST[Ajency_Events_Custom_Fields::ENDDATE]))
+                    {
+                            $value = date('Y-m-d H:i:s', strtotime($value));
+                    } else {
+                        $value = false;
+                    }
+
+
+                    break;
+                case Ajency_Events_Custom_Fields::LOCATION_OBJECT:
+
                     foreach (Ajency_Events_Location_Object_Fields::getConstants() as $field) {
 
                         if(empty($value[$field]))
@@ -238,31 +252,33 @@ class Ajency_Events_Custom_Post_Types {
                         }
                     }
 
-                }
+                    break;
+                case Ajency_Events_Custom_Fields::FEATURED:
 
-
-                //TODO handle this to remove the meta
-                if($key == Ajency_Events_Custom_Fields::FEATURED && empty($value)) {
-                    delete_post_meta( $post->ID, $key );
-                    $write_meta = false; // handle it with its own unset because of the way checkboxes pass data from HTML
-                }
-
-                if (!empty($value)) {
-                    $write_meta = true;
-                }
-
-                //Write to DB
-                if($write_meta){
-                    //TODO Write function for multiple
-                    if ( get_post_meta( $post->ID, $key, FALSE ) ) { // If the custom field already has a value
-                        update_post_meta( $post->ID, $key, $value );
-                    } else { // If the custom field doesn't have a value
-                        add_post_meta( $post->ID, $key, $value );
+                    if(empty($value)) {
+                        delete_post_meta( $post->ID, $key );
+                        $value = false; // handle it with its own unset because of the way checkboxes pass data from HTML
                     }
-                }
+
+                    break;
+
+                default:
+                    //Let every thing else pass
+                    //TODO - Do we want to validate lat long as float?
             }
 
+            //Write to DB
+            if(!empty($value)){
+                //TODO Write function for multiple
+                if ( get_post_meta( $post->ID, $key, FALSE ) ) { // If the custom field already has a value
+                    update_post_meta( $post->ID, $key, $value );
+                } else { // If the custom field doesn't have a value
+                    add_post_meta( $post->ID, $key, $value );
+                }
+            }
         }
+
+
     }
 
 }
