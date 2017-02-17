@@ -1,5 +1,5 @@
 <?php
-
+require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ae-base.php';
 /**
  * The file that defines the core plugin class
  *
@@ -27,7 +27,7 @@
  * @subpackage Plugin_Name/includes
  * @author     Your Name <email@example.com>
  */
-class Ajency_Events {
+class Ajency_Events extends Ajency_Events_Base {
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -39,53 +39,10 @@ class Ajency_Events {
 	 */
 	protected $loader;
 
-	/**
-	 * The unique identifier of this plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $plugin_name    The string used to uniquely identify this plugin.
-	 */
-	protected $plugin_name;
-
-	/**
-	 * The current version of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   protected
-	 * @var      string    $version    The current version of the plugin.
-	 */
-	protected $version;
-
-	/**
-	 * Define the core functionality of the plugin.
-	 *
-	 * Set the plugin name and the plugin version that can be used throughout the plugin.
-	 * Load the dependencies, define the locale, and set the hooks for the admin area and
-	 * the public-facing side of the site.
-	 *
-	 * @since    1.0.0
-	 */
-
-    protected static $instance = null;
-
-
-    public static function getInstance()
-    {
-        if (!isset(static::$instance)) {
-            static::$instance = new static;
-        }
-        return static::$instance;
-    }
-
-
-    protected $custom_post_type_name;
 
     public function __construct() {
 
-		$this->plugin_name = 'eventcodes';
-		$this->version = '1.0.0';
-		$this->custom_post_type_name = 'eventcode';
+        parent::__construct();
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -138,24 +95,27 @@ class Ajency_Events {
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-eventcodes-public.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-ae-public.php';
 
         /**
          *
          */
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/class-ae-render-template.php';
 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/custom_post_types/class-ae-custom-post-types.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/custom_post_types/class-ae-custom-post-types-columns.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/custom_post_types/class-ae-event-fields.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/custom_post_types/class-ae-event-loc-object-fields.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ae-base.php';
+
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ae-event-post-type.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ae-event-post-type-columns.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ae-event-post-type-meta-boxes.php';
 
 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/shortcodes/class-ae-shortcodes.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/common/class-ae-constants.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/common/class-ae-event-loc-object-fields.php';
 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/dashboard/class-ae-dashboard-config.php';
 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/templates/class-ae-templates.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/shortcodes/class-ae-shortcode-table.php';
+
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ae-dashboard-settings.php';
 
 		$this->loader = new Ajency_Events_Loader();
 
@@ -187,10 +147,12 @@ class Ajency_Events {
 	 */
 	private function define_admin_hooks() {
 
-		$plugin_admin = new Ajency_Events_Admin( $this->get_plugin_name(), $this->get_version() );
+        $plugin_admin = new Ajency_Events_Admin( );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+        if( TRUE ) {
+            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        }
 
 	}
 
@@ -203,7 +165,7 @@ class Ajency_Events {
 	 */
 	private function define_public_hooks() {
 
-		$plugin_public = new Ajency_Events_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Ajency_Events_Public();
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
@@ -221,22 +183,6 @@ class Ajency_Events {
 	}
 
 	/**
-	 * The name of the plugin used to uniquely identify it within the context of
-	 * WordPress and to define internationalization functionality.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The name of the plugin.
-	 */
-	public function get_plugin_name() {
-		return $this->plugin_name;
-	}
-
-
-    public function get_custom_post_type_name(){
-        return $this->custom_post_type_name;
-    }
-
-	/**
 	 * The reference to the class that orchestrates the hooks with the plugin.
 	 *
 	 * @since     1.0.0
@@ -246,28 +192,20 @@ class Ajency_Events {
 		return $this->loader;
 	}
 
-	/**
-	 * Retrieve the version number of the plugin.
-	 *
-	 * @since     1.0.0
-	 * @return    string    The version number of the plugin.
-	 */
-	public function get_version() {
-		return $this->version;
-	}
+    private function load_shortcodes() {
 
-    public function load_shortcodes() {
-
-        $ae_shortcodes = new Ajency_Events_Shortcodes();
+        $ae_shortcodes = new Ajency_Events_Shortcode_Table();
         $this->loader->add_action( 'init', $ae_shortcodes, 'load_shortcodes' );
     }
 
-    public function register_custom_post_types() {
+    private function register_custom_post_types() {
 
-        $ae_custom_post_types = new Ajency_Events_Custom_Post_Types();
-        $ae_custom_post_types_cols = new Ajency_Events_Custom_Post_Types_Columns();
+        $ae_custom_post_types = new Ajency_Events_Post_Type();
+        $ae_custom_post_types_cols = new Ajency_Events_Post_Type_Columns();
         $this->loader->add_action( 'init', $ae_custom_post_types, 'ae_register_custom_post_events' );
-        $this->loader->add_action( 'add_meta_boxes', $ae_custom_post_types, 'ae_register_metaboxes' );
+
+        $ae_metaboxes = new Ajency_Events_Post_Type_Meta_Boxes();
+        $this->loader->add_action( 'add_meta_boxes', $ae_metaboxes, 'ae_register_metaboxes' );
 
 
         $this->loader->add_action( 'save_post', $ae_custom_post_types, 'ae_save_events_meta', 1, 2);
@@ -283,7 +221,7 @@ class Ajency_Events {
 
     private function load_templates() {
 
-        $ae_templates = new Ajency_Events_Templates();
+        $ae_templates = new Ajency_Events_Public();
         $this->loader->add_filter( 'single_template', $ae_templates, 'events_single_template' );
         $this->loader->add_filter( 'archive_template', $ae_templates, 'events_archive_template' );
     }

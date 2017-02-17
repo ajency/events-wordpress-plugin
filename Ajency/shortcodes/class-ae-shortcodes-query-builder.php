@@ -14,7 +14,7 @@ class Ajency_Events_Shortcodes_Query_Builder {
     public function initialize_query($post_status = FILTER_POST_STATUS_DEFAULT, $limit = 10, $offset = 0 , $tags = false) {
 
         $query = [
-            'post_type' => FILTER_POST_TYPE,
+            'post_type' => $this->custom_post_type_name,
             'post_status' => $post_status, // only get posts with this status\
             'posts_per_page' => $limit,
             'offset' => $offset,
@@ -165,7 +165,12 @@ class Ajency_Events_Shortcodes_Query_Builder {
         );
 
         foreach($wpdb->get_results($preparedQuery, ARRAY_N) as $val) {
-            $event_meta[$val[0]][$val[1]] = $val[2];
+            if($val[1] == Ajency_Events_Constants::FIELD_LOCATION_OBJECT) {
+                $value = unserialize($val[2]);
+            } else {
+                $value = $val[2];
+            }
+            $event_meta[$val[0]][$val[1]] = $value;
         };
         return $event_meta;
     }
