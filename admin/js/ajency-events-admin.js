@@ -30,13 +30,87 @@
 	 */
 
 
-    jQuery(document).ready(function(){
-        jQuery('#_event_enddate').datetimepicker({
-            format:'Y-m-d H:i:s',
-		});
+    jQuery(document).ready(function() {
+
+
+        if ($('#copy_event_loc').is(':checked')) {
+            $('#_event_loc_edited').prop('readonly', true);
+        }
+
+        $('#copy_event_loc').change(function(){
+
+            if ($(this).is(':checked')) {
+                var event_location = document.getElementById('_event_loc').value;
+                document.getElementById('_event_loc_edited').value = event_location;
+                $('#_event_loc_edited').prop('readonly', true);
+            } else {
+                document.getElementById('_event_loc_edited').value = '';
+                $('#_event_loc_edited').prop('readonly', false);
+            }
+        });
+
+
+        $('#edit-copy_event_loc').click(function(){
+            $('#_event_loc_edited').prop('readonly', false);
+            document.getElementById("copy_event_loc").checked = false;
+        })
+
+
+
+
+        var d = new Date();
 
         jQuery('#_event_startdate').datetimepicker({
-            format:'Y-m-d H:i:s',
+            format:'d-M-Y H:i',
+            defaultTime : '00:00',
+            onChangeDateTime:function( ct ){
+
+                var startDate = new Date(jQuery('#_event_startdate').val());
+                var mon = startDate.getMonth()+1;
+                var day = startDate.getDate();
+                var year = startDate.getFullYear();
+                var hour = startDate.getMonth();
+                var min = startDate.getMonth();
+                var minDate = year+'-'+mon+'-'+day+' '+hour+':'+min+':00';
+
+                jQuery('#_event_enddate').val('');
+            },
+        });
+
+
+        jQuery('#_event_enddate').datetimepicker({
+
+            format:'d-M-Y H:i',
+            defaultTime : '00:00',
+            onShow:function( ct ){
+
+                if(jQuery('#_event_startdate').val())
+                {
+                    var startDate = new Date(jQuery('#_event_startdate').val());
+                    var mon = startDate.getMonth()+1;
+                    var day = startDate.getDate();
+                    var year = startDate.getFullYear();
+                    var hour = startDate.getMonth();
+                    var min = startDate.getMonth();
+                    var minDate = year+'-'+mon+'-'+day+' '+hour+':'+min+':00';
+
+                    console.log(minDate);
+
+                } else {
+                    var minDate = '9999-01-01 00:00:00';
+                }
+
+                this.setOptions({
+                    minDate:minDate,
+                    format : 'Y-m-d H:i:s',
+                })
+
+                this.setOptions({
+                    format : 'd-M-Y H:i',
+                    defaultHours : 0,
+                    defaultMinutes : 0,
+                })
+            },
         });
 
 
@@ -115,7 +189,6 @@
             var event_location = place.name + ' ' + place.formatted_address;
 
             document.getElementById('_event_loc').value = event_location;
-            document.getElementById('_event_loc_edited').value = event_location;
 
             var newlatlong = new google.maps.LatLng(place.geometry.location.lat(),place.geometry.location.lng());
 
@@ -124,9 +197,15 @@
             document.getElementById("_event_loc_lat_edited").value = place.geometry.location.lat();
             document.getElementById("_event_loc_lng_edited").value = place.geometry.location.lng();
 
+
+            if($("#copy_event_loc").attr("checked")){
+                document.getElementById('_event_loc_edited').value = event_location;
+                document.getElementById('_event_loc_edited').readonly = true;
+            }
+
             map.setCenter(newlatlong);
             marker.setPosition(newlatlong);
-            map.setZoom(19);
+            map.setZoom(17);
         });
 
 
@@ -158,7 +237,7 @@
             var myLatlng = new google.maps.LatLng(defaultLat,defaultLng);
 
             var mapOptions = {
-                zoom: 19,
+                zoom: 17,
                 center: myLatlng
             }
             map = new google.maps.Map(document.getElementById('map'), mapOptions);

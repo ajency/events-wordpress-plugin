@@ -1,21 +1,6 @@
 <?php
 
-define(FILTER_POST_TYPE, 'eventcode');
-define(FILTER_POST_STATUS_DEFAULT, 'publish');
-define(FILTER_RANGE_PAST, 'past');
-define(FILTER_RANGE_UPCOMING, 'upcoming');
-define(FILTER_RANGE_MONTH, 'month');
-define(FILTER_RANGE_YEAR, 'year');
-define(FILTER_RANGE_DAY, 'day');
-define(FILTER_RANGE_SETTING, 'range-setting');
-
-define(EVENT_FEATURED_META_KEY, '_event_featured');
-define(EVENT_STARTDATE_META_KEY, '_event_startdate');
-define(EVENT_ENDDATE_META_KEY, '_event_enddate');
-define(EVENT_VENUE_META_KEY, '_event_venue');
-define(EVENT_CITY_META_KEY, '_event_city');
-
-class Ajency_Events_Shortcodes {
+class Ajency_Events_Shortcode_Table {
 
     /**
      *
@@ -23,7 +8,7 @@ class Ajency_Events_Shortcodes {
 
     public function load_shortcodes()
     {
-        add_shortcode( 'eventcodes-table', array( $this, 'shortcode_events' ) );
+        add_shortcode( 'ajency-events-table', array( $this, 'shortcode_events' ) );
     }
 
     /**
@@ -83,6 +68,7 @@ class Ajency_Events_Shortcodes {
 
         $atts = shortcode_atts(
             array(
+
                 'range' => 'upcoming', // month, day, year, upcoming, past
                 'range-setting' => 30, // no of days in case of upcoming, past. Default to 30,
 
@@ -91,18 +77,21 @@ class Ajency_Events_Shortcodes {
 
                 'tags' => false,
 
-                'limit' => 10,
+                'limit' => 5,
                 'offset' => 0,
 
                 'order' => 'ASC',
                 'order-by' => 'startdate',
 
-                'fields' => 'name,city,startdate|Event Name,City,Start at',
+                'fields' => 'name,venue,startdate', // name,city,startdate|Event Name,City,Start at
                 'link-field' => 'name',
+                'map-field' => 'venue',
 
-                'event-status' => FILTER_POST_STATUS_DEFAULT,
+                'date-format' => 'd-M-Y',
 
-            ), $atts, 'eventcodes'
+                'event-status' => 'publish',
+
+            ), $atts, 'ajency_events'
         );
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . '/shortcodes/class-ae-shortcodes-query-builder.php';
@@ -122,29 +111,26 @@ class Ajency_Events_Shortcodes {
         $query_sort = $qb->sort($atts['order-by'],$atts['order']);
         $query = array_merge($query,$query_sort);
 
-
-        //TODO Paged Query
-        /*        $query['paged'] = 1;
-                $template = new Ajency_Events_Render_Template('shortcodes/templates/table.php', [
-                    'query' => $query,
-                ]);
-                return $template->render();*/
-
         $field_settings = explode('|',$atts['fields']);
         $fields = explode(',',$field_settings[0]);
         $field_labels = explode(',',$field_settings[1]);
 
-        $html = '<table class="table table-hover">';
-        $html .= '<thead><tr>';
+        $html = '<table class="aj-t__table" cellpadding="0" cellspacing="0" border="0">';
 
-        foreach ($field_labels as $field_label)
-        {
-            $html .= '<th>'.$field_label.'</th>';
+        if(!empty($field_labels[0])) {
+
+            $html .= '<thead><tr>';
+
+            foreach ($field_labels as $field_label)
+            {
+                $html .= '<th>'.$field_label.'</th>';
+            }
+
+            $html .= '</tr></thead><tbody>';
+
         }
 
-        $html .= '</tr></thead><tbody>';
-
-        $html .=  "<script>console.log( 'Query for Events: " . json_encode($query) . "' );</script>";
+        $html .= '<tbody>';
 
 
         $posts = query_posts($query);
@@ -152,15 +138,21 @@ class Ajency_Events_Shortcodes {
             $ids[] = $post->ID;
         }
 
+       # print_r($query);
 
         //A helper function to get all the meta in all the posts
         $post_meta = $qb->get_post_custom_multiple($ids,[
-            EVENT_FEATURED_META_KEY,
-            EVENT_STARTDATE_META_KEY,
-            EVENT_ENDDATE_META_KEY,
-            EVENT_VENUE_META_KEY,
-            EVENT_CITY_META_KEY]
+            Ajency_Events_Constants::FIELD_FEATURED,
+            Ajency_Events_Constants::FIELD_STARTDATE,
+            Ajency_Events_Constants::FIELD_ENDDATE,
+            Ajency_Events_Constants::FIELD_LOCATION_OBJECT,
+            Ajency_Events_Constants::FIELD_LAT_EDITED,
+            Ajency_Events_Constants::FIELD_LNG_EDITED,
+            Ajency_Events_Constants::FIELD_LOCATION_EDITED
+            ]
         );
+
+        $width = 100/count($fields);
 
         while ( have_posts() ) { the_post();
             $html .= '<tr>';
@@ -171,16 +163,20 @@ class Ajency_Events_Shortcodes {
                         $content =  __(get_the_title());
                         break;
                     case "venue":
-                        $content = __($post_meta[get_the_ID()][EVENT_VENUE_META_KEY]);
+                        $content = __($post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LOCATION_OBJECT][Ajency_Events_Location_Object_Fields::NAME]);
                         break;
                     case "startdate":
-                        $content = __(date('d-M-Y',strtotime($post_meta[get_the_ID()][EVENT_STARTDATE_META_KEY])));
+                        $content = __(date($atts['date-format'],strtotime($post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_STARTDATE])));
                         break;
                     case "enddate":
-                        $content = __($post_meta[get_the_ID()][EVENT_ENDDATE_META_KEY]);
+                        $content = __($post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_ENDDATE]);
                         break;
                     case "city":
-                        $content = __($post_meta[get_the_ID()][EVENT_CITY_META_KEY]);
+                        $content = __(
+
+                            $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LOCATION_OBJECT][Ajency_Events_Location_Object_Fields::LOCALITY]
+
+                        );
                         break;
                     case "link":
                         $content = __('View');
@@ -188,11 +184,26 @@ class Ajency_Events_Shortcodes {
                     default:
                         //Do Nothing - In case a missspelt field will lead to field being omited
                 }
-                if($atts['link-field'] == $field) {
-                    $html .=     '<td><a href='.get_permalink().'>'.__($content).'</a></td>';
-                } else {
-                    $html .=     '<td>'.__($content).'</td>';
+
+/*                print "<pre>";
+                print $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LAT_EDITED];*/
+
+                if($content == '') {
+                    $content = 'NA';
                 }
+
+                if($atts['map-field'] == $field && $content != 'NA') {
+
+                    $lat = $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LAT_EDITED];
+                    $lng = $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LNG_EDITED];
+                    $content = $content.'(<a target="_blank" href="http://maps.google.com/?q='.$lat.','.$lng.'"">View Map</a>)';
+                } else  if($atts['link-field'] == $field && $content != 'NA') {
+                    $content =     '<a href='.get_permalink().'>'.__($content).'</a>';
+                }
+
+
+                $html .=     '<td style="width: '.$width.'%" class="aj-t__col">'.__($content).'</td>';
+
             }
             $html .= '</tr>';
         }

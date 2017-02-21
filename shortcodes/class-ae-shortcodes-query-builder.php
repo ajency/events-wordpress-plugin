@@ -2,26 +2,24 @@
 
 
 
-class Ajency_Events_Shortcodes_Query_Builder {
+class Ajency_Events_Shortcodes_Query_Builder extends Ajency_Events_Base  {
 
-
-    public function __construct() {
-
-        //Can we initialize the query object here? Does it matter in PHP?
-
-    }
 
     public function initialize_query($post_status = FILTER_POST_STATUS_DEFAULT, $limit = 10, $offset = 0 , $tags = false) {
 
         $query = [
-            'post_type' => FILTER_POST_TYPE,
+            'post_type' => $this->custom_post_type_name,
             'post_status' => $post_status, // only get posts with this status\
             'posts_per_page' => $limit,
             'offset' => $offset,
         ];
 
         if($tags){
-            $query['tag__in'] = $tags;
+            $query['tax_query'] = array(
+                'taxonomy' => 'event-types',
+                'field' => 'slug',
+                'terms' => $tags
+            );
         }
 
         return $query;
@@ -165,7 +163,13 @@ class Ajency_Events_Shortcodes_Query_Builder {
         );
 
         foreach($wpdb->get_results($preparedQuery, ARRAY_N) as $val) {
-            $event_meta[$val[0]][$val[1]] = $val[2];
+            if($val[1] == Ajency_Events_Constants::FIELD_LOCATION_OBJECT) {
+                $value = unserialize($val[2]);
+
+            } else {
+                $value = $val[2];
+            }
+            $event_meta[$val[0]][$val[1]] = $value;
         };
         return $event_meta;
     }

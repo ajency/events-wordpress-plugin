@@ -1,11 +1,30 @@
 <?php
 
-class Ajency_Events_Custom_Post_Types_Columns {
+/**
+ * The admin-specific functionality of the plugin.
+ *
+ * @link       http://example.com
+ * @since      1.0.0
+ *
+ * @package    Plugin_Name
+ * @subpackage Plugin_Name/admin
+ */
+
+/**
+ * The admin-specific functionality of the plugin.
+ *
+ * Defines the plugin name, version, and two examples hooks for how to
+ * enqueue the admin-specific stylesheet and JavaScript.
+ *
+ * @package    Plugin_Name
+ * @subpackage Plugin_Name/admin
+ * @author     Your Name <email@example.com>
+ */
+class Ajency_Events_Post_Type_Columns extends Ajency_Events_Base {
+
 
     // ADD NEW COLUMN
     function ae_columns_head($columns) {
-
-        $ae = Ajency_Events::getInstance();
 
         unset(
             $columns['author'],
@@ -13,11 +32,11 @@ class Ajency_Events_Custom_Post_Types_Columns {
             $columns['date']
         );
         $new_columns = array(
-            'featured_image' => __('Featured Image', $ae->get_plugin_name()),
-            'event_startdate' => __('Enddate', $ae->get_plugin_name()),
-            'event_enddate' => __('Startdate', $ae->get_plugin_name()),
-            'location' => __('Location', $ae->get_plugin_name()),
-            'event_featured' => __('Featured', $ae->get_plugin_name()),
+            'featured_image' => __('Featured Image', $this->plugin_name),
+            'event_startdate' => __('Enddate', $this->plugin_name),
+            'event_enddate' => __('Startdate', $this->plugin_name),
+            'location' => __('Location', $this->plugin_name),
+            'event_featured' => __('Featured', $this->plugin_name),
         );
         return array_merge($columns, $new_columns);
     }
@@ -27,20 +46,18 @@ class Ajency_Events_Custom_Post_Types_Columns {
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . '/shortcodes/class-ae-shortcodes-query-builder.php';
 
-        $ae = Ajency_Events::getInstance();
-
         $qb = new Ajency_Events_Shortcodes_Query_Builder();
         $meta_values = $qb->get_post_custom_multiple([$post_ID],[
-            Ajency_Events_Custom_Fields::STARTDATE,
-            Ajency_Events_Custom_Fields::ENDDATE,
-            Ajency_Events_Custom_Fields::LOCATION_EDITED,
-            Ajency_Events_Custom_Fields::LAT_EDITED,
-            Ajency_Events_Custom_Fields::LNG_EDITED,
+            Ajency_Events_Constants::FIELD_STARTDATE,
+            Ajency_Events_Constants::FIELD_ENDDATE,
+            Ajency_Events_Constants::FIELD_LOCATION_EDITED,
+            Ajency_Events_Constants::FIELD_LAT_EDITED,
+            Ajency_Events_Constants::FIELD_LNG_EDITED,
         ]);
 
-/*        print "<pre>";
-        print_r($meta_values[0]['_event_startdate']);
-        die;*/
+        /*        print "<pre>";
+                print_r($meta_values[0]['_event_startdate']);
+                die;*/
 
 
 
@@ -63,7 +80,7 @@ class Ajency_Events_Custom_Post_Types_Columns {
         } else if ($column_name == 'event_startdate') {
 
             if(isset($meta_values[$post_ID]['_event_startdate'])){
-                echo __(date('Y-m-d H:i:s',strtotime($meta_values[$post_ID]['_event_startdate'])));
+                echo __(date(Ajency_Events_Constants::DATE_DISPLAY_FORMAT,strtotime($meta_values[$post_ID]['_event_startdate'])));
             } else {
                 echo "Not Set";
             }
@@ -71,7 +88,7 @@ class Ajency_Events_Custom_Post_Types_Columns {
         } else if ($column_name == 'event_enddate') {
 
             if(isset($meta_values[$post_ID]['_event_enddate'])){
-                echo __(date('Y-m-d H:i:s',strtotime($meta_values[$post_ID]['_event_enddate'])));
+                echo __(date(Ajency_Events_Constants::DATE_DISPLAY_FORMAT,strtotime($meta_values[$post_ID]['_event_enddate'])));
             } else {
                 echo "Not Set";
             }

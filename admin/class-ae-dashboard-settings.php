@@ -1,17 +1,34 @@
 <?php
 
-class Ajency_Events_Dashboard_Settings {
+/**
+ * The admin-specific functionality of the plugin.
+ *
+ * @link       http://example.com
+ * @since      1.0.0
+ *
+ * @package    Plugin_Name
+ * @subpackage Plugin_Name/admin
+ */
+
+/**
+ * The admin-specific functionality of the plugin.
+ *
+ * Defines the plugin name, version, and two examples hooks for how to
+ * enqueue the admin-specific stylesheet and JavaScript.
+ *
+ * @package    Plugin_Name
+ * @subpackage Plugin_Name/admin
+ * @author     Your Name <email@example.com>
+ */
+class Ajency_Events_Dashboard_Settings extends Ajency_Events_Base {
 
     public function load_dashboard_config_menu(){
-
-        include '/var/www/wp/wp-content/plugins/eventcodes/Ajency/dashboard/template-settings.php';
-        $ae = Ajency_Events::getInstance();
         add_submenu_page(
-            'edit.php?post_type='.$ae->get_custom_post_type_name(),
-            __( 'Event  Settings', $ae->get_plugin_name() ),
-            __( 'Setings', $ae->get_plugin_name() ),
+            'edit.php?post_type='.$this->custom_post_type_name,
+            __( 'Event  Settings', $this->plugin_name ),
+            __( 'Setings', $this->plugin_name ),
             'manage_options',
-            $ae->get_plugin_name().'-settings',
+            $this->plugin_name.'-settings',
             array( $this, 'add_settings_page' )
         );
     }
@@ -47,4 +64,5 @@ class Ajency_Events_Dashboard_Settings {
 
         <?php
     }
+
 }
