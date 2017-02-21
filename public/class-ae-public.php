@@ -59,7 +59,7 @@ class Ajency_Events_Public extends Ajency_Events_Base {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ajency_events-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ajency-events-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 
