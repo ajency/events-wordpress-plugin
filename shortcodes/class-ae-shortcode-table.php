@@ -100,6 +100,8 @@ class Ajency_Events_Shortcode_Table {
 
         if($atts['tags']){
             $tags = explode(',',$atts['tags']);
+        } else {
+            $tags = false;
         }
 
         $query = $qb->initialize_query($atts['event-status'],$atts['limit'],$atts['offset'],$tags);
