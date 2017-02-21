@@ -36,8 +36,7 @@ class Ajency_Events_Public extends Ajency_Events_Base {
 		 * class.
 		 */
 
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/skeleton.css', array(), $this->version, 'all' );
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/thegrid.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/styles.css', array(), $this->version, 'all' );
 
 	}
 
@@ -60,14 +59,15 @@ class Ajency_Events_Public extends Ajency_Events_Base {
 		 * class.
 		 */
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/eventcodes-public.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/ajency_events-public.js', array( 'jquery' ), $this->version, false );
 
 	}
 
     public function events_single_template($single_template) {
         global $wp_query, $post;
-        if ($post->post_type == $this->custom_post_type_name)
+        if ($post->post_type == $this->custom_post_type_name){
             $single_template = $this->load_template_location('single');
+        }
         return $single_template;
     }
 
@@ -86,7 +86,16 @@ class Ajency_Events_Public extends Ajency_Events_Base {
         } else {
             $template = plugin_dir_path( dirname( __FILE__ ) ) . 'public/templates/'.$template;
         }
+
         return $template;
     }
 
+    function excerpt_read_more_link($output) {
+        global $post;
+        if ($post->post_type != $this->custom_post_type_name)
+        {
+            $output .= '<p><a href="'. get_permalink($post->ID) . '">read more</a></p>';
+        }
+        return $output;
+    }
 }

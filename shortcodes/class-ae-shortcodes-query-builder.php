@@ -2,14 +2,8 @@
 
 
 
-class Ajency_Events_Shortcodes_Query_Builder {
+class Ajency_Events_Shortcodes_Query_Builder extends Ajency_Events_Base  {
 
-
-    public function __construct() {
-
-        //Can we initialize the query object here? Does it matter in PHP?
-
-    }
 
     public function initialize_query($post_status = FILTER_POST_STATUS_DEFAULT, $limit = 10, $offset = 0 , $tags = false) {
 
@@ -21,7 +15,11 @@ class Ajency_Events_Shortcodes_Query_Builder {
         ];
 
         if($tags){
-            $query['tag__in'] = $tags;
+            $query['tax_query'] = array(
+                'taxonomy' => 'event-types',
+                'field' => 'slug',
+                'terms' => $tags
+            );
         }
 
         return $query;
@@ -167,6 +165,7 @@ class Ajency_Events_Shortcodes_Query_Builder {
         foreach($wpdb->get_results($preparedQuery, ARRAY_N) as $val) {
             if($val[1] == Ajency_Events_Constants::FIELD_LOCATION_OBJECT) {
                 $value = unserialize($val[2]);
+
             } else {
                 $value = $val[2];
             }

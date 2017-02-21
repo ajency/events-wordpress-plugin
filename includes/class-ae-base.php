@@ -51,7 +51,7 @@ class Ajency_Events_Base {
 
     public function __construct() {
 
-		$this->plugin_name = 'eventcodes';
+		$this->plugin_name = 'ajency_events';
 		$this->version = '1.0.0';
 		$this->custom_post_type_name = 'eventcode';
 	}

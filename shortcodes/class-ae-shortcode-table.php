@@ -8,7 +8,7 @@ class Ajency_Events_Shortcode_Table {
 
     public function load_shortcodes()
     {
-        add_shortcode( 'eventcodes-table', array( $this, 'shortcode_events' ) );
+        add_shortcode( 'ajency-events-table', array( $this, 'shortcode_events' ) );
     }
 
     /**
@@ -77,20 +77,21 @@ class Ajency_Events_Shortcode_Table {
 
                 'tags' => false,
 
-                'limit' => 10,
+                'limit' => 5,
                 'offset' => 0,
 
                 'order' => 'ASC',
                 'order-by' => 'startdate',
 
-                'fields' => 'name,city,startdate', // name,city,startdate|Event Name,City,Start at
+                'fields' => 'name,venue,startdate', // name,city,startdate|Event Name,City,Start at
                 'link-field' => 'name',
+                'map-field' => 'venue',
 
                 'date-format' => 'd-M-Y',
 
-                'event-status' => FILTER_POST_STATUS_DEFAULT,
+                'event-status' => 'publish',
 
-            ), $atts, 'eventcodes'
+            ), $atts, 'ajency_events'
         );
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . '/shortcodes/class-ae-shortcodes-query-builder.php';
@@ -110,36 +111,6 @@ class Ajency_Events_Shortcode_Table {
         $query_sort = $qb->sort($atts['order-by'],$atts['order']);
         $query = array_merge($query,$query_sort);
 
-
-        //TODO Paged Query
-        /*        $query['paged'] = 1;
-                $template = new Ajency_Events_Render_Template('shortcodes/templates/table.php', [
-                    'query' => $query,
-                ]);
-                return $template->render();*/
-
-
-        /*<table class="aj-t__table" cellpadding="0" cellspacing="0" border="0">
-				<tr>
-					<td class="aj-t__col">
-						<a href="#" class="aj-t__event">ComicCon 2017</a>
-					</td>
-					<td class="aj-t__col">
-						<div class="aj-t__location">
-							<span class="aj-t__venue">Venue Name</span>, <span class="aj-t__city">Pune</span>, <span class="aj-t__state">Maharastra</span>
-							<a href="#" target="_blank" title="See venue in Google Maps" class="aj-t__link-ext">See in Map</a>
-						</div>
-					</td>
-					<td class="aj-t__col">
-						<div class="aj-t__when">
-							<span class="aj-t__date">4th March</span>
-							<span class="hidden-xs">-</span>
-							<span class="aj-t__time">10:00 AM to 08:00 PM</span>
-						</div>
-					</td>
-				</tr>
-			</table>*/
-
         $field_settings = explode('|',$atts['fields']);
         $fields = explode(',',$field_settings[0]);
         $field_labels = explode(',',$field_settings[1]);
@@ -147,10 +118,6 @@ class Ajency_Events_Shortcode_Table {
         $html = '<table class="aj-t__table" cellpadding="0" cellspacing="0" border="0">';
 
         if(!empty($field_labels[0])) {
-
-            print "<pre>";
-
-            print_r($field_labels);
 
             $html .= '<thead><tr>';
 
@@ -165,14 +132,13 @@ class Ajency_Events_Shortcode_Table {
 
         $html .= '<tbody>';
 
-        $html .=  "<script>console.log( 'Query for Events: " . json_encode($query) . "' );</script>";
-
 
         $posts = query_posts($query);
         foreach ($posts as $post){
             $ids[] = $post->ID;
         }
 
+       # print_r($query);
 
         //A helper function to get all the meta in all the posts
         $post_meta = $qb->get_post_custom_multiple($ids,[
@@ -181,12 +147,12 @@ class Ajency_Events_Shortcode_Table {
             Ajency_Events_Constants::FIELD_ENDDATE,
             Ajency_Events_Constants::FIELD_LOCATION_OBJECT,
             Ajency_Events_Constants::FIELD_LAT_EDITED,
-            Ajency_Events_Constants::FIELD_LNG_EDITED
+            Ajency_Events_Constants::FIELD_LNG_EDITED,
+            Ajency_Events_Constants::FIELD_LOCATION_EDITED
             ]
         );
 
-      /*  print "<pre>";
-        print_r($post_meta);*/
+        $width = 100/count($fields);
 
         while ( have_posts() ) { the_post();
             $html .= '<tr>';
@@ -206,7 +172,11 @@ class Ajency_Events_Shortcode_Table {
                         $content = __($post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_ENDDATE]);
                         break;
                     case "city":
-                        $content = __($post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LOCATION_OBJECT][Ajency_Events_Location_Object_Fields::LOCALITY]);
+                        $content = __(
+
+                            $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LOCATION_OBJECT][Ajency_Events_Location_Object_Fields::LOCALITY]
+
+                        );
                         break;
                     case "link":
                         $content = __('View');
@@ -214,11 +184,26 @@ class Ajency_Events_Shortcode_Table {
                     default:
                         //Do Nothing - In case a missspelt field will lead to field being omited
                 }
-                if($atts['link-field'] == $field) {
-                    $html .=     '<td class="aj-t__col"><a href='.get_permalink().'>'.__($content).'</a></td>';
-                } else {
-                    $html .=     '<td class="aj-t__col">'.__($content).'</td>';
+
+/*                print "<pre>";
+                print $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LAT_EDITED];*/
+
+                if($content == '') {
+                    $content = 'NA';
                 }
+
+                if($atts['map-field'] == $field && $content != 'NA') {
+
+                    $lat = $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LAT_EDITED];
+                    $lng = $post_meta[get_the_ID()][Ajency_Events_Constants::FIELD_LNG_EDITED];
+                    $content = $content.'(<a target="_blank" href="http://maps.google.com/?q='.$lat.','.$lng.'"">View Map</a>)';
+                } else  if($atts['link-field'] == $field && $content != 'NA') {
+                    $content =     '<a href='.get_permalink().'>'.__($content).'</a>';
+                }
+
+
+                $html .=     '<td style="width: '.$width.'%" class="aj-t__col">'.__($content).'</td>';
+
             }
             $html .= '</tr>';
         }

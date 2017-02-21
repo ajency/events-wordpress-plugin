@@ -34,7 +34,7 @@
 
 
         if ($('#copy_event_loc').is(':checked')) {
-            document.getElementById('_event_loc_edited').disabled = true;
+            $('#_event_loc_edited').prop('readonly', true);
         }
 
         $('#copy_event_loc').change(function(){
@@ -42,16 +42,16 @@
             if ($(this).is(':checked')) {
                 var event_location = document.getElementById('_event_loc').value;
                 document.getElementById('_event_loc_edited').value = event_location;
-                document.getElementById('_event_loc_edited').disabled = true;
+                $('#_event_loc_edited').prop('readonly', true);
             } else {
                 document.getElementById('_event_loc_edited').value = '';
-                document.getElementById('_event_loc_edited').disabled = false;
+                $('#_event_loc_edited').prop('readonly', false);
             }
         });
 
 
         $('#edit-copy_event_loc').click(function(){
-            document.getElementById('_event_loc_edited').disabled = false;
+            $('#_event_loc_edited').prop('readonly', false);
             document.getElementById("copy_event_loc").checked = false;
         })
 
@@ -200,7 +200,7 @@
 
             if($("#copy_event_loc").attr("checked")){
                 document.getElementById('_event_loc_edited').value = event_location;
-                document.getElementById('_event_loc_edited').disabled = true;
+                document.getElementById('_event_loc_edited').readonly = true;
             }
 
             map.setCenter(newlatlong);

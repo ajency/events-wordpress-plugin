@@ -24,7 +24,7 @@ class Ajency_Events_Constants
     const META_BOX_LABEL_EVENT_LOCATION = 'Where?';
     const META_BOX_LABEL_EVENT_DISPLAY_ADDRESS = 'Where?';
     const META_BOX_LABEL_EVENT_TAGS = 'Event Type';
-    const META_BOX_LABEL_EVENT_FEATURED = 'Event Type';
+    const META_BOX_LABEL_EVENT_FEATURED = 'Featured Event';
 
     static function getConstants() {
         $oClass = new ReflectionClass(__CLASS__);

@@ -42,11 +42,11 @@ class Ajency_Events_Post_Type extends Ajency_Events_Base {
         );
 
         $args = array (
-            'label'               => __( 'event', $this->plugin_name ),
-            'description'         => __( 'Event news and reviews', $this->plugin_name ),
+            'label'               => __( 'Event', $this->plugin_name ),
+            'description'         => __( 'Events', $this->plugin_name ),
             'labels'              => $labels,
             'supports'            => array( 'title', 'editor', 'excerpt', 'author', 'thumbnail', 'revisions', 'custom-fields', ),
-            'taxonomies'          => array( 'post_tag' ),
+          /*  'taxonomies'          => array( 'post_tag' ),*/
             'hierarchical'        => false,
             'public'              => true,
             'show_ui'             => true,
@@ -59,12 +59,44 @@ class Ajency_Events_Post_Type extends Ajency_Events_Base {
             'has_archive'         => true,
             'exclude_from_search' => false,
             'publicly_queryable'  => true,
-            'rewrite' 			  => array('slug' => 'events'),
+/*            'rewrite' 			  => array('slug' => 'events'),*/
             'capability_type'     => 'page',
         );
 
         register_post_type( $this->custom_post_type_name, $args );
-        /*        add_action( 'save_post', 'wpdocs_save_meta_box' );*/
+
+
+        // Add new taxonomy, NOT hierarchical (like tags)
+        $event_type_labels = array(
+            'name'                       => _x( 'Event Types', 'taxonomy general name', 'textdomain' ),
+            'singular_name'              => _x( 'Event Type', 'taxonomy singular name', 'textdomain' ),
+            'search_items'               => __( 'Search Event Types', 'textdomain' ),
+            'popular_items'              => __( 'Popular Event Types', 'textdomain' ),
+            'all_items'                  => __( 'All Event Types', 'textdomain' ),
+            'parent_item'                => null,
+            'parent_item_colon'          => null,
+            'edit_item'                  => __( 'Edit Event Type', 'textdomain' ),
+            'update_item'                => __( 'Update Event Type', 'textdomain' ),
+            'add_new_item'               => __( 'Add New Event Type', 'textdomain' ),
+            'new_item_name'              => __( 'New Event Type Name', 'textdomain' ),
+            'separate_items_with_commas' => __( 'Separate Event Types with commas', 'textdomain' ),
+            'add_or_remove_items'        => __( 'Add or remove Event Types', 'textdomain' ),
+            'choose_from_most_used'      => __( 'Choose from the most used Event Types', 'textdomain' ),
+            'not_found'                  => __( 'No Event Types found.', 'textdomain' ),
+            'menu_name'                  => __( 'Event Types', 'textdomain' ),
+        );
+
+        $event_type_args = array(
+            'hierarchical'          => false,
+            'labels'                => $event_type_labels,
+            'show_ui'               => true,
+            'show_admin_column'     => true,
+            'update_count_callback' => '_update_post_term_count',
+            'query_var'             => true,
+            'rewrite'               => array( 'slug' => 'event-types' ),
+        );
+
+        register_taxonomy( 'event-types', 'eventcode', $event_type_args );
 
     }
 

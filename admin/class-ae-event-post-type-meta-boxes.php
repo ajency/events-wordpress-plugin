@@ -27,7 +27,34 @@ class Ajency_Events_Post_Type_Meta_Boxes extends Ajency_Events_Base {
         add_meta_box( 'ae_register_metabox_dates', Ajency_Events_Constants::META_BOX_LABEL_EVENT_DURATION, array( &$this,'ae_register_metabox_dates'), $this->custom_post_type_name, 'side', 'default', array( 'id' => '_start') );
         add_meta_box( 'ae_register_metabox_location', Ajency_Events_Constants::META_BOX_LABEL_EVENT_LOCATION, array( &$this,'ae_register_metabox_location'), $this->custom_post_type_name, 'side', 'default', array('id'=>'_end') );
         add_meta_box( 'ae_register_metabox_featured_event', Ajency_Events_Constants::META_BOX_LABEL_EVENT_FEATURED, array( &$this,'ae_register_metabox_featured_event'), $this->custom_post_type_name, 'side', 'default', array('id'=>'_3132') );
-        add_meta_box( 'ae_register_metabox_display_address', Ajency_Events_Constants::META_BOX_LABEL_EVENT_DISPLAY_ADDRESS, array( &$this,'ae_register_metabox_display_address'), $this->custom_post_type_name, 'side', 'default', array('id'=>'_3132') );
+     /*   add_meta_box( 'ae_register_metabox_display_address', Ajency_Events_Constants::META_BOX_LABEL_EVENT_DISPLAY_ADDRESS, array( &$this,'ae_register_metabox_display_address'), $this->custom_post_type_name, 'side', 'default', array('id'=>'_3132') );*/
+    }
+
+
+    public function ae_rename_metaboxes(){
+        global $wp_meta_boxes;
+
+        /* Specified Custom Post Type. */
+        $custom_post_type = $this->custom_post_type_name;
+
+
+
+
+        /* Only perform these actions on Adding or Editing pages for the specified Custom Post Type. */
+        if(array_key_exists($custom_post_type, $wp_meta_boxes)){
+            /* Make a backup copy of the original Meta Boxes. */
+            $meta_box['featured_image'] = $wp_meta_boxes[$custom_post_type]['side']['low']['postimagediv'];
+
+            /* Remove the original Meta Boxes from the Custom Post Type. */
+            unset($wp_meta_boxes[$custom_post_type]['side']['low']['postimagediv']);
+
+            /* Re-label the "Featured Image" Meta Box. */
+            $meta_box['featured_image']['title'] = 'Event Cover';
+
+            /* Re-add our Meta Boxes to the Custom Post Type. */
+            $wp_meta_boxes[$custom_post_type]['side']['high']['postimagediv'] = $meta_box['featured_image'];
+        }
+
     }
 
     function ae_register_metabox_featured_event($post, $args) {
@@ -42,11 +69,15 @@ class Ajency_Events_Post_Type_Meta_Boxes extends Ajency_Events_Base {
 
         $checked = isset($event_featured) && $event_featured == 1 ? 'checked' : 0;
 
-        echo '<input type="checkbox" name="_event_featured" value="1" '.$checked.' />';
+        echo '<input type="checkbox" name="_event_featured" value="1" '.$checked.' />
+        <p>
+        If this event needs to be showcased at the top of any event lists, check this bo
+        </p>
+        ';
 
     }
 
-
+/*
     function ae_register_metabox_display_address($post, $args) {
         global $post;
         wp_nonce_field( plugin_basename( __FILE__ ), 'ae_nonce' );
@@ -54,7 +85,7 @@ class Ajency_Events_Post_Type_Meta_Boxes extends Ajency_Events_Base {
         echo 'Copy Map location : <input type="checkbox" id="copy_event_loc" checked />';
         echo '<textarea name="_event_loc_edited" id="_event_loc_edited" rows="5" cols="60" style="width:99%">'.$event_loc_edited.'</textarea>';
         echo '<a id="edit-copy_event_loc">Edit</a>';
-    }
+    }*/
 
 
     function ae_register_metabox_dates($post, $args) {
@@ -90,6 +121,7 @@ class Ajency_Events_Post_Type_Meta_Boxes extends Ajency_Events_Base {
 
         $event_loc_obj = get_post_meta( $post->ID, Ajency_Events_Constants::FIELD_LOCATION_OBJECT, true );
 
+
         $event_loc  = get_post_meta( $post->ID, Ajency_Events_Constants::FIELD_LOCATION, true );
 
         $event_loc_cordinates[Ajency_Events_Constants::FIELD_LAT]  = get_post_meta( $post->ID, Ajency_Events_Constants::FIELD_LAT, true );
@@ -104,15 +136,26 @@ class Ajency_Events_Post_Type_Meta_Boxes extends Ajency_Events_Base {
 
         $event_loc_fields = Ajency_Events_Location_Object_Fields::getConstants();
         foreach ($event_loc_fields as $field) {
-            echo '<input class="field" name="_event_loc_obj['.$field.']"  id="_event_loc_obj['.$field.']" hidden="true" value='.$event_loc_obj[$field].'></input>';
+            echo '<input class="field" name="_event_loc_obj['.$field.']"  id="_event_loc_obj['.$field.']" hidden="true" value="'.$event_loc_obj[$field].'"></input>';
         }
 
 
         $event_loc_fields = Ajency_Events_Constants::getHiddenConstants();
         foreach ($event_loc_fields as $field) {
-            echo '<input class="field" name="'.$field.'"  id="'.$field.'" hidden="true" value='.$event_loc_cordinates[$field].'></input>';
+            echo '<input class="field" name="'.$field.'"  id="'.$field.'" hidden="true" value="'.$event_loc_cordinates[$field].'"></input>';
         }
-        echo '<div id="map" style="width: 100%; height: 300px;"></div>';
+        echo '<div id="map" style="width: 100%; height: 300px;"></div><br><hr>';
+
+        $event_loc_edited = get_post_meta( $post->ID, Ajency_Events_Constants::FIELD_LOCATION_EDITED, true );
+        echo 'Copy Map location : <input type="checkbox" id="copy_event_loc" checked />';
+        echo '<textarea name="_event_loc_edited" id="_event_loc_edited" rows="5" cols="60" style="width:99%">'.$event_loc_edited.'</textarea>';
+        echo '<a id="edit-copy_event_loc">Edit</a>';
+
+/*        $event_loc_edited = get_post_meta( $post->ID, Ajency_Events_Constants::FIELD_LOCATION_EDITED, true );
+        echo 'Copy Map location : <input type="checkbox" id="copy_event_loc" checked />';
+        echo '<textarea name="_event_loc_edited" id="_event_loc_edited" rows="5" cols="60" style="width:99%">'.$event_loc_edited.'</textarea>';
+        echo '<a id="edit-copy_event_loc">Edit</a>';*/
+
     }
 
     function ae_validate_meta_box_startdate_input($startdate,$enddate){
@@ -252,7 +295,7 @@ class Ajency_Events_Post_Type_Meta_Boxes extends Ajency_Events_Base {
         add_settings_error(
             $id,
             $id,
-            __($message,'eventcodes'),
+            __($message,'ajency_events'),
             'error'
         );
         set_transient( 'ae_errors', get_settings_errors(), 30 );

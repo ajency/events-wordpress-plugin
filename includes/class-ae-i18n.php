@@ -35,7 +35,7 @@ class Ajency_Events_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'eventcodes',
+			'ajency_events',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

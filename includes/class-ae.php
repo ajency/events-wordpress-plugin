@@ -50,10 +50,11 @@ class Ajency_Events extends Ajency_Events_Base {
 		$this->define_public_hooks();
 
 
+
+        $this->load_templates();
         $this->load_dashboard();
         $this->load_shortcodes();
         $this->register_custom_post_types();
-        $this->load_templates();
 	}
 
 	/**
@@ -100,7 +101,6 @@ class Ajency_Events extends Ajency_Events_Base {
         /**
          *
          */
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/class-ae-render-template.php';
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-ae-base.php';
 
@@ -109,11 +109,11 @@ class Ajency_Events extends Ajency_Events_Base {
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ae-event-post-type-meta-boxes.php';
 
 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/common/class-ae-constants.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/common/class-ae-event-loc-object-fields.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-ae-constants.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'common/class-ae-event-loc-object-fields.php';
 
 
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'Ajency/shortcodes/class-ae-shortcode-table.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'shortcodes/class-ae-shortcode-table.php';
 
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-ae-dashboard-settings.php';
 
@@ -138,6 +138,32 @@ class Ajency_Events extends Ajency_Events_Base {
 
 	}
 
+    /**
+     * gets the current post type in the WordPress Admin
+     */
+    function get_current_post_type() {
+        global $post, $typenow, $current_screen;
+
+        //we have a post so we can just get the post type from that
+        if ( $post && $post->post_type )
+            return $post->post_type;
+
+        //check the global $typenow - set in admin.php
+        elseif( $typenow )
+            return $typenow;
+
+        //check the global $current_screen object - set in sceen.php
+        elseif( $current_screen && $current_screen->post_type )
+            return $current_screen->post_type;
+
+        //lastly check the post_type querystring
+        elseif( isset( $_REQUEST['post_type'] ) )
+            return sanitize_key( $_REQUEST['post_type'] );
+
+        //we do not know the post type!
+        return null;
+    }
+
 	/**
 	 * Register all of the hooks related to the admin area functionality
 	 * of the plugin.
@@ -147,14 +173,11 @@ class Ajency_Events extends Ajency_Events_Base {
 	 */
 	private function define_admin_hooks() {
 
-        $plugin_admin = new Ajency_Events_Admin( );
+            $plugin_admin = new Ajency_Events_Admin();
+            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles', 10,1);
+            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts', 10, 1);
 
-        if( TRUE ) {
-            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-            $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
-        }
-
-	}
+    }
 
 	/**
 	 * Register all of the hooks related to the public-facing functionality
@@ -169,6 +192,7 @@ class Ajency_Events extends Ajency_Events_Base {
 
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action( 'excerpt_more', $plugin_public, 'excerpt_read_more_link' );
 
 	}
 
@@ -206,17 +230,17 @@ class Ajency_Events extends Ajency_Events_Base {
 
         $ae_metaboxes = new Ajency_Events_Post_Type_Meta_Boxes();
         $this->loader->add_action( 'add_meta_boxes', $ae_metaboxes, 'ae_register_metaboxes' );
+        $this->loader->add_action( 'in_admin_header', $ae_metaboxes, 'ae_rename_metaboxes' ,9999 );
 
 
-        $this->loader->add_action( 'save_post', $ae_custom_post_types, 'ae_save_events_meta', 1, 2);
-        $this->loader->add_action( 'admin_notices', $ae_custom_post_types, 'ae_register_admin_notices', 1, 2);
+        $this->loader->add_action( 'save_post', $ae_metaboxes, 'ae_save_events_meta', 1, 2);
+        $this->loader->add_action( 'admin_notices', $ae_metaboxes, 'ae_register_admin_notices', 1, 2);
 
         $this->loader->add_action( 'manage_eventcode_posts_columns', $ae_custom_post_types_cols, 'ae_columns_head');
         $this->loader->add_filter( 'manage_eventcode_posts_custom_column', $ae_custom_post_types_cols, 'ae_columns_content', 10, 2);
 
         /*$this->loader->add_filter( 'manage_ae_posts_columns', $ae_custom_post_types_cols, 'ST4_columns_content', 10, 2);
         */
-
     }
 
     private function load_templates() {
@@ -225,6 +249,18 @@ class Ajency_Events extends Ajency_Events_Base {
         $this->loader->add_filter( 'single_template', $ae_templates, 'events_single_template' );
         $this->loader->add_filter( 'archive_template', $ae_templates, 'events_archive_template' );
     }
+
+
+/*    function get_custom_post_type_template( $archive_template ) {
+        global $post;
+
+        if ( is_post_type_archive ( 'eventcode' ) ) {
+            $archive_template = dirname( __FILE__ ) . '/post-type-template.php';
+            print $archive_template;
+        }
+        return $archive_template;
+    }*/
+
 
     private function load_dashboard() {
 

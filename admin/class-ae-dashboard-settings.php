@@ -23,8 +23,6 @@
 class Ajency_Events_Dashboard_Settings extends Ajency_Events_Base {
 
     public function load_dashboard_config_menu(){
-
-        include '/var/www/wp/wp-content/plugins/eventcodes/Ajency/dashboard/template-settings.php';
         add_submenu_page(
             'edit.php?post_type='.$this->custom_post_type_name,
             __( 'Event  Settings', $this->plugin_name ),

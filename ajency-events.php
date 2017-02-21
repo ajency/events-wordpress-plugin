@@ -21,7 +21,7 @@
  * Author URI:        http://ajency.in/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       eventcodes
+ * Text Domain:       ajency_events
  * Domain Path:       /languages
  */
 
@@ -34,7 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-plugin-name-activator.php
  */
-function activate_eventcodes() {
+function activate_ajency_events() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-ae-activator.php';
 	Ajency_Events_Activator::activate();
 }
@@ -43,13 +43,13 @@ function activate_eventcodes() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-plugin-name-deactivator.php
  */
-function deactivate_eventcodes() {
+function deactivate_ajency_events() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-ae-deactivator.php';
 	Ajency_Events_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_eventcodes' );
-register_deactivation_hook( __FILE__, 'deactivate_eventcodes' );
+register_activation_hook( __FILE__, 'activate_ajency_events' );
+register_deactivation_hook( __FILE__, 'deactivate_ajency_events' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -66,10 +66,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-ae.php';
  *
  * @since    1.0.0
  */
-function run_eventcodes() {
+function run_ajency_events() {
 
 	$plugin = new Ajency_Events();
 	$plugin->run();
 
 }
-run_eventcodes();
+run_ajency_events();
