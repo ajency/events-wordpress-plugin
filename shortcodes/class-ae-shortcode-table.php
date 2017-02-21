@@ -133,24 +133,26 @@ class Ajency_Events_Shortcode_Table {
         $html .= '<tbody>';
 
 
+        $ids = [];
         $posts = query_posts($query);
         foreach ($posts as $post){
             $ids[] = $post->ID;
         }
 
-       # print_r($query);
-
         //A helper function to get all the meta in all the posts
-        $post_meta = $qb->get_post_custom_multiple($ids,[
-            Ajency_Events_Constants::FIELD_FEATURED,
-            Ajency_Events_Constants::FIELD_STARTDATE,
-            Ajency_Events_Constants::FIELD_ENDDATE,
-            Ajency_Events_Constants::FIELD_LOCATION_OBJECT,
-            Ajency_Events_Constants::FIELD_LAT_EDITED,
-            Ajency_Events_Constants::FIELD_LNG_EDITED,
-            Ajency_Events_Constants::FIELD_LOCATION_EDITED
-            ]
-        );
+
+        if($ids) {
+            $post_meta = $qb->get_post_custom_multiple($ids,[
+                    Ajency_Events_Constants::FIELD_FEATURED,
+                    Ajency_Events_Constants::FIELD_STARTDATE,
+                    Ajency_Events_Constants::FIELD_ENDDATE,
+                    Ajency_Events_Constants::FIELD_LOCATION_OBJECT,
+                    Ajency_Events_Constants::FIELD_LAT_EDITED,
+                    Ajency_Events_Constants::FIELD_LNG_EDITED,
+                    Ajency_Events_Constants::FIELD_LOCATION_EDITED
+                ]
+            );
+        }
 
         $width = 100/count($fields);
 
