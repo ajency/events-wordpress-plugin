@@ -22,7 +22,7 @@
  * @link       https://ajency.in
  * @since      1.0.0
  *
- * @package    Shortcodes_Tec
+ * @package    Event_Codes
  */
 
 // If uninstall not called from WordPress, then exit.

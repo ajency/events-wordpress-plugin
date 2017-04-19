@@ -8,8 +8,8 @@
  * @link       https://ajency.in
  * @since      1.0.0
  *
- * @package    Shortcodes_Tec
- * @subpackage Shortcodes_Tec/public/partials
+ * @package    Event_Codes
+ * @subpackage Event_Codes/public/partials
  */
 ?>
 
