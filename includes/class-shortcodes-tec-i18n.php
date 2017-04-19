@@ -6,11 +6,11 @@
  * Loads and defines the internationalization files for this plugin
  * so that it is ready for translation.
  *
- * @link       http://example.com
+ * @link       https://ajency.in
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Shortcodes_Tec
+ * @subpackage Shortcodes_Tec/includes
  */
 
 /**
@@ -20,11 +20,11 @@
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    Shortcodes_Tec
+ * @subpackage Shortcodes_Tec/includes
+ * @author     Ajency.in <wp@ajency.in>
  */
-class Ajency_Events_i18n {
+class Shortcodes_Tec_i18n {
 
 
 	/**
@@ -35,7 +35,7 @@ class Ajency_Events_i18n {
 	public function load_plugin_textdomain() {
 
 		load_plugin_textdomain(
-			'ajency-events',
+			'shortcodes-tec',
 			false,
 			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
 		);

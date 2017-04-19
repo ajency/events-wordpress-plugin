@@ -3,11 +3,11 @@
 /**
  * Fired during plugin deactivation
  *
- * @link       http://example.com
+ * @link       https://ajency.in
  * @since      1.0.0
  *
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
+ * @package    Shortcodes_Tec
+ * @subpackage Shortcodes_Tec/includes
  */
 
 /**
@@ -16,11 +16,11 @@
  * This class defines all code necessary to run during the plugin's deactivation.
  *
  * @since      1.0.0
- * @package    Plugin_Name
- * @subpackage Plugin_Name/includes
- * @author     Your Name <email@example.com>
+ * @package    Shortcodes_Tec
+ * @subpackage Shortcodes_Tec/includes
+ * @author     Ajency.in <wp@ajency.in>
  */
-class Ajency_Events_Deactivator {
+class Shortcodes_Tec_Deactivator {
 
 	/**
 	 * Short Description. (use period)
