@@ -21,6 +21,7 @@
 	}
 	&__image {
 		display: block;
+		font-size: 0;
 		img {
 			width: 100%;
 		}
@@ -66,7 +67,8 @@
     	top: 15px;
     	left: -15px;
     }
-    &--basic &__price {
+    &--basic &__price,
+    &--bigdate &__price {
     	position: absolute;
     	right: 15px;
     	bottom: 15px;
@@ -75,11 +77,15 @@
     &--basic &__content {
     	padding: 15px;
     }
-    &--basic &__title {
+    &--basic &__title,
+    &--bigdate &__title,
+    &--overlay &__title {
     	margin: 0;
     	margin-bottom: 8px;
     }
-    &--basic &__desc {
+    &--basic &__desc,
+    &--bigdate &__desc,
+    &--overlay &__desc {
     	font-size: 0.9em;
     	line-height: 1.5;
     	opacity: 0.6;
@@ -104,4 +110,109 @@
     	background: #fff;
     	box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
+    &--bigdate &__date {
+    	.blackDate();
+    	position: absolute;
+    	bottom: 15px;
+    	left: 15px;
+    	font-size: 0.9em;
+    	text-align: center;
+    	width: 145px;
+    }
+    &--bigdate &__datein {
+    	font-weight: normal;
+    }
+    &--bigdate &__day {
+    	font-size: 1.8em;
+    	display: block;
+    	font-weight: bold;
+    }
+    &--bigdate &__datein > span {
+    	display: inline-block;
+    	vertical-align: middle;
+    	padding: 0 5px;
+    	line-height: 1.15;
+    	margin-bottom: 7px;
+    	// font-weight: normal;
+    }
+    &--bigdate &__time {
+    	font-size: 0.85em;
+    	opacity: 0.7;
+    }
+    @media screen and (max-width: 991px) {
+		&--bigdate &__inner {
+			height: 380px;
+		}
+	}
+	@media screen and (max-width: 780px) {
+		&--bigdate &__inner {
+			height: 335px;
+		}
+	}
+	@media screen and (max-width: 767px) {
+		&--bigdate &__inner {
+			height: auto;
+		}
+	}
+
+	// ============================
+    // overlay styles
+    // ============================
+    &--overlay &__content {
+    	padding: 25px 45px;
+    	margin-top: -75px;
+    	position: relative;
+    	z-index: 1;
+    }
+    &--overlay &__desc {
+    	padding: 25px;
+    	margin: 0 -45px;
+    }
+    &--overlay &__image {
+    	overflow: hidden;
+    	position: relative;
+    	height: 220px;
+    	background-size: cover;
+    	background-position: center;
+    	background-repeat: no-repeat;
+    	img {
+    		display: none;
+    	}
+    	&:after {
+    		content: '';
+    		position: absolute;
+    		bottom: -5px;
+    		top: auto;
+    		left: 25px;
+    		right: 25px;
+    		height: 125px;
+    		background: #fff;
+    		box-shadow: 0 0 25px rgba(0,0,0,0.15);
+    	}
+    }
+    &--overlay &__date {
+    	position: absolute;
+    	bottom: 75px;
+    	left: 45px;
+    }
+    &--overlay.aj--hastime &__date {
+    	bottom: 65px;
+    }
+    &--overlay &__time {
+    	font-size: 0.9em;
+    }
+    &--overlay &__price {
+    	position: absolute;
+    	bottom: 68px;
+    	font-size: 1.3em;
+    	right: 45px;
+    }
+    &--overlay &__inner {
+    	height: 310px;
+    }
+    @media screen and (max-width: 650px) {
+		&--overlay &__inner {
+	    	height: auto;
+	    }
+	}
 }
