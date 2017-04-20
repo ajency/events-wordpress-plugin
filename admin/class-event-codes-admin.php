@@ -100,6 +100,18 @@ class Event_Codes_Admin {
 
 	}
 
+
+	public function allowed_datasources() {
+
+		return [
+			'the-events-calendar/the-events-calendar.php' => [
+				'versions' => ['4.4.5'],
+				'install_url' =>  'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true',
+				'plugin_name' => 'The Events Calendar'
+			]
+		];
+	}
+
 	/**
 	 * Check if plugin Events Calender Exists and throw markup asking user to install the plugin
 	 *
@@ -107,10 +119,18 @@ class Event_Codes_Admin {
 	 */
 	public function check_the_event_calender() {
 
-		if ( ! is_plugin_active( 'the-events-calendar/the-events-calendar.php' ) and current_user_can( 'activate_plugins' ) ) {
-			$url = 'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true';
-			$title = __('The Events Calendar', 'eventcodes');
-			echo '<div class="error"><p>' . sprintf(__('To begin using Shortcodes for The Events Calendar, please install the latest version of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'eventcodes'), esc_url($url), $title) . '</p></div>';
+		$enabling_for = 'the-events-calendar/the-events-calendar.php';
+		$allowed_sources = $this->allowed_datasources();
+		$enabling_array = $allowed_sources[$enabling_for];
+		$plugin_data = get_plugin_data( WP_PLUGIN_DIR.'/'.$enabling_for, false, false );
+		if (current_user_can( 'activate_plugins' ) and (
+			! is_plugin_active( $enabling_for ) OR !in_array($plugin_data['Version'],$enabling_array['versions'])
+		)
+		)
+		{
+			$url = $enabling_array['install_url'];
+			$title = __($enabling_array['plugin_name'], 'eventcodes');
+			echo '<div class="error"><p>' . sprintf(__('To begin using Shortcodes for The Events Calendar, please install the versions '.implode(',',$enabling_array['versions']).' of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'eventcodes'), esc_url($url), $title) . '</p></div>';
 		}
 	}
 
