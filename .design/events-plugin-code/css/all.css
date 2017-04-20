@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 14px;
 }
 .container {
@@ -14,8 +14,8 @@ h5,
 h6 {
   font-weight: bold;
 }
-.aj-table,
-.aj-table * {
+.aj,
+.aj * {
   box-sizing: border-box;
 }
 .text-center {
@@ -195,6 +195,103 @@ h6 {
   margin: 0 -1.2em;
   padding-left: 1.2em;
   padding-right: 1.2em;
+}
+.aj-grid:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.aj-grid__single {
+  width: 33.3%;
+  padding: 0 15px;
+  float: left;
+  margin-bottom: 15px;
+}
+.aj-grid__inner {
+  height: 350px;
+}
+.aj-grid__top {
+  position: relative;
+}
+.aj-grid__image {
+  display: block;
+}
+.aj-grid__image img {
+  width: 100%;
+}
+.aj-grid__datein,
+.aj-grid__time {
+  display: block;
+}
+.aj-grid__datein {
+  font-weight: bold;
+}
+.aj-grid__address img {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 6px;
+}
+.aj-grid__price {
+  float: right;
+}
+.aj-grid__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media screen and (max-width: 991px) {
+  .aj-grid__single {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .aj-grid__single {
+    width: 100%;
+  }
+  .aj-grid__inner {
+    height: auto;
+  }
+}
+.aj-grid--basic .aj-grid__date {
+  position: absolute;
+  top: 15px;
+  left: -15px;
+}
+.aj-grid--basic .aj-grid__price {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  font-size: 1.4em;
+}
+.aj-grid--basic .aj-grid__content {
+  padding: 15px;
+}
+.aj-grid--basic .aj-grid__title {
+  margin: 0;
+  margin-bottom: 8px;
+}
+.aj-grid--basic .aj-grid__desc {
+  font-size: 0.9em;
+  line-height: 1.5;
+  opacity: 0.6;
+  margin-top: 1.2em;
+}
+.aj-grid--basic .aj-grid__datein {
+  font-size: 1.1em;
+  margin-bottom: 3px;
+}
+.aj-grid--basic .aj-grid__time {
+  font-size: 0.9em;
+}
+.aj-grid--basic .aj-grid__date {
+  background: #fff;
+  padding: 15px;
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
+}
+.aj-grid--bigdate .aj-grid__content {
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 .aj__link {
   font-size: 1.1em;
