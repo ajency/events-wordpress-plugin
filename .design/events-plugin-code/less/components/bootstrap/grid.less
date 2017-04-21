@@ -1,8 +1,8 @@
-.aj-list {
+.aj-grid {
 	// ============================
     // barebones styles
     // ============================
-    &__inner:after {
+    &:after {
     	content: '';
     	display: table;
     	clear: both;
@@ -14,12 +14,10 @@
     	margin-bottom: 15px;
     }
     &__inner {
-        position: relative;
+    	height: 350px;
     }
 	&__top {
-		// position: relative;
-        width: 25%;
-        float: left;
+		position: relative;
 	}
 	&__image {
 		display: block;
@@ -47,24 +45,18 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-    &__content {
-        float: left;
-        width: 75%;
-        padding: 15px 25px;
-    }
 	@media screen and (max-width: 991px) {
-        &__top {
-            width: 35%;
-        }
-        &__content {
-            width: 65%;
-        }
+		&__single {
+			width: 50%;
+		}
 	}
-	@media screen and (max-width: 767px) {
-        &__top, &__content {
-            width: 100%;
-            float: none;
-        }
+	@media screen and (max-width: 650px) {
+		&__single {
+			width: 100%;
+		}
+		&__inner {
+	    	height: auto;
+	    }
 	}
 
 	// ============================
@@ -79,8 +71,11 @@
     &--bigdate &__price {
     	position: absolute;
     	right: 15px;
-    	top: 15px;
+    	bottom: 15px;
     	font-size: 1.4em;
+    }
+    &--basic &__content {
+    	padding: 15px;
     }
     &--basic &__title,
     &--bigdate &__title,
