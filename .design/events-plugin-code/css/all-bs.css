@@ -155,3 +155,207 @@
   height: 4px;
   background: #414141;
 }
+.aj-grid:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+.aj-grid__single {
+  margin-bottom: 15px;
+}
+.aj-grid__inner {
+  height: 350px;
+}
+.aj-grid__top {
+  position: relative;
+}
+.aj-grid__image {
+  display: block;
+  font-size: 0;
+}
+.aj-grid__image img {
+  width: 100%;
+}
+.aj-grid__datein,
+.aj-grid__time {
+  display: block;
+}
+.aj-grid__datein {
+  font-weight: bold;
+}
+.aj-grid__address img {
+  display: inline-block;
+  vertical-align: bottom;
+  margin-right: 6px;
+}
+.aj-grid__price {
+  float: right;
+}
+.aj-grid__title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media screen and (max-width: 991px) {
+  .aj-grid__single {
+    width: 50%;
+  }
+}
+@media screen and (max-width: 650px) {
+  .aj-grid__single {
+    width: 100%;
+  }
+  .aj-grid__inner {
+    height: auto;
+  }
+}
+.aj-grid--basic .aj-grid__date {
+  position: absolute;
+  top: 15px;
+  left: -15px;
+}
+.aj-grid--basic .aj-grid__price,
+.aj-grid--bigdate .aj-grid__price {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  font-size: 1.4em;
+}
+.aj-grid--basic .aj-grid__content {
+  padding: 15px;
+}
+.aj-grid--basic .aj-grid__title,
+.aj-grid--bigdate .aj-grid__title,
+.aj-grid--overlay .aj-grid__title {
+  margin: 0;
+  margin-bottom: 8px;
+}
+.aj-grid--basic .aj-grid__desc,
+.aj-grid--bigdate .aj-grid__desc,
+.aj-grid--overlay .aj-grid__desc {
+  font-size: 0.9em;
+  line-height: 1.5;
+  opacity: 0.6;
+  margin-top: 1.2em;
+}
+.aj-grid--basic .aj-grid__datein {
+  font-size: 1.1em;
+  margin-bottom: 3px;
+}
+.aj-grid--basic .aj-grid__time {
+  font-size: 0.9em;
+}
+.aj-grid--basic .aj-grid__date {
+  background: #fff;
+  padding: 15px;
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
+}
+.aj-grid--bigdate .aj-grid__content {
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+.aj-grid--bigdate .aj-grid__date {
+  border-radius: 3px;
+  background: #414141;
+  color: #fff;
+  padding: 15px;
+  box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  font-size: 0.9em;
+  text-align: center;
+  width: 145px;
+}
+.aj-grid--bigdate .aj-grid__datein {
+  font-weight: normal;
+}
+.aj-grid--bigdate .aj-grid__day {
+  font-size: 1.8em;
+  display: block;
+  font-weight: bold;
+}
+.aj-grid--bigdate .aj-grid__datein > span {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 0 5px;
+  line-height: 1.15;
+  margin-bottom: 7px;
+}
+.aj-grid--bigdate .aj-grid__time {
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+@media screen and (max-width: 991px) {
+  .aj-grid--bigdate .aj-grid__inner {
+    height: 380px;
+  }
+}
+@media screen and (max-width: 780px) {
+  .aj-grid--bigdate .aj-grid__inner {
+    height: 335px;
+  }
+}
+@media screen and (max-width: 767px) {
+  .aj-grid--bigdate .aj-grid__inner {
+    height: auto;
+  }
+}
+.aj-grid--overlay .aj-grid__content {
+  padding: 25px 45px;
+  margin-top: -75px;
+  position: relative;
+  z-index: 1;
+}
+.aj-grid--overlay .aj-grid__desc {
+  padding: 25px;
+  margin: 0 -45px;
+}
+.aj-grid--overlay .aj-grid__image {
+  overflow: hidden;
+  position: relative;
+  height: 220px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.aj-grid--overlay .aj-grid__image img {
+  display: none;
+}
+.aj-grid--overlay .aj-grid__image:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  top: auto;
+  left: 25px;
+  right: 25px;
+  height: 125px;
+  background: #fff;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+}
+.aj-grid--overlay .aj-grid__date {
+  position: absolute;
+  bottom: 75px;
+  left: 45px;
+}
+.aj-grid--overlay.aj--hastime .aj-grid__date {
+  bottom: 65px;
+}
+.aj-grid--overlay .aj-grid__time {
+  font-size: 0.9em;
+}
+.aj-grid--overlay .aj-grid__price {
+  position: absolute;
+  bottom: 68px;
+  font-size: 1.3em;
+  right: 45px;
+}
+.aj-grid--overlay .aj-grid__inner {
+  height: 310px;
+}
+@media screen and (max-width: 650px) {
+  .aj-grid--overlay .aj-grid__inner {
+    height: auto;
+  }
+}
