@@ -15,11 +15,13 @@
     }
     &__inner {
         position: relative;
+        display: flex;
+        flex-direction: row;
     }
 	&__top {
 		// position: relative;
         width: 25%;
-        float: left;
+        // float: left;
 	}
 	&__image {
 		display: block;
@@ -48,7 +50,7 @@
 		text-overflow: ellipsis;
 	}
     &__content {
-        float: left;
+        // float: left;
         width: 75%;
         padding: 15px 25px;
     }
@@ -63,7 +65,9 @@
 	@media screen and (max-width: 767px) {
         &__top, &__content {
             width: 100%;
-            float: none;
+        }
+        &__inner {
+            flex-direction: column;
         }
 	}
 
@@ -84,13 +88,15 @@
     }
     &--basic &__title,
     &--bigdate &__title,
-    &--overlay &__title {
+    &--overlay &__title,
+    &--complete &__title {
     	margin: 0;
     	margin-bottom: 8px;
     }
     &--basic &__desc,
     &--bigdate &__desc,
-    &--overlay &__desc {
+    &--overlay &__desc,
+    &--complete &__desc {
     	font-size: 0.9em;
     	line-height: 1.5;
     	opacity: 0.6;
@@ -106,33 +112,50 @@
     &--basic &__date {
     	.whiteDate();
     }
+    @media screen and (max-width: 1199px) {
+        &--basic &__date {
+            left: 15px;
+        }
+    }
+    @media screen and (min-width: 768px) {
+        &--basic &__title,
+        &--bigdate &__title,
+        &--overlay &__title {
+            padding-right: 64px;
+        }
+    }
 
     // ============================
     // big-date styles
     // ============================
-    &--bigdate &__content {
+    &--bigdate &__content,
+    &--complete &__content {
     	padding: 15px;
     	background: #fff;
     	box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
-    &--bigdate &__date {
+    &--bigdate &__date,
+    &--complete &__date {
     	.blackDate();
     	position: absolute;
     	bottom: 15px;
-    	left: 15px;
+    	left: -15px;
     	font-size: 0.9em;
     	text-align: center;
     	width: 145px;
     }
-    &--bigdate &__datein {
+    &--bigdate &__datein,
+    &--complete &__datein {
     	font-weight: normal;
     }
-    &--bigdate &__day {
+    &--bigdate &__day,
+    &--complete &__day {
     	font-size: 1.8em;
     	display: block;
     	font-weight: bold;
     }
-    &--bigdate &__datein > span {
+    &--bigdate &__datein > span,
+    &--complete &__datein > span {
     	display: inline-block;
     	vertical-align: middle;
     	padding: 0 5px;
@@ -140,84 +163,130 @@
     	margin-bottom: 7px;
     	// font-weight: normal;
     }
-    &--bigdate &__time {
+    &--bigdate &__time,
+    &--complete &__time {
     	font-size: 0.85em;
     	opacity: 0.7;
     }
-    @media screen and (max-width: 991px) {
-		&--bigdate &__inner {
-			height: 380px;
-		}
-	}
-	@media screen and (max-width: 780px) {
-		&--bigdate &__inner {
-			height: 335px;
-		}
-	}
-	@media screen and (max-width: 767px) {
-		&--bigdate &__inner {
-			height: auto;
-		}
-	}
+    @media screen and (max-width: 1199px) {
+        &--bigdate &__date,
+        &--complete &__date {
+            left: 15px;
+            top: 15px;
+            bottom: auto;
+        }
+    }
 
 	// ============================
     // overlay styles
     // ============================
-    &--overlay &__content {
-    	padding: 25px 45px;
-    	margin-top: -75px;
-    	position: relative;
-    	z-index: 1;
-    }
-    &--overlay &__desc {
-    	padding: 25px;
-    	margin: 0 -45px;
+    &--overlay &__inner {
+    	align-items: center;
     }
     &--overlay &__image {
-    	overflow: hidden;
-    	position: relative;
-    	height: 220px;
-    	background-size: cover;
-    	background-position: center;
-    	background-repeat: no-repeat;
-    	img {
-    		display: none;
-    	}
-    	&:after {
-    		content: '';
-    		position: absolute;
-    		bottom: -5px;
-    		top: auto;
-    		left: 25px;
-    		right: 25px;
-    		height: 125px;
-    		background: #fff;
-    		box-shadow: 0 0 25px rgba(0,0,0,0.15);
-    	}
+        height: 200px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        img {
+            display: none;
+        }
+    }
+    &--overlay &__content {
+        background: #fff;
+        margin-left: -25px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     &--overlay &__date {
-    	position: absolute;
-    	bottom: 75px;
-    	left: 45px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    	// position: absolute;
+    	// bottom: 75px;
+    	// left: 45px;
+        & > span {
+            width: 50%;
+        }
     }
-    &--overlay.aj--hastime &__date {
-    	bottom: 65px;
-    }
+    // &--overlay.aj--hastime &__date {
+    // 	bottom: 65px;
+    // }
     &--overlay &__time {
     	font-size: 0.9em;
+        text-align: right;
     }
     &--overlay &__price {
     	position: absolute;
-    	bottom: 68px;
+    	bottom: 25px;
     	font-size: 1.3em;
-    	right: 45px;
+    	right: 79%;
     }
-    &--overlay &__inner {
-    	height: 310px;
+    @media screen and (max-width: 991px) {
+        &--overlay &__price {
+            right: 70%;
+        }
     }
-    @media screen and (max-width: 650px) {
-		&--overlay &__inner {
-	    	height: auto;
-	    }
-	}
+    @media screen and (max-width: 767px) {
+        &--overlay &__price {
+            right: 15px;
+            bottom: auto;
+            top: 150px;
+        }
+        &--overlay &__content {
+            margin-left: 0;
+        }
+    }
+
+    // ============================
+    // complete overlay styles
+    // ============================
+    @media screen and (min-width: 768px) {
+        &--complete &__inner {
+            display: block;
+            position: relative;
+        }
+        &--complete &__top,
+        &--complete &__content {
+            width: 100%;
+        }
+        &--complete &__title a,
+        &--complete &__desc,
+        &--complete &__address a {
+            color: #fff;
+        }
+        &--complete &__image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            img {
+                display: none;
+            }
+        }
+        &--complete &__content {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            background: transparent;
+            box-shadow: none;
+            padding-left: 35%;
+
+            /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.47+100 */
+            background: -moz-linear-gradient(left, rgba(0,0,0,0) 0%, rgba(0,0,0,0.47) 100%); /* FF3.6-15 */
+            background: -webkit-linear-gradient(left, rgba(0,0,0,0) 0%,rgba(0,0,0,0.47) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.47) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#78000000',GradientType=1 ); /* IE6-9 */
+        }
+        &--complete &__date {
+            left: 0;
+            border-radius: 0 3px 3px 0;
+            padding-left: 10px;
+            padding-right: 10px;
+            width: 140px;
+        }
+    }
 }
