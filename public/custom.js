@@ -49,23 +49,24 @@
 				//The response from the server
 				'success' : function(data) {
 
+					console.log($('#style').val());
+
 					$.ajax({
 						//The URL to process the request
-						'url' : 'http://wp.dev/wp-content/plugins/eventcodes/events/views/table-view-item-bootstrap.php',
+						'url' : 'http://wp.dev/wp-content/plugins/eventcodes/events/views/bootstrap/tabular-view-item.php',
 						//The type of request, also known as the "method" in HTML forms
 						//Can be 'GET' or 'POST'
 						'type' : 'GET',
 						//Any post-data/get-data parameters
 						//This is optional
 						'data' : {
-							'paramater1' : 'value',
-							'parameter2' : 'another value'
+							'style' : $('#style').val()
 						},
 						//The response from the server
 						'success' : function(markup) {
 							for(var i = 0; i < data.length; i ++) {
 								var markup1 = $(markup);
-								var a = markup1.find('.aj-title').find('a');
+								var a = markup1.find('.aj__data-title').find('a');
 								var event = data[i];
 								$(a[0]).text(event.title);
 								$('.aj-table').append(markup1);
