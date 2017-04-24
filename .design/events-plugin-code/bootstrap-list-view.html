@@ -1,0 +1,86 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>Ajency Events Shortcode Plugin</title>
+	<meta name="description" content="">
+	<meta name="author" content="">
+
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/all-bs.css">
+
+  	<!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+	<!-- only for styling and structuring, remove later -->
+	<div class="container">
+
+		<!--
+			L I S T
+			styles: basic / big-date / overlay
+			===================================
+			Add/replace the beolow classes to the div with class "aj-list"
+			===================================
+			class for layout: aj-list--basic / aj-list--bigdate / aj-list--overlay / aj-list--complete
+			class for price: aj--hasprice
+			class for time: aj--hastime
+			class for desc: aj--hasdesc
+		-->
+		<div class="aj">
+			<h3 class="aj__title">Upcoming Events</h3>
+			<div class="aj-list aj-list--complete aj--hastime aj--hasprice aj--hasdesc">
+				<div class="aj-list__single">
+					<div class="aj-list__inner">
+						<div class="aj-list__top">
+							<a href="#" class="aj-list__image aj__data-image" style="background-image: url(img/dummyimg.png);">
+								<img src="img/dummyimg.png" alt="">
+							</a>
+						</div>
+						<div class="aj-list__content">
+							<div class="aj__price aj-list__price pull-right">
+								<small class="aj__data-currency">&#8377;</small> <strong class="aj__data-price">35</strong>
+							</div>
+							<div class="aj-list__date">
+								<span class="aj-list__datein">
+									<span class="aj-list__start">
+										<span class="aj-list__day aj__data-daystart">16</span>
+										<span class="aj__data-daystart-month">May</span>
+									</span>
+									<span class="aj-list__div">-</span>
+									<span class="aj-list__end">
+										<span class="aj-list__day aj__data-dayend">18</span>
+										<span class="aj__data-dayend-month">May</span>
+									</span>
+								</span>
+								<span class="aj-list__time aj__data-time">09:30AM - 02:30PM</span>
+							</div>
+
+							<h4 class="aj-list__title aj__data-title"><a href="#">Serendipity Art and Culture Festival</a></h4>
+							<div class="aj__address aj-list__address aj__data-address">
+								<a href="#"><img src="img/marker.png" alt="">Kala Academy, Panjim, Goa</a>
+							</div>
+							<p class="aj-list__desc aj__data-desc">Seamlessly actualize parallel technologies and multidisciplinary technologies...</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="text-center aj-table__navi">
+				<a href="#" class="aj__link aj--loadmore">Load More</a>
+				<a href="#" class="aj__button aj--viewall btn btn-primary pull-right">View All</a>
+			</div>
+		</div>
+		<!--
+			/ E N D
+			L I S T
+		-->
+
+	</div>
+
+</body>
+</html>

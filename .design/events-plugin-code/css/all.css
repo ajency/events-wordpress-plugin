@@ -696,9 +696,6 @@
     width: 140px;
   }
 }
-.sidebar {
-  max-width: 380px;
-}
 .sidebar .aj-list__top,
 .sidebar .aj-list__content {
   width: 100%;
