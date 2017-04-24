@@ -59,9 +59,11 @@
   font-weight: bold;
   padding: .8em 1.2em;
 }
-.aj-table__name,
+.aj-table__name {
+  flex-basis: 50%;
+}
 .aj-table__address {
-  flex-basis: 40%;
+  flex-basis: 30%;
 }
 .aj-table__date {
   flex-basis: 20%;
@@ -75,7 +77,7 @@
 }
 .aj-table__price {
   float: right;
-  margin: 0 1.2em;
+  margin: 0 2em 0 1.2em;
 }
 .aj-table__navi {
   margin-top: 25px;
@@ -107,6 +109,9 @@
   }
   .aj-table__address {
     display: flex;
+  }
+  .aj-table__price {
+    margin: 0 0 0 1.2em;
   }
   .aj-table__name:before,
   .aj-table__address:before,

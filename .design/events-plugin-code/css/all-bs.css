@@ -63,7 +63,7 @@
   content: '';
 }
 .aj-table__price {
-  margin: 0 1.2em;
+  margin: 0 0 0 1.2em;
 }
 .aj-table__navi {
   margin-top: 25px;
@@ -88,6 +88,9 @@
     color: gray;
     display: inline-block;
     min-width: 25%;
+  }
+  .aj-table__price {
+    margin: 0 1.2em;
   }
   .aj-table__name:before,
   .aj-table__address:before,

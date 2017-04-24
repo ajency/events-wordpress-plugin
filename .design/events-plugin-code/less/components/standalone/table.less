@@ -37,8 +37,11 @@
       font-weight: bold;
       padding: .8em 1.2em;
    }
-   &__name, &__address {
-   	flex-basis: 40%;
+   &__name {
+      flex-basis: 50%;
+   }
+   &__address {
+   	flex-basis: 30%;
    }
    &__date {
    	flex-basis: 20%;
@@ -54,7 +57,7 @@
    &__price {
       // .defaultPrice();
       float: right;
-      margin: 0 1.2em;
+      margin: 0 2em 0 1.2em;
    }
    &__navi {
       margin-top: 25px;
@@ -89,6 +92,9 @@
       }
       &__address {
          display: flex;
+      }
+      &__price {
+         margin: 0 0 0 1.2em;
       }
       &__name:before, &__address:before, &__date:before {
          content: attr(data-display);
