@@ -87,7 +87,7 @@
   display: block;
   clear: both;
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 767px) {
   .aj-table--header {
     display: none;
   }
@@ -270,7 +270,7 @@
     width: 50%;
   }
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 767px) {
   .aj-grid__single {
     width: 100%;
   }
@@ -423,7 +423,7 @@
 .aj-grid--overlay .aj-grid__inner {
   height: 310px;
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 767px) {
   .aj-grid--overlay .aj-grid__inner {
     height: auto;
   }
