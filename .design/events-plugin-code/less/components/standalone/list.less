@@ -290,3 +290,42 @@
         }
     }
 }
+
+.sidebar {
+    max-width: 380px;
+    .aj-list {
+        &__top, &__content {
+            width: 100%;
+        }
+        &__inner {
+            flex-direction: column;
+        }
+
+        &--bigdate .aj-list__date,
+        &--complete .aj-list__date {
+            left: 15px;
+            top: 15px;
+            bottom: auto;
+        }
+
+        &--overlay .aj-list__content {
+            margin-left: 0;
+        }
+        &--overlay .aj-list__price {
+            right: 15px;
+            bottom: auto;
+            top: 150px;
+        }
+
+        &--complete .aj-list__content {
+            padding-left: 15px;
+            padding-top: 150px;
+        }
+        @media screen and (max-width: 767px) {
+            &--complete .aj-list__content {
+                padding-left: 15px;
+                padding-top: 15px;
+            }
+        }
+    }
+}
