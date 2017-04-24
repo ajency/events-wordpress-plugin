@@ -182,3 +182,45 @@
       padding-right: 1.2em;
    }
 }
+
+// in sidebar
+.sidebar {
+   .aj-table {
+      display: block;
+      &__info {
+         display: block;
+         & > div {
+           padding: .3em;
+           text-align: left;
+            &:before {
+               color: gray;
+               display: inline-block;
+               // width: 60px;
+               min-width: 25%;
+            }
+         }
+      }
+      &--header {
+         display: none;
+      }
+      &__title {
+         margin-top: 12px;
+      }
+      &__name:before, &__address:before, &__date:before {
+         content: attr(data-display);
+      }
+      &__date {
+         // white-space: normal;
+         &-wrap {
+            display: flex;
+            white-space: normal;
+            width: 75%;
+            float: right;
+            flex-direction: column;
+         }
+      }
+      &__price {
+         margin-right: 0;
+      }
+   }
+}
