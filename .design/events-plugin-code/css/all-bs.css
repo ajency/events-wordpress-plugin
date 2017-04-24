@@ -397,3 +397,7 @@
     height: auto;
   }
 }
+.sidebar .aj-grid__single {
+  width: 100%;
+  float: none;
+}
