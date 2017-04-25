@@ -5,6 +5,10 @@
 .text-center {
   text-align: center;
 }
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .aj__price {
   padding: 0.25em 0.7em;
   border-radius: 25px;
@@ -44,7 +48,7 @@
 .aj-table__info {
   display: flex;
   align-items: flex-start;
-  flex: 1;
+  flex: 0 1 auto;
   overflow: hidden;
   padding: 1.2em 1.2em;
 }
@@ -111,7 +115,7 @@
     display: flex;
   }
   .aj-table__price {
-    margin: 0 0 0 1.2em;
+    margin: -5px 0 0 1.2em;
   }
   .aj-table__name:before,
   .aj-table__address:before,
@@ -220,6 +224,9 @@
 }
 .sidebar .aj-table__price {
   margin-right: 0;
+}
+.aj-grid {
+  margin: 0 -15px;
 }
 .aj-grid:after {
   content: '';
@@ -742,4 +749,8 @@
   padding: 8px 12px;
   border-radius: 3px;
   text-decoration: none;
+}
+.aj__link {
+  display: inline-block;
+  padding: 8px 0;
 }

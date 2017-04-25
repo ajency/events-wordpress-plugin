@@ -5,6 +5,10 @@
 .text-center {
   text-align: center;
 }
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
 .aj__price {
   padding: 0.25em 0.7em;
   border-radius: 25px;
@@ -63,7 +67,7 @@
   content: '';
 }
 .aj-table__price {
-  margin: 0 0 0 1.2em;
+  margin: -5px 0 0 1.2em;
 }
 .aj-table__navi {
   margin-top: 25px;
@@ -89,9 +93,6 @@
     display: inline-block;
     min-width: 25%;
   }
-  .aj-table__price {
-    margin: 0 1.2em;
-  }
   .aj-table__name:before,
   .aj-table__address:before,
   .aj-table__date:before {
@@ -101,6 +102,9 @@
     white-space: normal;
     width: 75%;
     float: right;
+  }
+  .aj-table__address {
+    display: flex;
   }
 }
 @media screen and (max-width: 400px) {

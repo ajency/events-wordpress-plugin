@@ -21,9 +21,10 @@
       display: flex;
       // align-items: center;
       align-items: flex-start;
-      flex: 1;
+      flex: 0 1 auto;
       overflow: hidden;
       padding: 1.2em 1.2em;
+      // height: 125px;
       &:not(:last-child) {
          border-bottom: 1px solid #f1f1f1;
       }
@@ -36,6 +37,7 @@
       font-size: 0.9em;
       font-weight: bold;
       padding: .8em 1.2em;
+      // height: 40px;
    }
    &__name {
       flex-basis: 50%;
@@ -94,7 +96,7 @@
          display: flex;
       }
       &__price {
-         margin: 0 0 0 1.2em;
+         margin: -5px 0 0 1.2em;
       }
       &__name:before, &__address:before, &__date:before {
          content: attr(data-display);
