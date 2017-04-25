@@ -2,6 +2,7 @@
 	// ============================
     // barebones styles
     // ============================
+    margin: 0 -15px;
     &:after {
     	content: '';
     	display: table;
@@ -50,7 +51,7 @@
 			width: 50%;
 		}
 	}
-	@media screen and (max-width: 650px) {
+	@media screen and (max-width: 767px) {
 		&__single {
 			width: 100%;
 		}
@@ -210,9 +211,18 @@
     &--overlay &__inner {
     	height: 310px;
     }
-    @media screen and (max-width: 650px) {
+    @media screen and (max-width: 767px) {
 		&--overlay &__inner {
 	    	height: auto;
 	    }
 	}
+}
+
+.sidebar {
+    .aj-grid {
+        &__single {
+            width: 100%;
+            float: none;
+        }
+    }
 }

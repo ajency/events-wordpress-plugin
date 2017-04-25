@@ -43,7 +43,7 @@
    }
    &__price {
       // .defaultPrice();
-      margin: 0 1.2em;
+      margin: -5px 0 0 1.2em;
    }
    &__navi {
       margin-top: 25px;
@@ -72,6 +72,9 @@
             }
          }
       }
+      // &__price {
+      //    margin: 0 1.2em;
+      // }
       &__name:before, &__address:before, &__date:before {
          content: attr(data-display);
       }
@@ -81,6 +84,9 @@
             width: 75%;
             float: right;
          }
+      }
+      &__address {
+        display: flex;
       }
    }
    

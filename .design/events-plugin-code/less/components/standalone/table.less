@@ -21,9 +21,10 @@
       display: flex;
       // align-items: center;
       align-items: flex-start;
-      flex: 1;
+      flex: 1 0 auto;
       overflow: hidden;
       padding: 1.2em 1.2em;
+      // height: 125px;
       &:not(:last-child) {
          border-bottom: 1px solid #f1f1f1;
       }
@@ -36,9 +37,13 @@
       font-size: 0.9em;
       font-weight: bold;
       padding: .8em 1.2em;
+      // height: 40px;
    }
-   &__name, &__address {
-   	flex-basis: 40%;
+   &__name {
+      flex-basis: 50%;
+   }
+   &__address {
+   	flex-basis: 30%;
    }
    &__date {
    	flex-basis: 20%;
@@ -54,7 +59,7 @@
    &__price {
       // .defaultPrice();
       float: right;
-      margin: 0 1.2em;
+      margin: 0 2em 0 1.2em;
    }
    &__navi {
       margin-top: 25px;
@@ -65,7 +70,7 @@
       }
    }
    
-   @media screen and (max-width: 650px) {
+   @media screen and (max-width: 767px) {
       &--header {
          display: none;
       }
@@ -89,6 +94,9 @@
       }
       &__address {
          display: flex;
+      }
+      &__price {
+         margin: -5px 0 0 1.2em;
       }
       &__name:before, &__address:before, &__date:before {
          content: attr(data-display);
