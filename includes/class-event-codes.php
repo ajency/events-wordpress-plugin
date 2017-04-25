@@ -115,6 +115,7 @@ class Event_Codes {
 
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-shortcode.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-api.php';
 
 
 		$this->loader = new Event_Codes_Loader();
@@ -152,6 +153,7 @@ class Event_Codes {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'check_the_event_calender' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_submenu_for_shortcodes', 999 );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
 
 
 		$plugin_public = new Event_Codes_Public( $this->get_plugin_name(), $this->get_version() );
@@ -161,6 +163,8 @@ class Event_Codes {
 		$event_shortcodes = new Event_Codes_Shortcode( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'init', $event_shortcodes, 'load_shortcodes' );
 
+		$event_api = new Event_Codes_API( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'rest_api_init', $event_api, 'event_codes_api' );
 	}
 
 	/**
