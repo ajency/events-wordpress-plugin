@@ -53,6 +53,7 @@
         // float: left;
         width: 75%;
         padding: 15px 25px;
+        border: 1px solid #eee;
     }
 	@media screen and (max-width: 991px) {
         &__top {
@@ -183,6 +184,10 @@
     &--overlay &__inner {
     	align-items: center;
     }
+    &--overlay &__top {
+        margin-right: -25px;
+        width: 27%;
+    }
     &--overlay &__image {
         height: 200px;
         background-size: cover;
@@ -194,7 +199,7 @@
     }
     &--overlay &__content {
         background: #fff;
-        margin-left: -25px;
+        // margin-left: -25px;
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
     &--overlay &__date {
@@ -219,11 +224,14 @@
     	position: absolute;
     	bottom: 25px;
     	font-size: 1.3em;
-    	right: 79%;
+    	right: 77%;
     }
     @media screen and (max-width: 991px) {
         &--overlay &__price {
             right: 70%;
+        }
+        &--overlay &__top {
+            width: 38%;
         }
     }
     @media screen and (max-width: 767px) {
@@ -232,8 +240,12 @@
             bottom: auto;
             top: 150px;
         }
+        &--overlay &__top {
+            margin-right: 0;
+            width: 100%;
+        }
         &--overlay &__content {
-            margin-left: 0;
+            width: 100%;
         }
     }
 
