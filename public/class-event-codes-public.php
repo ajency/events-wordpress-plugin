@@ -45,6 +45,14 @@ class Event_Codes_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'custom.js', array( 'jquery' ), $this->version, false );
 
+		wp_localize_script(  $this->plugin_name,  'event_codes', array(
+				'root' => esc_url_raw( rest_url() ),
+				'nonce' => wp_create_nonce( 'wp_rest' ),
+				'current_user_id' => get_current_user_id(),
+				'homeUrl' => esc_url(home_url())
+			)
+		);
+
 	}
 
 }

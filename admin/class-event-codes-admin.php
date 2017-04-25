@@ -124,13 +124,13 @@ class Event_Codes_Admin {
 		$enabling_array = $allowed_sources[$enabling_for];
 		$plugin_data = get_plugin_data( WP_PLUGIN_DIR.'/'.$enabling_for, false, false );
 		if (current_user_can( 'activate_plugins' ) and (
-			! is_plugin_active( $enabling_for ) OR !in_array($plugin_data['Version'],$enabling_array['versions'])
-		)
+				! is_plugin_active( $enabling_for ) OR !in_array($plugin_data['Version'],$enabling_array['versions'])
+			)
 		)
 		{
 			$url = $enabling_array['install_url'];
-			$title = __($enabling_array['plugin_name'], 'eventcodes');
-			echo '<div class="error"><p>' . sprintf(__('To begin using Shortcodes for The Events Calendar, please install the versions '.implode(',',$enabling_array['versions']).' of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'eventcodes'), esc_url($url), $title) . '</p></div>';
+			$title = __($enabling_array['plugin_name'], 'event_codes');
+			echo '<div class="error"><p>' . sprintf(__('To begin using Shortcodes for The Events Calendar, please install the versions '.implode(',',$enabling_array['versions']).' of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'event_codes'), esc_url($url), $title) . '</p></div>';
 		}
 	}
 
@@ -142,12 +142,72 @@ class Event_Codes_Admin {
 			'Shortcodes',
 			'manage_options',
 			'event-codes',
-			array($this,'shortcodes_page_content')
+			array($this,'theme_tabs')
 		);
 	}
 
-	public function shortcodes_page_content() {
-		include dirname( __FILE__ ) . '/partials/info-page.php';
+	function theme_tabs() {
+		?>
+		<!-- Create a header in the default WordPress 'wrap' container -->
+		<div class="wrap">
+
+			<div id="icon-themes" class="icon32"></div>
+			<h2>Event Codes Theme Options</h2>
+			<!--			--><?php /*settings_errors(); */?>
+
+
+			<?php
+			if( isset( $_GET[ 'tab' ] ) ) {
+				$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'display_options';
+			} // end if
+			?>
+
+			<h2 class="nav-tab-wrapper">
+				<a href="?post_type=tribe_events&page=event-codes&tab=event_codes" class="nav-tab <?php echo $active_tab == 'event_codes' ? 'nav-tab-active' : ''; ?>">Event Codes</a>
+				<a href="?post_type=tribe_events&page=event-codes&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
+			</h2>
+
+
+			<form action='options.php' method='post'>
+				<?php
+
+				if( $active_tab == 'event_codes' ) {
+
+					include dirname( __FILE__ ) . '/partials/info-page.php';
+
+				} else {
+					settings_fields( 'event_codes_section' );
+					do_settings_sections( 'event_codes_settings' );
+					submit_button();
+				} // end if/else
+				?>
+			</form>
+
+		</div><!-- /.wrap -->
+		<?php
+	} //
+
+	function settings_init(  ) {
+		add_settings_section("event_codes_section", "Section", null, "event_codes_settings");
+		add_settings_field("event_codes_settings", "Enable Bootstrap", array($this,"template_select_checkbox_display"), "event_codes_settings", "event_codes_section");
+		register_setting("event_codes_section", "event_codes_settings");
+	}
+
+	function template_select_checkbox_display()
+	{
+		$options =  get_option('event_codes_settings');
+		?>
+		<input type="checkbox" name="event_codes_settings[template]" value="1" <?php checked(1, $options['template'], true); ?>>
+			This is awesome!!
+		</input>
+		<?php
+	}
+
+
+	function settings_section_callback(  ) {
+
+		echo __( 'This section description', 'event_codes' );
+
 	}
 
 }

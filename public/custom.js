@@ -36,7 +36,10 @@
 //Send the AJAX call to the server
 			$.ajax({
 				//The URL to process the request
-				'url' : 'http://wp.dev/wp-content/plugins/eventcodes/events/example-json.php',
+
+
+
+				'url' : event_codes.root + 'events/v1/get-events',
 				//The type of request, also known as the "method" in HTML forms
 				//Can be 'GET' or 'POST'
 				'type' : 'GET',
@@ -53,7 +56,7 @@
 
 					$.ajax({
 						//The URL to process the request
-						'url' : 'http://wp.dev/wp-content/plugins/eventcodes/events/views/bootstrap/tabular-view-item.php',
+						'url' : 'http://wp.dev/wp-content/plugins/event_codes/events/views/bootstrap/tabular-view-item.php',
 						//The type of request, also known as the "method" in HTML forms
 						//Can be 'GET' or 'POST'
 						'type' : 'GET',

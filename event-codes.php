@@ -34,7 +34,7 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-event-codes-activator.php
  */
-function activate_eventcodes() {
+function activate_event_codes() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-event-codes-activator.php';
 	Event_Codes_Activator::activate();
 }
@@ -43,13 +43,13 @@ function activate_eventcodes() {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-event-codes-deactivator.php
  */
-function deactivate_eventcodes() {
+function deactivate_event_codes() {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/class-event-codes-deactivator.php';
 	Event_Codes_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_eventcodes' );
-register_deactivation_hook( __FILE__, 'deactivate_eventcodes' );
+register_activation_hook( __FILE__, 'activate_event_codes' );
+register_deactivation_hook( __FILE__, 'deactivate_event_codes' );
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -66,8 +66,8 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-event-codes.php';
  *
  * @since    1.0.0
  */
-function run_eventcodes() {
+function run_event_codes() {
 	$plugin = new Event_Codes();
 	$plugin->run();
 }
-run_eventcodes();
+run_event_codes();

@@ -71,7 +71,10 @@ class Event_Codes_Shortcode {
         $event->setTitle('Test Event');
         $event->setVenue('Test Venue');
 
-        $template = 'bootstrap'; //boostrap, normal - fetched from option value, same value used in enqueue scripts
+
+        $options =  get_option('event_codes_settings');
+        $template = $options['template'] == 1 ? 'boostrap' : 'normal';
+
         $atts['view'] = 'tabular'; //rewrite the default for dev
 
         $event_data = [];
