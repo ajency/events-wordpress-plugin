@@ -12,7 +12,7 @@
 -->
 <div class="aj">
     <h3 class="aj__title">Upcoming Events</h3>
-        <div class="aj-table aj-table--<?php echo $atts['style']; ?> aj--hasprice aj--hastime aj--hasdesc">
+        <div id="data-<?php echo $shortcode_id; ?>" class="aj-table aj-table--<?php echo $atts['style']; ?> aj--hasprice aj--hastime aj--hasdesc">
             <div class="aj-table__info aj-table--header">
                 <div class="aj-table__name">Event Title</div>
                 <div class="aj__address aj-table__address">Location</div>
@@ -23,7 +23,9 @@
             <?php endforeach; ?>
         </div>
         <div class="text-center aj-table__navi">
-            <a href="#" class="aj__link aj--loadmore">Load More</a>
+            <a id="<?php echo $shortcode_id; ?>" href="#" class="aj__link aj--loadmore">Load More</a>
+            <input type="hidden" id="template" value="<?php echo $template; ?>" />
+            <input type="hidden" id="view" value="<?php echo $view; ?>" />
             <a href="#" class="aj__button aj--viewall">View All</a>
         </div>
 </div>

@@ -40,10 +40,6 @@ class Event_Codes_API
 
     function event_codes_api()
     {
-
-/*        'giftology/v1',
-        '/gifts/(?P<gift_id>\d+)/queue-invites',*/
-
         register_rest_route(
             'events/v1',
             '/get-events',
@@ -80,19 +76,21 @@ class Event_Codes_API
     function dummy_data() {
 
         include 'class-event-codes-event.php';
-        include '/var/www/wp/wp-content/plugins/event_codes/tests/phpunit/tests/dummy-data.php';
         $event = new Event_Codes_Event();
         $events = [];
-        foreach(get_dummy_data() as $data) {
-            $event->setCatgory(['sdfsfdsf','sdfsdfsdf','sdfsdfsdf']);
-            $event->setDescription('Seamlessly actualize parallel technologies and multidisciplinary technologies...');
-            $event->setEndDate('15 Mar');
-            $event->setStartDate('23 Feb');
-            $event->setVenue('Kala Academy, Panjim, Goa');
-            $event->setTitle('sdfsdfsdfsdf sdfsdfsdfsfd');
-            $events[] = $event->getEvent();
-
-        }
+        $event->setDescription('Seamlessly actualize parallel technologies and multidisciplinary technologies...');
+        $event->setEndDate('15 Mar');
+        $event->setStartDate('23 Feb');
+        $event->setAddress('Kala Academy, Panjim, Goa');
+        $event->setTitle('sdfsdfsdfsdf sdfsdfsdfsfd');
+        $event->setPrice(100);
+        $event->setStartDateDay(16);
+        $event->setStartDateMon('May');
+        $event->setEndDateDay(18);
+        $event->setEndDateMon('May');
+        $event->setStartTime('10:00 AM');
+        $event->setEndTime('02:00 PM');
+        $events[] = $event->getEvent();
         return $events;
     }
 }

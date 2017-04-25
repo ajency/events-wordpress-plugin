@@ -105,9 +105,9 @@ class Event_Codes_Admin {
 
 		return [
 			'the-events-calendar/the-events-calendar.php' => [
-				'versions' => ['4.4.5'],
+				'versions' => ['4.4.4'],
 				'install_url' =>  'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true',
-				'plugin_name' => 'The Events Calendar'
+				'plugin_name' => 'The Events Calendar',
 			]
 		];
 	}
@@ -117,7 +117,7 @@ class Event_Codes_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function check_the_event_calender() {
+	public function check_datasources() {
 
 		$enabling_for = 'the-events-calendar/the-events-calendar.php';
 		$allowed_sources = $this->allowed_datasources();
@@ -138,12 +138,17 @@ class Event_Codes_Admin {
 
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',
-			'Shortcodes',
-			'Shortcodes',
+			'Event Codes',
+			'Event Codes',
 			'manage_options',
 			'event-codes',
 			array($this,'theme_tabs')
 		);
+		add_action( 'admin_print_styles', array( $this, 'enqueue_submenu_styles' ) );
+	}
+
+	public function enqueue_submenu_styles() {
+		wp_enqueue_style( 'event-codes-submenu', plugin_dir_url( __FILE__ ) . 'css/event-codes-submenu.css' );
 	}
 
 	function theme_tabs() {
@@ -156,14 +161,11 @@ class Event_Codes_Admin {
 			<!--			--><?php /*settings_errors(); */?>
 
 
-			<?php
-			if( isset( $_GET[ 'tab' ] ) ) {
-				$active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'display_options';
-			} // end if
+			<?php $active_tab = isset( $_GET[ 'tab' ] ) ? $_GET[ 'tab' ] : 'about';
 			?>
 
 			<h2 class="nav-tab-wrapper">
-				<a href="?post_type=tribe_events&page=event-codes&tab=event_codes" class="nav-tab <?php echo $active_tab == 'event_codes' ? 'nav-tab-active' : ''; ?>">Event Codes</a>
+				<a href="?post_type=tribe_events&page=event-codes&tab=about" class="nav-tab <?php echo $active_tab == 'about' ? 'nav-tab-active' : ''; ?>">Event Codes</a>
 				<a href="?post_type=tribe_events&page=event-codes&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
 			</h2>
 
@@ -171,11 +173,11 @@ class Event_Codes_Admin {
 			<form action='options.php' method='post'>
 				<?php
 
-				if( $active_tab == 'event_codes' ) {
+				if( $active_tab == 'about' ) {
 
 					include dirname( __FILE__ ) . '/partials/info-page.php';
 
-				} else {
+				} else if( $active_tab == 'settings' ) {
 					settings_fields( 'event_codes_section' );
 					do_settings_sections( 'event_codes_settings' );
 					submit_button();

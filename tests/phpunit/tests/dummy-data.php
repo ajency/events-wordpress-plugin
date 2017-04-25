@@ -7,7 +7,8 @@ function get_dummy_data() {
             'start_date' => '',
             'end_date' => '',
             'price' => '',
-            'location' => '',
+            'venue' => '',
+            'description' => '',
         ],
     ];
 }

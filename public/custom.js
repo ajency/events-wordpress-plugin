@@ -31,7 +31,7 @@
 
 	jQuery(document).ready(function() {
 
-		$('#load-more').click(function(e) {
+		$('.aj--loadmore').click(function(e) {
 			e.preventDefault();
 //Send the AJAX call to the server
 			$.ajax({
@@ -46,33 +46,46 @@
 				//Any post-data/get-data parameters
 				//This is optional
 				'data' : {
-					'paramater1' : 'value',
-					'parameter2' : 'another value'
 				},
 				//The response from the server
 				'success' : function(data) {
 
-					console.log($('#style').val());
-
 					$.ajax({
 						//The URL to process the request
-						'url' : 'http://wp.dev/wp-content/plugins/event_codes/events/views/bootstrap/tabular-view-item.php',
+						'url' : event_codes.root + 'events/v1/get-template',
 						//The type of request, also known as the "method" in HTML forms
 						//Can be 'GET' or 'POST'
 						'type' : 'GET',
 						//Any post-data/get-data parameters
 						//This is optional
 						'data' : {
-							'style' : $('#style').val()
+							'template' : $('#template').val(),
+							'view' : $('#view').val()
 						},
 						//The response from the server
 						'success' : function(markup) {
 							for(var i = 0; i < data.length; i ++) {
 								var markup1 = $(markup);
-								var a = markup1.find('.aj__data-title').find('a');
+								var a_title = markup1.find('.aj__data-title').find('a');
 								var event = data[i];
-								$(a[0]).text(event.title);
-								$('.aj-table').append(markup1);
+
+								console.log(event);
+
+								$(a_title[0]).text(event.title);
+
+								var a_address = markup1.find('.aj__address').find('a');
+								$(a_address[0]).text(event.address);
+
+								markup1.find('.aj__data-price').text(event.price);
+
+								markup1.find('.aj__data-daystart').text(event.start_date_day);
+								markup1.find('.aj__data-dayend').text(event.end_date_day);
+								markup1.find('.aj__data-daystart-month').text(event.start_date_mon);
+								markup1.find('.aj__data-dayend-month').text(event.end_date_mon);
+								markup1.find('.aj__data-timestart').text(event.start_time);
+								markup1.find('.aj__data-timeend').text(event.end_time);
+
+								$('#data-' + e.target.id).append(markup1);
 							}
 						}
 					});

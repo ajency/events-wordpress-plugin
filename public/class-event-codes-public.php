@@ -36,8 +36,10 @@ class Event_Codes_Public {
 
 	public function enqueue_styles() {
 
-		//TODO Check options to determind which file to load
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'style-bootstrap.css', array(), $this->version, 'all' );
+
+		$options =  get_option('event_codes_settings');
+		$template = $options['template'] == 1 ? 'bootstrap' : 'normal';
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'style-'.$template.'.css', array(), $this->version, 'all' );
 
 	}
 

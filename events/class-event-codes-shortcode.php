@@ -44,7 +44,7 @@ class Event_Codes_Shortcode {
         $atts = shortcode_atts(
             array(
 
-                'view' => 'list',
+                'view' => 'tabular',
                 'style' => 'basic',
                 'property' => 'altgrayshade', //needs tabular to be selected
                 'showtime' => false,
@@ -64,24 +64,28 @@ class Event_Codes_Shortcode {
         //query builder etc should be in the ds folder, only returned data shoud be fecthed here in Event object $event
         require_once plugin_dir_path( dirname( __FILE__ ) ) . '/events/class-event-codes-event.php';
 
-        //Pass data to our events object
-        $event = new Event_Codes_Event();
-        $event->setEndDate(date('d-m-Y H:i:s'),time());
-        $event->setStartDate(date('d-m-Y H:i:s'),time());
-        $event->setTitle('Test Event');
-        $event->setVenue('Test Venue');
-
 
         $options =  get_option('event_codes_settings');
-        $template = $options['template'] == 1 ? 'boostrap' : 'normal';
+        $template = $options['template'] == 1 ? 'bootstrap' : 'normal';
+        $view = $atts['view'];
+        $shortcode_id = uniqid();
 
-        $atts['view'] = 'tabular'; //rewrite the default for dev
+        //TEST Data
+        for($i = 0 ; $i < $atts['count']; $i++) {
 
-        $event_data = [];
-        $event_data[] = $event->getEvent();
-        $event_data[] = $event->getEvent();
-        $event_data[] = $event->getEvent();
-        include(dirname( __FILE__ )  . '/views/'.$template.'/'.$atts['view'].'-view.php' );
+            $event = new Event_Codes_Event();
+            $event->setStartDateDay('13');
+            $event->setStartDateMon('Jan');
+            $event->setEndDateDay('15');
+            $event->setEndDateMon('Dec');
+            $event->setStartTime('2:30 PM');
+            $event->setEndTime('9:30 PM');
+            $event->setTitle('Test Event '. $i);
+            $event->setAddress('Test Line 1, test Addreess, test cpuntry');
+            $event->setPrice($i * 5);
+            $event_data[] = $event->getEvent();
+        }
+        include(dirname( __FILE__ )  . '/views/'.$template.'/'.$view.'-view.php' );
         //Call requested view and based on more selections other UI options
     }
 }
