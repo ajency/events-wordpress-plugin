@@ -58,8 +58,7 @@ wp-config-live.php
 !app/phpspec.yaml
 !app/phpunit.xml
 .tests/downloads/*
-.tests/tests
-.tests/tests/*
+
 
 #Composer
 /vendor
