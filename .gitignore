@@ -57,6 +57,7 @@ wp-config-live.php
 # PHP Testing
 !app/phpspec.yaml
 !app/phpunit.xml
+.tests
 
 #Composer
 /vendor
