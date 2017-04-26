@@ -105,11 +105,31 @@ class Event_Codes_Admin {
 
 		return [
 			'the-events-calendar/the-events-calendar.php' => [
-				'versions' => ['4.4.4'],
+				'versions' => ['4.4.4' , '4.4.3'],
 				'install_url' =>  'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true',
 				'plugin_name' => 'The Events Calendar',
 			]
 		];
+	}
+
+		/**
+	 * Check if plugin Events Calender Exists and throw markup asking user to install the plugin
+	 *
+	 * @since    1.0.0
+	 */
+	public function check_datasources($module) {
+
+		$return = [];
+		$return['success'] = true;
+		$allowed_sources = $this->allowed_datasources();
+		$enabling_array = $allowed_sources[$module];
+		$plugin_data = get_plugin_data( WP_PLUGIN_DIR.'/'.$module, false, false );
+		if (!is_plugin_active( $module ) OR (is_plugin_active( $module ) AND !in_array($plugin_data['Version'],$enabling_array['versions'])))
+		{
+			$return['success'] = false;
+		}
+		$return['data'] = $enabling_array;
+		return $return;
 	}
 
 	/**
@@ -117,24 +137,22 @@ class Event_Codes_Admin {
 	 *
 	 * @since    1.0.0
 	 */
-	public function check_datasources() {
+	public function check_datasources_admin_message() {
 
 		$enabling_for = 'the-events-calendar/the-events-calendar.php';
-		$allowed_sources = $this->allowed_datasources();
-		$enabling_array = $allowed_sources[$enabling_for];
-		$plugin_data = get_plugin_data( WP_PLUGIN_DIR.'/'.$enabling_for, false, false );
-		if (current_user_can( 'activate_plugins' ) and (
-				! is_plugin_active( $enabling_for ) OR !in_array($plugin_data['Version'],$enabling_array['versions'])
-			)
-		)
+		$enabling = $this->check_datasources($enabling_for);
+		if (!$enabling['success'])
 		{
-			$url = $enabling_array['install_url'];
-			$title = __($enabling_array['plugin_name'], 'event_codes');
-			echo '<div class="error"><p>' . sprintf(__('To begin using Event Codes, please install the versions '.implode(',',$enabling_array['versions']).' of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'event_codes'), esc_url($url), $title) . '</p></div>';
+			$url = $enabling['data']['install_url'];
+			$title = __($enabling['data']['plugin_name'], 'event_codes');
+			echo '<div class="error"><p>' . sprintf(__('To begin using Event Codes, please install <a href="%s" class="thickbox" title="%s">The Events Calendar</a>. We support versions '.implode(', ',$enabling['data']['versions']), 'event_codes'), esc_url($url), $title) . '</p></div>';
 		}
 	}
 
 	public function add_submenu_for_shortcodes() {
+
+		$enabling_for = $this->check_datasources('the-events-calendar/the-events-calendar.php');
+		if($enabling_for['success']) {
 
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',
@@ -145,6 +163,8 @@ class Event_Codes_Admin {
 			array($this,'theme_tabs')
 		);
 		add_action( 'admin_print_styles', array( $this, 'enqueue_submenu_styles' ) );
+		}
+
 	}
 
 	public function enqueue_submenu_styles() {
@@ -200,7 +220,7 @@ class Event_Codes_Admin {
 		$options =  get_option('event_codes_settings');
 		?>
 		<input type="checkbox" name="event_codes_settings[template]" value="1" <?php checked(1, $options['template'], true); ?>>
-					Check this option is your theme supports Bootstrap 3.0
+					Check this option if your theme supports Bootstrap 3.0
 		</input>
 		<?php
 	}
