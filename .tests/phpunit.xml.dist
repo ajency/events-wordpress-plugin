@@ -1,0 +1,19 @@
+<phpunit
+	bootstrap="run.php"
+	backupGlobals="false"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertNoticesToExceptions="true"
+	convertWarningsToExceptions="true"
+	>
+	<testsuites>
+		<testsuite>
+			<directory prefix="test-" suffix=".php">./ec-tests/</directory>
+		</testsuite>
+	</testsuites>
+	<php>
+		<env name="WP_VER" value="4.7"/>
+		<env name="DS" value="the-events-calendar"/>
+		<env name="DS_VER" value="4.4.4"/>
+	</php>
+</phpunit>
