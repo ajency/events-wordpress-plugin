@@ -130,7 +130,7 @@ class Event_Codes_Admin {
 		{
 			$url = $enabling_array['install_url'];
 			$title = __($enabling_array['plugin_name'], 'event_codes');
-			echo '<div class="error"><p>' . sprintf(__('To begin using Shortcodes for The Events Calendar, please install the versions '.implode(',',$enabling_array['versions']).' of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'event_codes'), esc_url($url), $title) . '</p></div>';
+			echo '<div class="error"><p>' . sprintf(__('To begin using Event Codes, please install the versions '.implode(',',$enabling_array['versions']).' of <a href="%s" class="thickbox" title="%s">The Events Calendar</a>.', 'event_codes'), esc_url($url), $title) . '</p></div>';
 		}
 	}
 
