@@ -15,9 +15,17 @@ if (!file_exists($plugin_target)) {
 	$proceed = false;
 }
 
-if($proceed) {
+$major_wp_version_explode = explode('.',getenv('WP_VER'));
+$major_wp_version = $major_wp_version_explode[0].'.'.$major_wp_version_explode[1];
 
-	$_tests_dir = './tests/phpunit';
+$_tests_dir = './tests/'.$major_wp_version.'/tests/phpunit';
+
+if (!file_exists($_tests_dir)) {
+	print 'Tests folder for '.$major_wp_version.' needs to be downloaded'."\n";
+	$proceed = false;
+}
+
+if($proceed) {
 
 // Give access to tests_add_filter() function.
 	require_once $_tests_dir . '/includes/functions.php';
@@ -45,7 +53,7 @@ if($proceed) {
 	}
 
 	register_shutdown_function('endScript');
-}/* else {
+} else {
 	die;
-}*/
+}
 
