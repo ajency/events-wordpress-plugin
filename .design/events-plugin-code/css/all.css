@@ -1,3 +1,11 @@
+.aj h1,
+.aj h2,
+.aj h3,
+.aj h4,
+.aj h5,
+.aj h6 {
+  margin: 0;
+}
 .aj,
 .aj * {
   box-sizing: border-box;
