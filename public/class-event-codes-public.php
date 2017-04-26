@@ -39,7 +39,7 @@ class Event_Codes_Public {
 
 		$options =  get_option('event_codes_settings');
 		$template = $options['template'] == 1 ? 'bootstrap' : 'normal';
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'style-'.$template.'.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/style-'.$template.'.css', array(), $this->version, 'all' );
 
 	}
 

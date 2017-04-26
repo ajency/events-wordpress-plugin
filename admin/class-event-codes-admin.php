@@ -200,16 +200,14 @@ class Event_Codes_Admin {
 		$options =  get_option('event_codes_settings');
 		?>
 		<input type="checkbox" name="event_codes_settings[template]" value="1" <?php checked(1, $options['template'], true); ?>>
-			This is awesome!!
+					Check this option is your theme supports Bootstrap 3.0
 		</input>
 		<?php
 	}
 
 
 	function settings_section_callback(  ) {
-
 		echo __( 'This section description', 'event_codes' );
-
 	}
 
 }
