@@ -152,7 +152,7 @@ class Event_Codes {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
-		$this->loader->add_action( 'admin_notices', $plugin_admin, 'check_datasources' );
+		$this->loader->add_action( 'admin_notices', $plugin_admin, 'check_datasources_admin_message' );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_submenu_for_shortcodes', 99999999999999999999999999999 );
 		$this->loader->add_action( 'admin_init', $plugin_admin, 'settings_init' );
