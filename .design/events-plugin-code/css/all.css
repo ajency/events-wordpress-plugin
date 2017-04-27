@@ -5,6 +5,7 @@
 .aj h5,
 .aj h6 {
   margin: 0;
+  clear: none;
 }
 .aj,
 .aj * {
