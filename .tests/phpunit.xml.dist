@@ -13,7 +13,7 @@
 	</testsuites>
 	<php>
 		<env name="WP_VER" value="4.7"/>
-		<env name="DS" value="the-events-calendar"/>
-		<env name="DS_VER" value="4.4.4"/>
+		<env name="PLUGIN" value="the-events-calendar"/>
+		<env name="PLUGIN_VER" value="4.4.4"/>
 	</php>
 </phpunit>

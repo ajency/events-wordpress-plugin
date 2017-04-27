@@ -120,13 +120,18 @@ class Event_Codes_Admin {
 	public function check_datasources($module) {
 
 		$return = [];
-		$return['success'] = true;
+		$return['success'] = false;
 		$allowed_sources = $this->allowed_datasources();
 		$enabling_array = $allowed_sources[$module];
-		$plugin_data = get_plugin_data( WP_PLUGIN_DIR.'/'.$module, false, false );
-		if (!is_plugin_active( $module ) OR (is_plugin_active( $module ) AND !in_array($plugin_data['Version'],$enabling_array['versions'])))
-		{
-			$return['success'] = false;
+		$module_path =  WP_PLUGIN_DIR.'/'.$module;
+		//We check if the module is in the plugins folder
+		if(file_exists($module_path)) {
+			//If so, we then check if its active and is of one of our tested versions
+			$plugin_data = get_plugin_data($module_path, false, false );
+			if (is_plugin_active( $module ) AND in_array($plugin_data['Version'],$enabling_array['versions']))
+			{
+				$return['success'] = true;
+			}
 		}
 		$return['data'] = $enabling_array;
 		return $return;
