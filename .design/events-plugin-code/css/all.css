@@ -7,6 +7,9 @@
   margin: 0;
   clear: none;
 }
+.aj h4.aj__data-title {
+  margin: 0;
+}
 .aj,
 .aj * {
   box-sizing: border-box;
@@ -68,7 +71,6 @@
   text-align: left;
 }
 .aj-table--header {
-  font-size: 0.9em;
   font-weight: bold;
   padding: .8em 1.2em;
 }
@@ -159,7 +161,6 @@
 .aj-table--basic .aj-table--header {
   background: #f6f6f6;
   border-bottom: 4px double #d8d8d8;
-  font-size: 0.9em;
 }
 .aj-table--shadow {
   border: 0;
@@ -171,7 +172,7 @@
   padding-right: 0;
 }
 .aj-table--shadow .aj-table--header {
-  font-size: 0.8em;
+  font-size: 0.9em;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: rgba(65, 65, 65, 0.6);
