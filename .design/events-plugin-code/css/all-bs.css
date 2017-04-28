@@ -725,3 +725,6 @@
     padding-top: 15px;
   }
 }
+.aj .pull-right {
+  float: right !important;
+}
