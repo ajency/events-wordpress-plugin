@@ -182,7 +182,7 @@ class Event_Codes_Admin {
 		<div class="wrap">
 
 			<div id="icon-themes" class="icon32"></div>
-			<h2>Event Codes Theme Options</h2>
+			<h2>"Event Codes - Shortcodes that work with other event plugins</h2>
 			<!--			--><?php /*settings_errors(); */?>
 
 
@@ -232,7 +232,7 @@ class Event_Codes_Admin {
 
 
 	function settings_section_callback(  ) {
-		echo __( 'This section description', 'event_codes' );
+		echo __( 'This section gives you quick access to settings that will help us make our services work better for you.', 'event_codes' );
 	}
 
 }

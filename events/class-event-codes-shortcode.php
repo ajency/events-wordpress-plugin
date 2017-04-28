@@ -70,19 +70,43 @@ class Event_Codes_Shortcode {
         $view = $atts['view'];
         $shortcode_id = uniqid();
 
+
+        $args = array(
+            'post_status' => 'publish',
+            'hide_upcoming' => false,
+            /*            'posts_per_page' => $atts['limit'],
+                        'tax_query'=> $atts['event_tax'],
+                        'meta_key' => $atts['key'],
+                        'orderby' => 'meta_value',
+                        'author' => $atts['author'],
+                        'order' => $atts['order'],*/
+        );
+
+        if(function_exists('tribe_get_events')) {
+            $posts = tribe_get_events($args);
+        } else {
+            echo "No Shortcode";
+        }
+
+/*
+        print "<pre>";
+        print_r($posts);*/
+
         //TEST Data
-        for($i = 0 ; $i < $atts['count']; $i++) {
+        foreach($posts as $post) {
 
             $event = new Event_Codes_Event();
-            $event->setStartDateDay('13');
-            $event->setStartDateMon('Jan');
-            $event->setEndDateDay('15');
-            $event->setEndDateMon('Dec');
-            $event->setStartTime('2:30 PM');
-            $event->setEndTime('9:30 PM');
-            $event->setTitle('Test Event '. $i);
+            $event_start_date = strtotime($post->EventStartDate);
+            $event_end_date = strtotime($post->EventEndDate);
+            $event->setStartDateDay(date('d',$event_start_date));
+            $event->setStartDateMon(date('M',$event_start_date));
+            $event->setEndDateDay(date('d',$event_end_date));
+            $event->setEndDateMon(date('M',$event_end_date));
+            $event->setStartTime(date('h:i A',$event_start_date));
+            $event->setEndTime(date('h:i A',$event_end_date));
+            $event->setTitle($post->post_title);
             $event->setAddress('Test Line 1, test Addreess, test cpuntry');
-            $event->setPrice($i * 5);
+            $event->setPrice(100);
             $event_data[] = $event->getEvent();
         }
         include(dirname( __FILE__ )  . '/views/'.$template.'/'.$view.'-view.php' );
