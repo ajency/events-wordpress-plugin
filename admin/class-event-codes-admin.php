@@ -182,7 +182,7 @@ class Event_Codes_Admin {
 		<div class="wrap">
 
 			<div id="icon-themes" class="icon32"></div>
-			<h2>"Event Codes - Shortcodes that work with other event plugins</h2>
+			<h2><?php echo __( 'Event Codes - Shortcodes that work with other event plugins.', 'event_codes' ); ?></h2>
 			<!--			--><?php /*settings_errors(); */?>
 
 
@@ -215,7 +215,7 @@ class Event_Codes_Admin {
 	} //
 
 	function settings_init(  ) {
-		add_settings_section("event_codes_section", "Section", null, "event_codes_settings");
+		add_settings_section("event_codes_section", "This section gives you quick access to settings that will help us make our services work better for you.", null, "event_codes_settings");
 		add_settings_field("event_codes_settings", "Enable Bootstrap", array($this,"template_select_checkbox_display"), "event_codes_settings", "event_codes_section");
 		register_setting("event_codes_section", "event_codes_settings");
 	}
@@ -232,11 +232,6 @@ class Event_Codes_Admin {
 					Check this option if your theme supports Bootstrap 3.0
 		</input>
 		<?php
-	}
-
-
-	function settings_section_callback(  ) {
-		echo __( 'This section gives you quick access to settings that will help us make our services work better for you.', 'event_codes' );
 	}
 
 }
