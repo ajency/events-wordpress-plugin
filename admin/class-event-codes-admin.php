@@ -223,6 +223,10 @@ class Event_Codes_Admin {
 	function template_select_checkbox_display()
 	{
 		$options =  get_option('event_codes_settings');
+		if(empty($options)){
+			$options = [];
+			$options['template'] = 0;
+		}
 		?>
 		<input type="checkbox" name="event_codes_settings[template]" value="1" <?php checked(1, $options['template'], true); ?>>
 					Check this option if your theme supports Bootstrap 3.0

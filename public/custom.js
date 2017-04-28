@@ -84,6 +84,7 @@
 								markup1.find('.aj__data-dayend-month').text(event.end_date_mon);
 								markup1.find('.aj__data-timestart').text(event.start_time);
 								markup1.find('.aj__data-timeend').text(event.end_time);
+								markup1.find('.aj__data-desc').text(event.description);
 
 								$('#data-' + e.target.id).append(markup1);
 							}

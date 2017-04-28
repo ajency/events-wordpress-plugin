@@ -44,8 +44,11 @@ class Event_Codes_Shortcode {
         $atts = shortcode_atts(
             array(
 
-                'view' => 'tabular',
+                'view' => 'list',
                 'style' => 'basic',
+
+
+
                 'property' => 'altgrayshade', //needs tabular to be selected
                 'showtime' => false,
                 'description' => false,
@@ -66,7 +69,23 @@ class Event_Codes_Shortcode {
 
 
         $options =  get_option('event_codes_settings');
+        if(empty($options)){
+            $options = [];
+            $options['template'] = 0;
+        }
         $template = $options['template'] == 1 ? 'bootstrap' : 'normal';
+
+        $view_allowed_values = ['list', 'tabular'];
+        if(!in_array($atts['view'],$view_allowed_values)) {
+            $atts['style'] = 'list';
+        }
+
+        $style_allowed_values = ['basic', 'shadow'];
+
+        if(!in_array($atts['style'],$style_allowed_values)) {
+            $atts['style'] = 'basic';
+        }
+
         $view = $atts['view'];
         $shortcode_id = uniqid();
 
@@ -106,6 +125,7 @@ class Event_Codes_Shortcode {
             $event->setEndTime(date('h:i A',$event_end_date));
             $event->setTitle($post->post_title);
             $event->setAddress('Test Line 1, test Addreess, test cpuntry');
+            $event->setDescription('Test Description haha, Test Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description haha sdf');
             $event->setPrice(100);
             $event_data[] = $event->getEvent();
         }
