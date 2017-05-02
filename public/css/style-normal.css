@@ -43,6 +43,7 @@
 }
 .aj-table {
   display: flex;
+  -webkit-flex: 1 0 auto;
   flex-direction: column;
   margin: 1em auto;
   max-width: 100%;
@@ -59,6 +60,7 @@
 }
 .aj-table__info {
   display: flex;
+  -webkit-flex: 1 0 auto;
   align-items: flex-start;
   flex: 1 0 auto;
   overflow: hidden;
@@ -94,6 +96,9 @@
   float: right;
   margin: 0 2em 0 1.2em;
 }
+.aj-table__price strong.aj__data-price {
+  color: #fff;
+}
 .aj-table__navi {
   margin-top: 25px;
 }
@@ -124,6 +129,12 @@
   }
   .aj-table__address {
     display: flex;
+    -webkit-flex: 1 0 auto;
+  }
+  .aj-table__address a {
+    width: 60%;
+    display: inline-block;
+    vertical-align: top;
   }
   .aj-table__price {
     margin: -5px 0 0 1.2em;
@@ -135,6 +146,7 @@
   }
   .aj-table__date-wrap {
     display: flex;
+    -webkit-flex: 1 0 auto;
     white-space: normal;
     width: 75%;
     float: right;
@@ -227,6 +239,7 @@
 }
 .sidebar .aj-table__date-wrap {
   display: flex;
+  -webkit-flex: 1 0 auto;
   white-space: normal;
   width: 75%;
   float: right;

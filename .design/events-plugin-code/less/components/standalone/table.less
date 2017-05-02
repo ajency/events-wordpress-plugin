@@ -4,6 +4,7 @@
    // barebones styles
    // ============================
    display: flex;
+   -webkit-flex:1 0 auto;
    flex-direction: column;
    margin: 1em auto;
    max-width: 100%;
@@ -19,6 +20,7 @@
    }
    &__info {
       display: flex;
+      -webkit-flex:1 0 auto;
       // align-items: center;
       align-items: flex-start;
       flex: 1 0 auto;
@@ -60,6 +62,9 @@
       // .defaultPrice();
       float: right;
       margin: 0 2em 0 1.2em;
+      strong.aj__data-price {
+         color: #fff;
+      }
    }
    &__navi {
       margin-top: 25px;
@@ -94,6 +99,12 @@
       }
       &__address {
          display: flex;
+         -webkit-flex:1 0 auto;
+         a {
+            width: 60%;
+            display: inline-block;
+            vertical-align: top;
+         }
       }
       &__price {
          margin: -5px 0 0 1.2em;
@@ -105,6 +116,7 @@
          // white-space: normal;
          &-wrap {
             display: flex;
+            -webkit-flex:1 0 auto;
             white-space: normal;
             width: 75%;
             float: right;
@@ -221,6 +233,7 @@
          // white-space: normal;
          &-wrap {
             display: flex;
+            -webkit-flex:1 0 auto;
             white-space: normal;
             width: 75%;
             float: right;
