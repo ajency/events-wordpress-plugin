@@ -44,92 +44,44 @@ class Event_Codes_Shortcode {
         $atts = shortcode_atts(
             array(
 
-                'view' => 'list',
+                'view' => 'tabular',
                 'style' => 'basic',
-
-
-
-                'property' => 'altgrayshade', //needs tabular to be selected
+                'count' => 2,
+                'offset' => 0,
                 'showtime' => false,
                 'description' => false,
-                'count' => 5,
-                'offset' => 0,
-                'cat' => [],
-                'tag' => [],
-                'past' => false,
-                'featured' => false,
+
+                //TODO
+                /*
+                 'past' => false,
+                 'featured' => false,
+                 'property' => 'altgrayshade', //needs tabular to be selected
+                 'cat' => [],
+                 'tag' => [],*/
 
             ), $atts, 'event_codes'
         );
 
-        //include the datasource, base on config option
-        //pass all filters to the data source
-        //query builder etc should be in the ds folder, only returned data shoud be fecthed here in Event object $event
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . '/events/class-event-codes-event.php';
-
-
+        //Provide additional atts that are required
         $options =  get_option('event_codes_settings');
         if(empty($options)){
             $options = [];
             $options['template'] = 0;
         }
         $template = $options['template'] == 1 ? 'bootstrap' : 'normal';
-
-        $view_allowed_values = ['list', 'tabular'];
-        if(!in_array($atts['view'],$view_allowed_values)) {
-            $atts['style'] = 'list';
-        }
-
-        $style_allowed_values = ['basic', 'shadow'];
-
-        if(!in_array($atts['style'],$style_allowed_values)) {
-            $atts['style'] = 'basic';
-        }
-
-        $view = $atts['view'];
-        $shortcode_id = uniqid();
+        $atts['template'] = $template;
 
 
-        $args = array(
-            'post_status' => 'publish',
-            'hide_upcoming' => false,
-            /*            'posts_per_page' => $atts['limit'],
-                        'tax_query'=> $atts['event_tax'],
-                        'meta_key' => $atts['key'],
-                        'orderby' => 'meta_value',
-                        'author' => $atts['author'],
-                        'order' => $atts['order'],*/
-        );
+        $ds = new Event_Codes_Datasource();
+        $ds->renderShortcodeMarkupAndData($atts);
 
-        if(function_exists('tribe_get_events')) {
-            $posts = tribe_get_events($args);
-        } else {
-            echo "No Shortcode";
-        }
-
-/*
-        print "<pre>";
-        print_r($posts);*/
-
-        //TEST Data
-        foreach($posts as $post) {
-
-            $event = new Event_Codes_Event();
-            $event_start_date = strtotime($post->EventStartDate);
-            $event_end_date = strtotime($post->EventEndDate);
-            $event->setStartDateDay(date('d',$event_start_date));
-            $event->setStartDateMon(date('M',$event_start_date));
-            $event->setEndDateDay(date('d',$event_end_date));
-            $event->setEndDateMon(date('M',$event_end_date));
-            $event->setStartTime(date('h:i A',$event_start_date));
-            $event->setEndTime(date('h:i A',$event_end_date));
-            $event->setTitle($post->post_title);
-            $event->setAddress('Test Line 1, test Addreess, test cpuntry');
-            $event->setDescription('Test Description haha, Test Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description hahaTest Description haha sdf');
-            $event->setPrice(100);
-            $event_data[] = $event->getEvent();
-        }
-        include(dirname( __FILE__ )  . '/views/'.$template.'/'.$view.'-view.php' );
         //Call requested view and based on more selections other UI options
     }
+
+
+    //TODO
+    //1 - Excerpt limit
+    //showtime and desription
+    //diff tests for all those combos
+    //removing load more and view more
 }

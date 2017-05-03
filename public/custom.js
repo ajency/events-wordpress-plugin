@@ -33,63 +33,45 @@
 
 		$('.aj--loadmore').click(function(e) {
 			e.preventDefault();
+
+			var str_query = '?';
+			$("input:hidden.sc-params-"+e.target.id).each(function() {
+				str_query = str_query + $(this).attr('name') + "=" + $(this).attr('value') + "&";
+			});
+
+			$('#form-' + e.target.id).serializeArray().map(function(x){sc_params[x.name] = x.value;});
+
+			if(event_codes.api_ver == 1) {
+				var url = event_codes.root;
+				sc_params.action = 'get_api_data';
+			} else {
+				var url = event_codes.root + 'events/v1/get-more-events';
+			}
+
 //Send the AJAX call to the server
 			$.ajax({
 				//The URL to process the request
-
-
-
-				'url' : event_codes.root + 'events/v1/get-events',
+				'url' : url + str_query,
 				//The type of request, also known as the "method" in HTML forms
 				//Can be 'GET' or 'POST'
 				'type' : 'GET',
 				//Any post-data/get-data parameters
 				//This is optional
-				'data' : {
-				},
+				'data' : {},
 				//The response from the server
 				'success' : function(data) {
+					console.log(data);
 
-					$.ajax({
-						//The URL to process the request
-						'url' : event_codes.root + 'events/v1/get-template',
-						//The type of request, also known as the "method" in HTML forms
-						//Can be 'GET' or 'POST'
-						'type' : 'GET',
-						//Any post-data/get-data parameters
-						//This is optional
-						'data' : {
-							'template' : $('#template').val(),
-							'view' : $('#view').val()
-						},
-						//The response from the server
-						'success' : function(markup) {
-							for(var i = 0; i < data.length; i ++) {
-								var markup1 = $(markup);
-								var a_title = markup1.find('.aj__data-title').find('a');
-								var event = data[i];
-
-								console.log(event);
-
-								$(a_title[0]).text(event.title);
-
-								var a_address = markup1.find('.aj__address').find('a');
-								$(a_address[0]).text(event.address);
-
-								markup1.find('.aj__data-price').text(event.price);
-
-								markup1.find('.aj__data-daystart').text(event.start_date_day);
-								markup1.find('.aj__data-dayend').text(event.end_date_day);
-								markup1.find('.aj__data-daystart-month').text(event.start_date_mon);
-								markup1.find('.aj__data-dayend-month').text(event.end_date_mon);
-								markup1.find('.aj__data-timestart').text(event.start_time);
-								markup1.find('.aj__data-timeend').text(event.end_time);
-								markup1.find('.aj__data-desc').text(event.description);
-
-								$('#data-' + e.target.id).append(markup1);
-							}
-						}
+					var markup1 = $(data.markup);
+					$('#data-' + e.target.id).append(markup1);
+					$.each( data.atts, function( key, value ) {
+						$("input.sc-params-"+ e.target.id+"[name='"+key+"']").val(value);
 					});
+					console.log(+data.atts.count + +data.atts.offset);
+					console.log(data.results_count);
+					if(data.results_count < (+data.atts.count + +data.atts.offset)) {
+						$('#'+e.target.id).remove();
+					}
 				}
 			});
 		});

@@ -4,7 +4,7 @@
     ===================================
     Add/replace the beolow classes to the div with class "aj-table"
     ===================================
-    class for layout: aj-table--basic / aj-table--shadow
+    class for view: aj-table--basic / aj-table--shadow
     class for alt row grey: aj-table--alternate
     class for price: aj--hasprice
     class for time: aj--hastime
@@ -12,22 +12,25 @@
 -->
 <div class="aj">
     <h3 class="aj__title">Upcoming Events</h3>
-        <div id="data-<?php echo $shortcode_id; ?>" class="aj-table aj-table--<?php echo $atts['style']; ?> aj--hasprice aj--hastime aj--hasdesc">
-            <div class="aj-table__info aj-table--header">
-                <div class="aj-table__name">Event Title</div>
-                <div class="aj__address aj-table__address">Location</div>
-                <div class="aj-table__date">Date</div>
-            </div>
-            <?php foreach($event_data as $event) : ?>
-                <?php include(dirname( __FILE__ )  . '/tabular-view-item.php' ); ?>
-            <?php endforeach; ?>
+    <div id="data-<?php echo $shortcode_id; ?>" class="aj-table aj-table--<?php echo $atts['style']; ?> aj--hasprice aj--hastime aj--hasdesc">
+        <div class="aj-table__info aj-table--header row">
+            <div class="aj-table__name">Event Title</div>
+            <div class="aj__address aj-table__address">Location</div>
+            <div class="aj-table__date">Date</div>
         </div>
-        <div class="text-center aj-table__navi">
-            <a id="<?php echo $shortcode_id; ?>" href="#" class="aj__link aj--loadmore">Load More</a>
-            <input type="hidden" id="template" value="<?php echo $template; ?>" />
-            <input type="hidden" id="view" value="<?php echo $view; ?>" />
-            <a href="#" class="aj__button aj--viewall">View All</a>
-        </div>
+        <?php foreach($event_data['events'] as $event) : ?>
+            <?php include(dirname( __FILE__ )  . '/tabular-view-item.php' ); ?>
+        <?php endforeach; ?>
+    </div>
+    <div class="text-center aj-table__navi">
+        <?php if($atts['count'] < $event_data['count']) : ?>
+        <a id="<?php echo $shortcode_id; ?>" href="" class="aj__link aj--loadmore">Load More</a>
+        <?php endif; ?>
+        <a href="#" class="aj__button aj--viewall">View All</a>
+        <?php foreach($atts as $key => $value) : ?>
+            <input type="hidden" class="sc-params-<?php echo $shortcode_id; ?>" name="<?php echo $key; ?>" value="<?php echo $value; ?>" />
+        <?php endforeach; ?>
+    </div>
 </div>
 <!--
     / E N D

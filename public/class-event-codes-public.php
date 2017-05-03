@@ -50,13 +50,25 @@ class Event_Codes_Public {
 	public function enqueue_scripts() {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'custom.js', array( 'jquery' ), $this->version, false );
+		$data = $this->construct_local_js_object();
+		wp_localize_script(  $this->plugin_name,  'event_codes',$data);
+	}
 
-		wp_localize_script(  $this->plugin_name,  'event_codes', array(
-				'root' => esc_url_raw( rest_url() ),
-				'nonce' => wp_create_nonce( 'wp_rest' ),
-				'current_user_id' => get_current_user_id(),
-				'homeUrl' => esc_url(home_url())
-			)
+	public function construct_local_js_object() {
+
+		if(function_exists('rest_url')) {
+			$root = esc_url_raw( rest_url());
+			$api_ver = 2;
+		} else {
+			$root = admin_url( 'admin-ajax.php' );
+			$api_ver = 1;
+		}
+		return array(
+			'api_ver' => $api_ver,
+			'root' => $root ,
+/*			'nonce' => wp_create_nonce( 'wp_rest' ),
+			'current_user_id' => get_current_user_id(),
+			'homeUrl' => esc_url(home_url())*/
 		);
 
 	}

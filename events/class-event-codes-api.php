@@ -45,7 +45,7 @@ class Event_Codes_API
             '/get-events',
             array(
                 'methods' => 'GET',
-                'callback' => array($this,'dummy_data'),
+                'callback' => array($this,'get_events'),
                 'permission_callback' => function () {
                     return true;
                 }
@@ -65,6 +65,35 @@ class Event_Codes_API
 
             )
         );
+
+        register_rest_route(
+            'events/v1',
+            '/get-more-events',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this,'get_more_events'),
+                'permission_callback' => function () {
+                    return true;
+                }
+
+            )
+        );
+    }
+
+    function get_more_events($request_data) {
+
+        $atts = $request_data->get_params();
+        $ds = new Event_Codes_Datasource();
+        $atts['offset'] = 0;
+        $atts['offset'] = $atts['offset'] + $atts['count'];
+        $event_data = $ds->getEventData($atts);
+        ob_start();
+        $ds->renderLoadMoreMarkupAndData($event_data['events'],$atts);
+        $data['markup'] = ob_get_clean();
+        $data['atts'] = $atts;
+        $data['results_count'] = $event_data['count'];
+        return $data;
+
     }
 
     function get_template($request_data) {
@@ -73,9 +102,22 @@ class Event_Codes_API
         return file_get_contents(dirname( __FILE__ )  .'/views/'.$parameters['template'].'/'.$parameters['view'].'-view-item.php' );
     }
 
-    function dummy_data() {
+    function get_events($request_data) {
+        $atts = $request_data->get_params();
+        $data = new Event_Codes_Datasource();
+        $atts['offset'] = $atts['offset'] + $atts['count'];
+        $d['event_data'] = $data->getEventData($atts);
+        $d['atts'] = $atts;
+        if(function_exists('rest_url')) {
+            return $d;
+        } else {
+            print_r($d);
+            wp_die();
+        }
+    }
 
-        include 'class-event-codes-event.php';
+    function dummy_data_object() {
+
         $event = new Event_Codes_Event();
         $events = [];
         $event->setDescription('Seamlessly actualize parallel technologies and multidisciplinary technologies...');

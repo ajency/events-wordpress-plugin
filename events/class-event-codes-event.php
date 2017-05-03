@@ -3,6 +3,7 @@
 class Event_Codes_Event {
 
 	private $title;
+	private $title_link;
 	private $start_date;
 	private $end_date;
 	private $start_time;
@@ -19,8 +20,11 @@ class Event_Codes_Event {
 	private $end_date_min;
 	private $city;
 	private $address;
+	private $address_link;
 	private $venue;
 	private $price;
+	private $currency;
+	private $currency_position;
 	private $description;
 	private $organizer;
 	private $tags;
@@ -50,6 +54,111 @@ class Event_Codes_Event {
 		if (ObjectHelper::existsMethod($this,$name))
 			$this->$name($value);
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getTitleLink()
+	{
+		return $this->title_link;
+	}
+
+	/**
+	 * @param mixed $title_link
+	 */
+	public function setTitleLink($title_link)
+	{
+		$this->title_link = $title_link;
+	}
+
+
+
+	public function setDates($event_start_date,$event_end_date,$all_day = false, $showtime = true){
+		$startDateDay = date('d',$event_start_date);
+		$startDateMon = date('M',$event_start_date);
+		$endDateDay = date('d',$event_end_date);
+		$endDateMon = date('M',$event_end_date);
+		$startTime = $showtime == true ? date('h:i A',$event_start_date) : false;
+		$endTime = $showtime == true ? date('h:i A',$event_end_date) : false;
+
+		//If its an all day event show only the day
+		if ($all_day) {
+
+			$startTime = false;
+			$endTime = false;
+		}
+
+		//If start date and end date is the same
+		if(strtotime(date('d-M-Y',$event_start_date)) == strtotime(date('d-M-Y',$event_end_date))) {
+			$endDateDay = false;
+			$endDateMon = false;
+
+		}
+
+		$this->setStartDateDay($startDateDay);
+		$this->setStartDateMon($startDateMon);
+		$this->setEndDateDay($endDateDay);
+		$this->setEndDateMon($endDateMon);
+		$this->setStartTime($startTime);
+		$this->setEndTime($endTime);
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCurrency()
+	{
+		return $this->currency;
+	}
+
+	/**
+	 * @param mixed $currency
+	 */
+	public function setCurrency($currency)
+	{
+		$this->currency = $currency;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCurrencyPosition()
+	{
+		return $this->currency_position;
+	}
+
+	/**
+	 * @param mixed $currency_position
+	 */
+	public function setCurrencyPosition($currency_position)
+	{
+		$this->currency_position = $currency_position;
+	}
+
+
+
+
+	/**
+	 * @return mixed
+	 */
+	public function getAddressLink()
+	{
+		return $this->address_link;
+	}
+
+	/**
+	 * @param mixed $address_link
+	 */
+	public function setAddressLink($points,$show_link = true)
+	{
+		if($show_link && $points['lat'] && $points['lng']) {
+			$this->address_link = 'http://maps.google.com/?q='.$points['lat'].','.$points['lng'];
+		} else {
+			$this->address_link = false;
+		}
+	}
+
+
 
 	/**
 	 * @return mixed
@@ -256,10 +365,17 @@ class Event_Codes_Event {
 	 */
 	public function setAddress($address)
 	{
-		$this->address = $address;
+		if(!array_filter($address))
+		{
+			$this->address = 'Not Provided';
+		} else {
+			if(is_array($address)) {
+				$this->address = implode(', ',$address);
+			} else {
+				$this->address = $address;
+			}
+		}
 	}
-
-
 
 	/**
 	 * @return mixed
@@ -368,9 +484,13 @@ class Event_Codes_Event {
 	/**
 	 * @param mixed $description
 	 */
-	public function setDescription($description)
+	public function setDescription($description,$set_description = true)
 	{
-		$this->description = $description;
+		if($set_description) {
+			$this->description = $description;
+		} else {
+			$this->description = false;
+		}
 	}
 
 	/**

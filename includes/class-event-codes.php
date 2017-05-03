@@ -116,6 +116,9 @@ class Event_Codes {
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-shortcode.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-api.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-event.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/datasource.php';
 
 
 		$this->loader = new Event_Codes_Loader();
@@ -167,6 +170,11 @@ class Event_Codes {
 
 		$event_api = new Event_Codes_API( $this->get_plugin_name(), $this->get_version() );
 		$this->loader->add_action( 'rest_api_init', $event_api, 'event_codes_api' );
+
+#		if(!function_exists('rest_url')) {
+			//Additional admin-ajax actions for depricated versions
+			$this->loader->add_action( 'wp_ajax_dummy_data', $event_api, 'dummy_data' );
+#		}
 	}
 
 	/**
