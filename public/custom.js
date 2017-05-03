@@ -39,7 +39,6 @@
 				str_query = str_query + $(this).attr('name') + "=" + $(this).attr('value') + "&";
 			});
 
-			$('#form-' + e.target.id).serializeArray().map(function(x){sc_params[x.name] = x.value;});
 
 			if(event_codes.api_ver == 1) {
 				var url = event_codes.root;

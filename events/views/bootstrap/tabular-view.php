@@ -25,14 +25,12 @@
         <div class="text-center aj-table__navi">
             <?php if($atts['count'] < $event_data['count']) : ?>
             <a id="<?php echo $shortcode_id; ?>" href="" class="aj__link aj--loadmore">Load More</a>
-            <a href="#" class="aj__button aj--viewall btn btn-primary pull-right">View All</a>
             <?php endif; ?>
+            <a href="#" class="aj__button aj--viewall btn btn-primary pull-right">View All</a>
+            <?php foreach($atts as $key => $value) : ?>
+                <input type="hidden" class="sc-params-<?php echo $shortcode_id; ?>" name="<?php echo $key; ?>" value="<?php echo $value; ?>" />
+            <?php endforeach; ?>
         </div>
-    <form id="form-<?php echo $shortcode_id; ?>">
-        <?php foreach($atts as $key => $value) : ?>
-            <input type="hidden" name="<?php echo $key; ?>" value="<?php echo $value; ?>" />
-        <?php endforeach; ?>
-    </form>
 </div>
 <!--
     / E N D

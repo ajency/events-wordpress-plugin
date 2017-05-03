@@ -12,7 +12,9 @@
                         </span>
 		<?php endif; ?>
 		<h4 class="aj-table__title aj__data-title"><a href="<?php echo $event['title_link']; ?>"><?php echo $event['title']; ?></a></h4>
+		<?php if($event['description']): ?>
 		<p class="aj-table__desc aj__data-desc"><?php echo $event['description']; ?></p>
+		<?php endif; ?>
 	</div>
 	<div data-display="Location" class="aj__address aj-table__address aj__data-address">
 		<?php if($event['address_link']): ?>
