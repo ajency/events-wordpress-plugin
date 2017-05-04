@@ -84,7 +84,6 @@ class Event_Codes_API
 
         $atts = $request_data->get_params();
         $ds = new Event_Codes_Datasource();
-        $atts['offset'] = 0;
         $atts['offset'] = $atts['offset'] + $atts['count'];
         $event_data = $ds->getEventData($atts);
         ob_start();

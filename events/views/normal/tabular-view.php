@@ -27,10 +27,12 @@
         <a id="<?php echo $shortcode_id; ?>" href="" class="aj__link aj--loadmore">Load More</a>
         <?php endif; ?>
         <a href="#" class="aj__button aj--viewall">View All</a>
-        <?php foreach($atts as $key => $value) : ?>
-            <input type="hidden" class="sc-params-<?php echo $shortcode_id; ?>" name="<?php echo $key; ?>" value="<?php echo $value; ?>" />
-        <?php endforeach; ?>
     </div>
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var event_codes_sc_atts_<?php echo $shortcode_id; ?> = <?php print json_encode($atts); ?>;
+        /* ]]> */
+    </script>
 </div>
 <!--
     / E N D

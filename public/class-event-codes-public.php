@@ -43,15 +43,15 @@ class Event_Codes_Public {
 			$options['template'] = 0;
 		}
 		$template = $options['template'] == 1 ? 'bootstrap' : 'normal';
-		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/style-'.$template.'.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'event_codes', plugin_dir_url( __FILE__ ) . 'css/style-'.$template.'.css', array(), $this->version, 'all' );
 
 	}
 
 	public function enqueue_scripts() {
 
-		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'custom.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( 'event_codes', plugin_dir_url( __FILE__ ) . 'custom.js', array( 'jquery' ), $this->version, false );
 		$data = $this->construct_local_js_object();
-		wp_localize_script(  $this->plugin_name,  'event_codes',$data);
+		wp_localize_script( 'event_codes',  'event_codes',$data);
 	}
 
 	public function construct_local_js_object() {

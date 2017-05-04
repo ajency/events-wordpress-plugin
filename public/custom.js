@@ -33,12 +33,7 @@
 
 		$('.aj--loadmore').click(function(e) {
 			e.preventDefault();
-
-			var str_query = '?';
-			$("input:hidden.sc-params-"+e.target.id).each(function() {
-				str_query = str_query + $(this).attr('name') + "=" + $(this).attr('value') + "&";
-			});
-
+			var sc_params = window['event_codes_sc_atts_'+e.target.id]
 
 			if(event_codes.api_ver == 1) {
 				var url = event_codes.root;
@@ -50,24 +45,23 @@
 //Send the AJAX call to the server
 			$.ajax({
 				//The URL to process the request
-				'url' : url + str_query,
+				'url' : url,
 				//The type of request, also known as the "method" in HTML forms
 				//Can be 'GET' or 'POST'
 				'type' : 'GET',
 				//Any post-data/get-data parameters
 				//This is optional
-				'data' : {},
+				'data' : sc_params,
 				//The response from the server
 				'success' : function(data) {
 					console.log(data);
 
 					var markup1 = $(data.markup);
 					$('#data-' + e.target.id).append(markup1);
-					$.each( data.atts, function( key, value ) {
-						$("input.sc-params-"+ e.target.id+"[name='"+key+"']").val(value);
-					});
-					console.log(+data.atts.count + +data.atts.offset);
-					console.log(data.results_count);
+					window['event_codes_sc_atts_'+e.target.id] = data.atts;
+
+/*					console.log(+data.atts.count + +data.atts.offset);
+					console.log(data.results_count);*/
 					if(data.results_count < (+data.atts.count + +data.atts.offset)) {
 						$('#'+e.target.id).remove();
 					}
