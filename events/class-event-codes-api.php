@@ -83,6 +83,11 @@ class Event_Codes_API
     function get_more_events($request_data) {
 
         $atts = $request_data->get_params();
+        foreach($atts as $k => $v){
+            if($v == "false"){
+                $atts[$k] = false;
+            }
+        }
         $ds = new Event_Codes_Datasource();
         $atts['offset'] = $atts['offset'] + $atts['count'];
         $event_data = $ds->getEventData($atts);

@@ -8,9 +8,6 @@ class Event_Codes_Datasource {
      * Function that returns only data for a given argument set, this is the meat of it all
      */
     public function getEventData($atts) {
-
-
-
         //pass all filters to the data source
         //query builder etc should be in the ds folder, only returned data shoud be fecthed here in Event object $event
 

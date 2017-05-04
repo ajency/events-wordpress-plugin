@@ -46,7 +46,7 @@ class Event_Codes_Shortcode {
 
                 'view' => 'tabular',
                 'style' => 'basic',
-                'count' => 2,
+                'count' => 5,
                 'offset' => 0,
                 'showtime' => false,
                 'description' => false,

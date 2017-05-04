@@ -31,6 +31,7 @@ class Event_Codes_The_Events_Calender_4_4 {
 
             $events[] = $event->getEvent();
         }
+        wp_reset_query();
         $response = [];
         $response['events'] = $events;
         if($include_count) {
