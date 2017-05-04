@@ -50,12 +50,12 @@ class Event_Codes_Shortcode {
                 'offset' => 0,
                 'showtime' => false,
                 'description' => false,
+                'row' => false,
+                'past' => false,
+                'featured' => false,
 
                 //TODO
                 /*
-                 'past' => false,
-                 'featured' => false,
-                 'property' => 'altgrayshade', //needs tabular to be selected
                  'cat' => [],
                  'tag' => [],*/
 

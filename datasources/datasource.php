@@ -32,6 +32,32 @@ class Event_Codes_Datasource {
                 */
 
         //these aregs are specific to events calender
+
+        $meta_query = [];
+        /*if($atts['past']) {
+            $meta_query['range_query'] = array(
+                'key' => '_EventStartDate', // Check the start date field
+                'value' => date("Y-m-d"), // Set today's date (note the similar format)
+                'compare' => '<', // Return the ones greater than today's date
+                'type' => 'DATE' // Let WordPress know we're working with date
+            );
+        } else {
+            $meta_query['range_query'] = array(
+                'key' => '_EventStartDate', // Check the start date field
+                'value' => date("Y-m-d"), // Set today's date (note the similar format)
+                'compare' => '>=', // Return the ones greater than today's date
+                'type' => 'DATE' // Let WordPress know we're working with date
+            );
+        }*/
+
+        if($atts['featured']) {
+            $meta_query['featured_query'] = array(
+                'key' => '_tribe_featured', // Check the start date field
+                'value' => 1, // Set today's date (note the similar format)
+                'compare' => '=', // Return the ones greater than today's date
+            );
+        }
+
         $args = array(
             'post_status' => 'publish',
             'hide_upcoming' => false,
@@ -40,14 +66,7 @@ class Event_Codes_Datasource {
             'meta_key' => '_EventStartDate',
             'orderby' => 'meta_value',
             'order' => 'ASC',
-            'meta_query' => array( // WordPress has all the results, now, return only the events after today's date
-                array(
-                    'key' => '_EventStartDate', // Check the start date field
-                    'value' => date("Y-m-d"), // Set today's date (note the similar format)
-                    'compare' => '>=', // Return the ones greater than today's date
-                    'type' => 'DATE' // Let WordPress know we're working with date
-                )
-            ),
+            'meta_query' => $meta_query,
             'eventDisplay' => 'list'
         );
 

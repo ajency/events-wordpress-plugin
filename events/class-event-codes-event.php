@@ -149,11 +149,12 @@ class Event_Codes_Event {
 	/**
 	 * @param mixed $address_link
 	 */
-	public function setAddressLink($points,$show_link = true)
+	public function setAddressLink($show_link = true)
 	{
-		if($show_link && $points['lat'] && $points['lng']) {
-			$this->address_link = 'http://maps.google.com/?q='.$points['lat'].','.$points['lng'];
-		} else {
+		if($show_link && $this->address)
+		{
+			$this->address_link = 'http://maps.google.com/?q='.$this->address;
+		} else  {
 			$this->address_link = false;
 		}
 	}
@@ -367,13 +368,25 @@ class Event_Codes_Event {
 	{
 		if(!array_filter($address))
 		{
-			$this->address = 'Not Provided';
+			$this->address = false;
 		} else {
 			if(is_array($address)) {
 				$this->address = implode(', ',$address);
 			} else {
 				$this->address = $address;
 			}
+		}
+	}
+
+
+	/**
+	 * @param mixed $address
+	 */
+	public function setNoAddressLabel()
+	{
+		if(!$this->address)
+		{
+			$this->address = "Not Provided";
 		}
 	}
 

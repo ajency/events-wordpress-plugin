@@ -11,8 +11,8 @@
     class for desc: aj--hasdesc
 -->
 <div class="aj">
-    <h3 class="aj__title">Upcoming Events</h3>
-    <div id="data-<?php echo $shortcode_id; ?>" class="aj-table aj-table--<?php echo $atts['style']; ?> aj--hasprice aj--hastime aj--hasdesc">
+    <h3 class="aj__title"><?php echo $event_data['event_range_lbl']; ?> Events</h3>
+    <div id="data-<?php echo $shortcode_id; ?>" class="aj-table aj-table--<?php echo $atts['style']; ?> <?php echo $atts['row'] == 'alternate-gray' ? 'aj-table--alternate':'' ?> <?php echo $atts['description'] ? 'aj--hasdesc':'' ?> <?php echo $atts['showtime'] ? 'aj--hastime':'' ?> aj--hasprice">
         <div class="aj-table__info aj-table--header row">
             <div class="aj-table__name col-md-6 col-sm-6">Event Title</div>
             <div class="aj__address aj-table__address col-md-3 col-sm-3">Location</div>
