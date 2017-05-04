@@ -26,7 +26,7 @@
         <?php if($atts['count'] < $event_data['count']) : ?>
         <a id="<?php echo $shortcode_id; ?>" href="" class="aj__link aj--loadmore">Load More</a>
         <?php endif; ?>
-        <a href="#" class="aj__button aj--viewall">View All</a>
+        <a href="<?php echo esc_url( tribe_get_events_link() ); ?>" class="aj__button aj--viewall">View All</a>
     </div>
     <script type="text/javascript">
         /* <![CDATA[ */
