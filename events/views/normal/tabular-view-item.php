@@ -18,7 +18,7 @@
 	</div>
 	<div data-display="Location" class="aj__address aj-table__address aj__data-address">
 		<?php if($event['address_link']): ?>
-			<a href="<?php echo $event['address_link']; ?>">
+			<a target="_blank" href="<?php echo $event['address_link']; ?>">
 				<?php echo $event['address']; ?>
 			</a>
 		<?php else: ?>
@@ -34,9 +34,7 @@
 									-
 									<span class="aj__data-dayend"><?php echo $event['end_date_day']; ?></span> <span class="aj__data-dayend-month"><?php echo $event['end_date_mon']; ?></span>
 								<?php endif; ?>
-
 							</strong>
-
                             <span class="aj__data-time">
                                 <?php if($event['start_time'] || $event['end_time']) : ?>
 									<span class="aj__data-time">

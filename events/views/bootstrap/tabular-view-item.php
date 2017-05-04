@@ -18,7 +18,7 @@
     </div>
     <div data-display="Location" class="aj__address aj-table__address col-md-3 col-sm-3 aj__data-address">
         <?php if($event['address_link']): ?>
-            <a href="<?php echo $event['address_link']; ?>">
+            <a target="_blank" href="<?php echo $event['address_link']; ?>">
                 <?php echo $event['address']; ?>
             </a>
         <?php else: ?>

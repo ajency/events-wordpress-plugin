@@ -34,21 +34,26 @@ class Event_Codes_Datasource {
         //these aregs are specific to events calender
 
         $meta_query = [];
-        /*if($atts['past']) {
+        if($atts['past']) {
             $meta_query['range_query'] = array(
                 'key' => '_EventStartDate', // Check the start date field
-                'value' => date("Y-m-d"), // Set today's date (note the similar format)
-                'compare' => '<', // Return the ones greater than today's date
-                'type' => 'DATE' // Let WordPress know we're working with date
+                'value' => current_time( 'Y-m-d H:i:s' ), // Set today's date (note the similar format)
+                'compare' => '<', // Return the ones lesser than today's date
+                'type' => 'DATETIME' // Let WordPress know we're working with date
             );
+            $order = 'DESC';
+            $event_display = 'past';
+
         } else {
             $meta_query['range_query'] = array(
                 'key' => '_EventStartDate', // Check the start date field
-                'value' => date("Y-m-d"), // Set today's date (note the similar format)
+                'value' => current_time( 'Y-m-d H:i:s' ), // Set today's date (note the similar format)
                 'compare' => '>=', // Return the ones greater than today's date
-                'type' => 'DATE' // Let WordPress know we're working with date
+                'type' => 'DATETIME' // Let WordPress know we're working with date
             );
-        }*/
+            $order = 'ASC';
+            $event_display = 'custom';
+        }
 
         if($atts['featured']) {
             $meta_query['featured_query'] = array(
@@ -60,14 +65,14 @@ class Event_Codes_Datasource {
 
         $args = array(
             'post_status' => 'publish',
-            'hide_upcoming' => false,
             'posts_per_page' => $atts['count'],
             'offset' => $atts['offset'],
             'meta_key' => '_EventStartDate',
             'orderby' => 'meta_value',
-            'order' => 'ASC',
+            'order' => $order,
             'meta_query' => $meta_query,
-            'eventDisplay' => 'list'
+            'hide_upcoming' => true,
+            'eventDisplay' => $event_display
         );
 
         //TODO For now this is almost hardcoded for the events calendar, will need some sort of detection or preference in the future

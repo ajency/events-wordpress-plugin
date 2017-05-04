@@ -497,10 +497,17 @@ class Event_Codes_Event {
 	/**
 	 * @param mixed $description
 	 */
-	public function setDescription($description,$set_description = true)
+	public function setDescription($description,$set_description = true,$length = 100)
 	{
 		if($set_description) {
-			$this->description = $description;
+			$excerpt = preg_replace( " (\[.*?\])", '', $description );
+			$excerpt = strip_tags( strip_shortcodes($excerpt) );
+			$excerpt = trim( preg_replace( '/\s+/', ' ', $excerpt ) );
+			if ( strlen( $excerpt ) > $length ) {
+				$excerpt = substr( $excerpt, 0, $length );
+				$excerpt .= '...';
+			}
+			$this->description = $excerpt;
 		} else {
 			$this->description = false;
 		}

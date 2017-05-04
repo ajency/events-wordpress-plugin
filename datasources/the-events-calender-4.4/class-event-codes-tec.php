@@ -6,7 +6,6 @@ class Event_Codes_The_Events_Calender_4_4 {
 
         global $post;
         $query = Tribe__Events__Query::getEvents( $args , true);
-
         $events = [];
         foreach($query->posts  as $post) {
             setup_postdata( $post );
