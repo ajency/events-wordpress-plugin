@@ -110,6 +110,9 @@ class Event_Codes {
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-event-codes-common.php';
+
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-event-codes-admin.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-event-codes-public.php';
 
@@ -119,7 +122,7 @@ class Event_Codes {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-event.php';
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/datasource.php';
-
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/datasources.php';
 
 		$this->loader = new Event_Codes_Loader();
 
@@ -173,6 +176,7 @@ class Event_Codes {
 
 #		if(!function_exists('rest_url')) {
 			//Additional admin-ajax actions for depricated versions
+		//TODO
 			$this->loader->add_action( 'wp_ajax_dummy_data', $event_api, 'dummy_data' );
 #		}
 	}

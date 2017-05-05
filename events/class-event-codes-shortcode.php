@@ -68,8 +68,8 @@ class Event_Codes_Shortcode {
             $options = [];
             $options['template'] = 0;
         }
-        $template = $options['template'] == 1 ? 'bootstrap' : 'normal';
-        $atts['template'] = $template;
+        $atts['template'] = $options['template'] == 1 ? 'bootstrap' : 'normal';
+        $atts['load-more'] = Event_Codes_Common::check_if_wp_rest_api();
 
 
         $ds = new Event_Codes_Datasource();

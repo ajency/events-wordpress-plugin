@@ -112,7 +112,7 @@ class Event_Codes_API
         $atts['offset'] = $atts['offset'] + $atts['count'];
         $d['event_data'] = $data->getEventData($atts);
         $d['atts'] = $atts;
-        if(function_exists('rest_url')) {
+        if(Event_Codes_Common::check_if_wp_rest_api()) {
             return $d;
         } else {
             print_r($d);

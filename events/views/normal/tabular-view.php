@@ -23,16 +23,18 @@
         <?php endforeach; ?>
     </div>
     <div class="text-center aj-table__navi">
-        <?php if($atts['count'] < $event_data['count']) : ?>
+        <?php if($atts['load-more'] && $atts['count'] < $event_data['count']) : ?>
         <a id="<?php echo $shortcode_id; ?>" href="" class="aj__link aj--loadmore">Load More</a>
         <?php endif; ?>
         <a href="<?php echo esc_url( tribe_get_events_link() ); ?>" class="aj__button aj--viewall">View All</a>
     </div>
+    <?php if($atts['load-more'] && $atts['count'] < $event_data['count']) : ?>
     <script type="text/javascript">
         /* <![CDATA[ */
         var event_codes_sc_atts_<?php echo $shortcode_id; ?> = <?php print json_encode($atts); ?>;
         /* ]]> */
     </script>
+    <?php endif; ?>
 </div>
 <!--
     / E N D

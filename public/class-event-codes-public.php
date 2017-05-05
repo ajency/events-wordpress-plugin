@@ -55,22 +55,8 @@ class Event_Codes_Public {
 	}
 
 	public function construct_local_js_object() {
-
-		if(function_exists('rest_url')) {
-			$root = esc_url_raw( rest_url());
-			$api_ver = 2;
-		} else {
-			$root = admin_url( 'admin-ajax.php' );
-			$api_ver = 1;
-		}
-		return array(
-			'api_ver' => $api_ver,
-			'root' => $root ,
-/*			'nonce' => wp_create_nonce( 'wp_rest' ),
-			'current_user_id' => get_current_user_id(),
-			'homeUrl' => esc_url(home_url())*/
-		);
-
+		//Added a place holder function incase we need to pass additional data like nonce or home url for future
+		return Event_Codes_Common::get_wp_api_version();
 	}
 
 }

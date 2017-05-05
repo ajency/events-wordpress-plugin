@@ -1,6 +1,6 @@
 <?php
 
-class Event_Codes_The_Events_Calender_4_4 {
+class Event_Codes_The_Events_Calender_444 {
 
     public function eventDataTransformation($args, $atts ,$include_count = true) {
 
@@ -47,6 +47,5 @@ class Event_Codes_The_Events_Calender_4_4 {
         return $response;
 
     }
-
 
 }

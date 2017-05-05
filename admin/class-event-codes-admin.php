@@ -100,43 +100,6 @@ class Event_Codes_Admin {
 
 	}
 
-
-	public function allowed_datasources() {
-
-		return [
-			'the-events-calendar/the-events-calendar.php' => [
-				'versions' => ['4.4.4' , '4.4.3'],
-				'install_url' =>  'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true',
-				'plugin_name' => 'The Events Calendar',
-			]
-		];
-	}
-
-		/**
-	 * Check if plugin Events Calender Exists and throw markup asking user to install the plugin
-	 *
-	 * @since    1.0.0
-	 */
-	public function check_datasources($module) {
-
-		$return = [];
-		$return['success'] = false;
-		$allowed_sources = $this->allowed_datasources();
-		$enabling_array = $allowed_sources[$module];
-		$module_path =  WP_PLUGIN_DIR.'/'.$module;
-		//We check if the module is in the plugins folder
-		if(file_exists($module_path)) {
-			//If so, we then check if its active and is of one of our tested versions
-			$plugin_data = get_plugin_data($module_path, false, false );
-			if (is_plugin_active( $module ) AND in_array($plugin_data['Version'],$enabling_array['versions']))
-			{
-				$return['success'] = true;
-			}
-		}
-		$return['data'] = $enabling_array;
-		return $return;
-	}
-
 	/**
 	 * Check if plugin Events Calender Exists and throw markup asking user to install the plugin
 	 *
@@ -144,20 +107,22 @@ class Event_Codes_Admin {
 	 */
 	public function check_datasources_admin_message() {
 
-		$enabling_for = 'the-events-calendar/the-events-calendar.php';
-		$enabling = $this->check_datasources($enabling_for);
-		if (!$enabling['success'])
-		{
-			$url = $enabling['data']['install_url'];
-			$title = __($enabling['data']['plugin_name'], 'event_codes');
-			echo '<div class="error"><p>' . sprintf(__('To begin using Event Codes, please install <a href="%s" class="thickbox" title="%s">The Events Calendar</a>. We support versions '.implode(', ',$enabling['data']['versions']), 'event_codes'), esc_url($url), $title) . '</p></div>';
+		//TODO provision for multipe data sources
+		$enabling_for = Event_Codes_Datasources::get_active_datasource();
+		$check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
+		if(!$check['is_support']) {
+			$url = $check['install_url'];
+			$title = __( $check['plugin_name'], $this->plugin_name );
+			echo '<div class="error"><p>' . sprintf( esc_html( __( 'To begin XXX, please install the latest version of %sThe Events Calendar%s.', 'the-events-calendar-shortcode' ) ), '<a href="' . esc_url( $url ) . '" class="thickbox" title="' . esc_attr( $title ) . '">', '</a>' ) . '</p></div>';
 		}
 	}
 
 	public function add_submenu_for_shortcodes() {
 
-		$enabling_for = $this->check_datasources('the-events-calendar/the-events-calendar.php');
-		if($enabling_for['success']) {
+		//TODO provision for multipe data sources
+		$enabling_for = Event_Codes_Datasources::get_active_datasource();;
+		$check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
+		if(!$check['is_support']) {
 
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',

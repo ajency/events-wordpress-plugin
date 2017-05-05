@@ -57,9 +57,9 @@ class Event_Codes_Datasource {
 
         if($atts['featured']) {
             $meta_query['featured_query'] = array(
-                'key' => '_tribe_featured', // Check the start date field
-                'value' => 1, // Set today's date (note the similar format)
-                'compare' => '=', // Return the ones greater than today's date
+                'key' => '_tribe_featured',
+                'value' => 1,
+                'compare' => '=',
             );
         }
 
@@ -71,15 +71,17 @@ class Event_Codes_Datasource {
             'orderby' => 'meta_value',
             'order' => $order,
             'meta_query' => $meta_query,
-            'hide_upcoming' => true,
             'eventDisplay' => $event_display
         );
 
-        //TODO For now this is almost hardcoded for the events calendar, will need some sort of detection or preference in the future
-        //Who do we need to pass args here
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/the-events-calender-4.4/class-event-codes-tec.php';
-        $ec44 = new Event_Codes_The_Events_Calender_4_4();
-        return  $ec44->eventDataTransformation($args,$atts);
+        $enabling_for = Event_Codes_Datasources::get_active_datasource();
+        $check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
+        if($check['is_support']) {
+            require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/'.$check['data']['file'];
+            $class = $check['data']['class_name'];
+            $object = new $class();
+            return  $object->eventDataTransformation($args,$atts);
+        }
     }
 
     /**
@@ -91,7 +93,7 @@ class Event_Codes_Datasource {
         $event_data = $this->getEventData($atts);
         if($event_data['count'] == 0) {
             echo '<div class="aj__no-events">
-                    No events added yet :(
+                    No events available :(
                    </div>';
         } else {
             $shortcode_id = uniqid();

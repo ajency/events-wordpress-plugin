@@ -36,10 +36,10 @@
 			var sc_params = window['event_codes_sc_atts_'+e.target.id]
 
 			if(event_codes.api_ver == 1) {
-				var url = event_codes.root;
+				var url = event_codes.api_url;
 				sc_params.action = 'get_api_data';
 			} else {
-				var url = event_codes.root + 'events/v1/get-more-events';
+				var url = event_codes.api_url + 'events/v1/get-more-events';
 			}
 
 //Send the AJAX call to the server
