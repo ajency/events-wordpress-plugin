@@ -69,7 +69,7 @@ class Event_Codes {
 	public function __construct() {
 
 		$this->plugin_name = 'event-codes';
-		$this->version = '1.0.0';
+		$this->version = '0.3.5';
 
 		$this->load_dependencies();
 		$this->set_locale();

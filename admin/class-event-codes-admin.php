@@ -111,10 +111,14 @@ class Event_Codes_Admin {
 		$enabling_for = Event_Codes_Datasources::get_active_datasource();
 		$check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
 		if(!$check['is_support']) {
-			$url = $check['install_url'];
-			$title = __( $check['plugin_name'], $this->plugin_name );
-			echo '<div class="error"><p>' . sprintf( esc_html( __( 'To begin XXX, please install the latest version of %sThe Events Calendar%s.', 'the-events-calendar-shortcode' ) ), '<a href="' . esc_url( $url ) . '" class="thickbox" title="' . esc_attr( $title ) . '">', '</a>' ) . '</p></div>';
+			$url = $check['data']['install_url'];
+			$title = __( $check['data']['plugin_name'], $this->plugin_name );
+			$version = $check['data']['version'];
+			$version_url = 'https://downloads.wordpress.org/plugin/the-events-calendar.'.$version.'.zip';
+			$plugin_page_url = '#';
+			echo '<div class="error"><p>' . sprintf( esc_html( __( 'To begin using Event Codes, please install version %s'.$version.'%s of %sThe Events Calendar%s. To know about previous versions supported by us visit our %splugin page%s.', 'event-codes' ) ), '<a target="_blank" href="' . esc_url( $version_url ) . '" title="' . esc_attr( $title.' '.$version ) . '">', '</a>' , '<a href="' . esc_url( $url ) . '" class="thickbox" title="' . esc_attr( $title ) . '">', '</a>', '<a href="' . esc_url( $plugin_page_url ) . '" title="' . esc_attr( 'Event Codes' ) . '">', '</a>' ) . '</p></div>';
 		}
+		#<a href=https://downloads.wordpress.org/plugin/the-events-calendar.'.$check['data']['version'].'.zip>'. $check['data']['version'] .'</a>
 	}
 
 	public function add_submenu_for_shortcodes() {

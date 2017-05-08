@@ -4,30 +4,17 @@ class Event_Codes_The_Events_Calender {
 
     public function supported_versions_config()
     {
+
+        //TODO in later version we might need these depending on wordpress versions
         return [
-            '4.4.5' =>
-                [
+            '4.4.5' => [
                     'file' => 'the-events-calendar/class-event-codes-tec-444.php',
                     'class_name' => 'Event_Codes_The_Events_Calender_444',
-                ],
-            '4.4.4' => [
+            ],
+            '4.4.3' => [
                 'file' => 'the-events-calendar/class-event-codes-tec-444.php',
                 'class_name' => 'Event_Codes_The_Events_Calender_444',
             ],
-            '4.4.3' => 'the-events-calender-444',
-            '4.4.2' => 'the-events-calender-444',
-            '4.4.1' => 'the-events-calender-444',
-            '4.4.0' => 'the-events-calender-444',
-            '4.4' => 'the-events-calender-444',
-            '4.3.9' => 'the-events-calender-439',
-            '4.3.8' => 'the-events-calender-439',
-            '4.3.7' => 'the-events-calender-439',
-            '4.3.6' => 'the-events-calender-439',
-            '4.3.5' => 'the-events-calender-439',
-            '4.3.4' => 'the-events-calender-439',
-            '4.3.3' => 'the-events-calender-439',
-            '4.3.2' => 'the-events-calender-439',
-            '4.3.1' => 'the-events-calender-439',
         ];
 
     }
@@ -54,8 +41,9 @@ class Event_Codes_The_Events_Calender {
     public function is_not_active_message_params()
     {
         return [
-            'install_url' =>  'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true',
+            'install_url' =>  'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true&fields[versions]=true',
             'plugin_name' => 'The Events Calendar',
+            'version' => max(array_keys($this->supported_versions_config())),
         ];
     }
 
