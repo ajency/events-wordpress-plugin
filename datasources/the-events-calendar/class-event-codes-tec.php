@@ -11,7 +11,27 @@ class Event_Codes_The_Events_Calender {
                     'file' => 'the-events-calendar/class-event-codes-tec-444.php',
                     'class_name' => 'Event_Codes_The_Events_Calender_444',
             ],
+            '4.4.4' => [
+                'file' => 'the-events-calendar/class-event-codes-tec-444.php',
+                'class_name' => 'Event_Codes_The_Events_Calender_444',
+            ],
             '4.4.3' => [
+                'file' => 'the-events-calendar/class-event-codes-tec-444.php',
+                'class_name' => 'Event_Codes_The_Events_Calender_444',
+            ],
+            '4.4.2' => [
+                'file' => 'the-events-calendar/class-event-codes-tec-444.php',
+                'class_name' => 'Event_Codes_The_Events_Calender_444',
+            ],
+            '4.4.1' => [
+                'file' => 'the-events-calendar/class-event-codes-tec-444.php',
+                'class_name' => 'Event_Codes_The_Events_Calender_444',
+            ],
+            '4.4.0' => [
+                'file' => 'the-events-calendar/class-event-codes-tec-444.php',
+                'class_name' => 'Event_Codes_The_Events_Calender_444',
+            ],
+            '4.4' => [
                 'file' => 'the-events-calendar/class-event-codes-tec-444.php',
                 'class_name' => 'Event_Codes_The_Events_Calender_444',
             ],

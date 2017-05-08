@@ -62,7 +62,7 @@
 
 /*					console.log(+data.atts.count + +data.atts.offset);
 					console.log(data.results_count);*/
-					if(data.results_count < (+data.atts.count + +data.atts.offset)) {
+					if(data.results_count <= (+data.atts.count + +data.atts.offset)) {
 						$('#'+e.target.id).remove();
 					}
 				}
