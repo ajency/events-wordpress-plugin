@@ -126,7 +126,10 @@ class Event_Codes_Admin {
 		//TODO provision for multipe data sources
 		$enabling_for = Event_Codes_Datasources::get_active_datasource();;
 		$check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
-		if(!$check['is_support']) {
+
+		print_r($check);
+
+		if($check['is_support']) {
 
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',
