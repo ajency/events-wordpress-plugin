@@ -127,8 +127,6 @@ class Event_Codes_Admin {
 		$enabling_for = Event_Codes_Datasources::get_active_datasource();;
 		$check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
 
-		print_r($check);
-
 		if($check['is_support']) {
 
 		add_submenu_page(
