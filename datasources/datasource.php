@@ -16,16 +16,6 @@ class Event_Codes_Datasource {
             //pass all filters to the data source
             //query builder etc should be in the ds folder, only returned data shoud be fecthed here in Event object $event
 
-            $view_allowed_values = ['list', 'tabular'];
-            if(!in_array($atts['view'],$view_allowed_values)) {
-                $atts['style'] = 'list';
-            }
-
-            $style_allowed_values = ['basic', 'shadow'];
-            if(!in_array($atts['style'],$style_allowed_values)) {
-                $atts['style'] = 'basic';
-            }
-
             /*        'post_status' => 'publish',
                         'hide_upcoming' => true,
                         'posts_per_page' => $atts['limit'],

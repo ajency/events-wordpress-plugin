@@ -86,6 +86,8 @@ class Event_Codes_API
         foreach($atts as $k => $v){
             if($v == "false"){
                 $atts[$k] = false;
+            } else if($v == "true"){
+                $atts[$k] = true;
             }
         }
         $ds = new Event_Codes_Datasource();

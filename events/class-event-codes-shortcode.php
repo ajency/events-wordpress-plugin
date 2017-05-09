@@ -41,6 +41,14 @@ class Event_Codes_Shortcode {
 
     public function event_codes_shortcode( $atts ) {
 
+        foreach($atts as $k => $v){
+            if($v == "false"){
+                $atts[$k] = false;
+            } else if($v == "true"){
+                $atts[$k] = true;
+            }
+        }
+
         $atts = shortcode_atts(
             array(
 
@@ -68,6 +76,38 @@ class Event_Codes_Shortcode {
             $options = [];
             $options['template'] = 0;
         }
+
+        $view_allowed_values = ['list', 'tabular'];
+        if(!in_array($atts['view'],$view_allowed_values)) {
+            $atts['style'] = 'list';
+        }
+
+        $style_allowed_values = ['basic', 'shadow'];
+        if(!in_array($atts['style'],$style_allowed_values)) {
+            $atts['style'] = 'basic';
+        }
+
+        $row_allowed_values = ['alternate-gray'];
+        if(!in_array($atts['row'],$row_allowed_values)) {
+            $atts['style'] = 'basic';
+        }
+
+        if(!is_bool($atts['description'])){
+            $atts['description'] = false;
+        }
+
+        if(!is_bool($atts['showtime'])){
+            $atts['showtime'] = false;
+        }
+
+        if(!is_bool($atts['featured'])){
+            $atts['featured'] = false;
+        }
+
+        if(!is_bool($atts['past'])){
+            $atts['past'] = false;
+        }
+
         $atts['template'] = $options['template'] == 1 ? 'bootstrap' : 'normal';
         $atts['load-more'] = Event_Codes_Common::check_if_wp_rest_api();
 
