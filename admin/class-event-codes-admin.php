@@ -108,8 +108,8 @@ class Event_Codes_Admin {
 	public function check_datasources_admin_message() {
 
 		//TODO provision for multipe data sources
-		$enabling_for = Event_Codes_Datasources::get_active_datasource();
-		$check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
+		$active_ds = Event_Codes_Datasources::get_active_datasource();
+		$check = Event_Codes_Datasources::check_if_active_and_version_supported($active_ds);
 		if(!$check['is_support']) {
 			$url = $check['data']['install_url'];
 			$title = __( $check['data']['plugin_name'], $this->plugin_name );
@@ -124,8 +124,8 @@ class Event_Codes_Admin {
 	public function add_submenu_for_shortcodes() {
 
 		//TODO provision for multipe data sources
-		$enabling_for = Event_Codes_Datasources::get_active_datasource();;
-		$check = Event_Codes_Datasources::check_if_active_and_version_supported($enabling_for);
+		$active_ds = Event_Codes_Datasources::get_active_datasource();;
+		$check = Event_Codes_Datasources::check_if_active_and_version_supported($active_ds);
 
 		if($check['is_support']) {
 

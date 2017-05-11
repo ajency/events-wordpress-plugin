@@ -35,6 +35,10 @@ class Event_Codes_Datasources {
         return false;
     }
 
+    /*
+     * Assuming one data source can be used at a time
+     * For now its Events Calendar
+     */
     static function get_active_datasource(){
         return 'the-events-calendar';
     }

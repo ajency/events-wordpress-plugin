@@ -41,17 +41,23 @@ class Event_Codes_Shortcode {
 
     public function event_codes_shortcode( $atts ) {
 
-        foreach($atts as $k => $v){
-            if($v == "false"){
-                $atts[$k] = false;
-            } else if($v == "true"){
-                $atts[$k] = true;
+        $debug_atts = false;
+        if(isset($atts['debug']) && ($atts['debug'] == 'true' OR $atts['debug'] == true)) {
+            $debug_atts = $atts;
+        }
+        //Resetting String bool values to actual boolean === only works in modern PHP versions so cannot rely
+        if($atts) {
+            foreach($atts as $k => $v){
+                if($v == "false"){
+                    $atts[$k] = false;
+                } else if($v == "true"){
+                    $atts[$k] = true;
+                }
             }
         }
 
         $atts = shortcode_atts(
             array(
-
                 'view' => 'tabular',
                 'style' => 'basic',
                 'count' => 5,
@@ -61,12 +67,8 @@ class Event_Codes_Shortcode {
                 'row' => false,
                 'past' => false,
                 'featured' => false,
-
-                //TODO
-                /*
-                 'cat' => [],
-                 'tag' => [],*/
-
+                'tag' => false,
+                'cat' => false,
             ), $atts, 'event_codes'
         );
 
@@ -109,19 +111,20 @@ class Event_Codes_Shortcode {
         }
 
         $atts['template'] = $options['template'] == 1 ? 'bootstrap' : 'normal';
+
+        //We do not use load more in older versions of WP, older than 4.4
+        //admin-ajax code is still buggy - TODO
         $atts['load-more'] = Event_Codes_Common::check_if_wp_rest_api();
 
-
+        //It all begins here
         $ds = new Event_Codes_Datasource();
+        $active_ds = Event_Codes_Datasources::get_active_datasource();
+        $ds->setActiveDataSource($active_ds);
+        if($debug_atts) {
+            echo "DEBUG Shortcode Atts Passed : ".json_encode($debug_atts);
+        }
         $ds->renderShortcodeMarkupAndData($atts);
 
         //Call requested view and based on more selections other UI options
     }
-
-
-    //TODO
-    //1 - Excerpt limit
-    //showtime and desription
-    //diff tests for all those combos
-    //removing load more and view more
 }

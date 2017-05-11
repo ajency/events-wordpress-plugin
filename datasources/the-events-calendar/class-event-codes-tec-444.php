@@ -48,4 +48,103 @@ class Event_Codes_The_Events_Calender_444 {
 
     }
 
+    public function constructQueryArguments($atts){
+
+        $meta_query = [];
+        if($atts['past']) {
+            $meta_query['range_query'] = array(
+                'key' => '_EventStartDate', // Check the start date field
+                'value' => current_time( 'Y-m-d H:i:s' ), // Set today's date (note the similar format)
+                'compare' => '<', // Return the ones lesser than today's date
+                'type' => 'DATETIME' // Let WordPress know we're working with date
+            );
+            $order = 'DESC';
+            $event_display = 'past';
+
+        } else {
+            $meta_query['range_query'] = array(
+                'key' => '_EventStartDate', // Check the start date field
+                'value' => current_time( 'Y-m-d H:i:s' ), // Set today's date (note the similar format)
+                'compare' => '>=', // Return the ones greater than today's date
+                'type' => 'DATETIME' // Let WordPress know we're working with date
+            );
+            $order = 'ASC';
+            $event_display = 'custom';
+        }
+
+        if($atts['featured']) {
+            $meta_query['featured_query'] = array(
+                'key' => '_tribe_featured',
+                'value' => 1,
+                'compare' => '=',
+            );
+        }
+
+        $tax_query = [];
+        $tax_query['relation'] = 'AND';
+        if ($atts['cat']) {
+            $cat_query = [];
+
+            if ( strpos( $atts['cat'], "," ) !== false ) {
+                $atts['cats'] = explode( ",", $atts['cat'] );
+                $atts['cats'] = array_map( 'trim', $atts['cats'] );
+            } else {
+                $atts['cats'] = $atts['cat'];
+            }
+
+            $cat_query['relation'] = 'OR';
+
+            $cat_query[] = array(
+                'taxonomy' => 'tribe_events_cat',
+                'field' => 'name',
+                'terms' => $atts['cats'],
+            );
+
+            $cat_query[] = array(
+                'taxonomy' => 'tribe_events_cat',
+                'field' => 'slug',
+                'terms' => $atts['cats'],
+            );
+            $tax_query[] = $cat_query;
+        }
+
+        if ($atts['tag']) {
+
+            $tag_query = [];
+            if ( strpos( $atts['tag'], "," ) !== false ) {
+                $atts['tags'] = explode( ",", $atts['tag'] );
+                $atts['tags'] = array_map( 'trim', $atts['tags'] );
+            } else {
+                $atts['tags'] = $atts['tag'];
+            }
+
+            $tag_query['relation'] = 'OR';
+
+            $tag_query[] = array(
+                'taxonomy' => 'post_tag',
+                'field' => 'name',
+                'terms' => $atts['tags'],
+            );
+            $tag_query[] = array(
+                'taxonomy' => 'post_tag',
+                'field' => 'slug',
+                'terms' => $atts['tags'],
+            );
+            $tax_query[] = $tag_query;
+        }
+
+        return array(
+            'post_status' => 'publish',
+            'posts_per_page' => $atts['count'],
+            'offset' => $atts['offset'],
+            'meta_key' => '_EventStartDate',
+            'orderby' => 'meta_value',
+            'order' => $order,
+            'meta_query' => $meta_query,
+            'tax_query' => $tax_query,
+            'eventDisplay' => $event_display
+        );
+
+    }
+
 }
