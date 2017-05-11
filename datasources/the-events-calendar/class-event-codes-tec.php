@@ -61,7 +61,7 @@ class Event_Codes_The_Events_Calender {
     {
         return [
             'install_url' =>  'plugin-install.php?tab=plugin-information&plugin=the-events-calendar&TB_iframe=true&fields[versions]=true',
-            'plugin_name' => 'The Events Calendar',
+            'plugin_name' => __('The Events Calendar','event-codes'),
             'version' => max(array_keys($this->supported_versions_config())),
         ];
     }

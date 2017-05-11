@@ -112,7 +112,7 @@ class Event_Codes_Admin {
 		$check = Event_Codes_Datasources::check_if_active_and_version_supported($active_ds);
 		if(!$check['is_support']) {
 			$url = $check['data']['install_url'];
-			$title = __( $check['data']['plugin_name'], $this->plugin_name );
+			$title = $check['data']['plugin_name'];
 			$version = $check['data']['version'];
 			$version_url = 'https://downloads.wordpress.org/plugin/the-events-calendar.'.$version.'.zip';
 			$plugin_page_url = '#';
@@ -131,8 +131,8 @@ class Event_Codes_Admin {
 
 		add_submenu_page(
 			'edit.php?post_type=tribe_events',
-			'Event Codes',
-			'Event Codes',
+			__('Event Codes','event-codes'),
+			__('Event Codes','event-codes'),
 			'manage_options',
 			'event-codes',
 			array($this,'theme_tabs')
@@ -152,7 +152,11 @@ class Event_Codes_Admin {
 		<div class="wrap">
 
 			<div id="icon-themes" class="icon32"></div>
-			<h2><?php echo __( 'Event Codes - Shortcodes that work with other event plugins.', 'event_codes' ); ?></h2>
+
+
+			<h2>
+			<?php echo sprintf( esc_html( __('Event Codes - Shortcodes that work with other event plugins.','event-codes'))); ?>
+			</h2>
 			<!--			--><?php /*settings_errors(); */?>
 
 
@@ -160,8 +164,8 @@ class Event_Codes_Admin {
 			?>
 
 			<h2 class="nav-tab-wrapper">
-				<a href="?post_type=tribe_events&page=event-codes&tab=about" class="nav-tab <?php echo $active_tab == 'about' ? 'nav-tab-active' : ''; ?>">Event Codes</a>
-				<a href="?post_type=tribe_events&page=event-codes&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>">Settings</a>
+				<a href="?post_type=tribe_events&page=event-codes&tab=about" class="nav-tab <?php echo $active_tab == 'about' ? 'nav-tab-active' : ''; ?>"><?php echo sprintf( esc_html( __('Event Codes','event-codes'))); ?></a>
+				<a href="?post_type=tribe_events&page=event-codes&tab=settings" class="nav-tab <?php echo $active_tab == 'settings' ? 'nav-tab-active' : ''; ?>"><?php echo sprintf( esc_html( __('Settings','event-codes'))); ?></a>
 			</h2>
 
 
@@ -185,8 +189,8 @@ class Event_Codes_Admin {
 	} //
 
 	function settings_init(  ) {
-		add_settings_section("event_codes_section", "This section gives you quick access to settings that will help us make our services work better for you.", null, "event_codes_settings");
-		add_settings_field("event_codes_settings", "Enable Bootstrap", array($this,"template_select_checkbox_display"), "event_codes_settings", "event_codes_section");
+		add_settings_section("event_codes_section", sprintf( esc_html( __("This section gives you quick access to settings that will help us make our services work better for you.",'event-codes'))), null, "event_codes_settings");
+		add_settings_field("event_codes_settings", sprintf( esc_html( __('Enable Bootstrap','event-codes'))), array($this,"template_select_checkbox_display"), "event_codes_settings", "event_codes_section");
 		register_setting("event_codes_section", "event_codes_settings");
 	}
 
@@ -199,7 +203,7 @@ class Event_Codes_Admin {
 		}
 		?>
 		<input type="checkbox" name="event_codes_settings[template]" value="1" <?php checked(1, $options['template'], true); ?>>
-					Check this option if your theme supports Bootstrap 3.0
+					<?php echo sprintf( esc_html( __('Check this option if your theme supports Bootstrap 3.0'))); ?>
 		</input>
 		<?php
 	}

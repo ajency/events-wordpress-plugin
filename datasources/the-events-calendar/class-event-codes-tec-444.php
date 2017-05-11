@@ -36,12 +36,13 @@ class Event_Codes_The_Events_Calender_444 {
         $events->setCount($query->found_posts);
 
         if($atts['past']){
-            $event_range_lbl = 'Past';
+            $event_range_lbl = __('Past','event-codes');
         } else {
-            $event_range_lbl = 'Upcoming';
+            $event_range_lbl = __('Upcoming','event-codes');
         }
+        $featured_label = __('Featured','event-codes');
         if($atts['featured']) {
-            $event_range_lbl = $event_range_lbl." Featured";
+            $event_range_lbl = sprintf(esc_html($event_range_lbl.' '.$featured_label));
         }
         $events->setEventRangeLbl($event_range_lbl);
         return $events;
