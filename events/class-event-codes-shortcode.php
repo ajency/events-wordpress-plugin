@@ -121,7 +121,8 @@ class Event_Codes_Shortcode {
         $sc = new Event_Codes_Shortcode_Helper();
         $sc->setActiveDataSource($active_ds);
         if($debug_atts) {
-            echo "DEBUG Shortcode Atts Passed : ".json_encode($debug_atts);
+            echo "DEBUG Shortcode Atts Passed : ".json_encode($debug_atts)."\n";
+            echo "DEBUG Shortcode Atts Accepted : ".json_encode($atts);
         }
         $sc->renderShortcodeMarkupAndData($atts);
     }
