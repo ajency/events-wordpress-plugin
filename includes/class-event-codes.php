@@ -69,7 +69,7 @@ class Event_Codes {
 	public function __construct() {
 
 		$this->plugin_name = 'event-codes';
-		$this->version = '0.3.5';
+		$this->version = '0.4';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -118,11 +118,12 @@ class Event_Codes {
 
 
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-shortcode.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-shortcode-helper.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-api.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-event.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'events/class-event-codes-events.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/datasource.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/datasources.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/class-event-codes-datasources.php';
 
 		$this->loader = new Event_Codes_Loader();
 

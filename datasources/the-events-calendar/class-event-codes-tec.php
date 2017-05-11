@@ -4,7 +4,6 @@ class Event_Codes_The_Events_Calender {
 
     public function supported_versions_config()
     {
-
         //TODO in later version we might need these depending on wordpress versions
         return [
             '4.4.5' => [

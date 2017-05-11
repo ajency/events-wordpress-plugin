@@ -41,11 +41,15 @@ class Event_Codes_Shortcode {
 
     public function event_codes_shortcode( $atts ) {
 
+        //Debug mode set to false by default
+        //Caught early before shortcode atts defaults setting
         $debug_atts = false;
         if(isset($atts['debug']) && ($atts['debug'] == 'true' OR $atts['debug'] == true)) {
             $debug_atts = $atts;
         }
-        //Resetting String bool values to actual boolean === only works in modern PHP versions so cannot rely
+
+        //Resetting String bool values to actual boolean === only works in modern PHP versions so cannot rely on it
+        //TODO - make common function as required in API also
         if($atts) {
             foreach($atts as $k => $v){
                 if($v == "false"){
@@ -69,62 +73,56 @@ class Event_Codes_Shortcode {
                 'featured' => false,
                 'tag' => false,
                 'cat' => false,
+                'show-load-more' => true,
+                'show-view-all' => true,
             ), $atts, 'event_codes'
         );
 
-        //Provide additional atts that are required
-        $options =  get_option('event_codes_settings');
-        if(empty($options)){
-            $options = [];
-            $options['template'] = 0;
-        }
-
-        $view_allowed_values = ['list', 'tabular'];
+        //Validate allowed views
+        $view_allowed_values = ['tabular'];
         if(!in_array($atts['view'],$view_allowed_values)) {
             $atts['style'] = 'list';
         }
 
+        //Validate allowed styles
         $style_allowed_values = ['basic', 'shadow'];
         if(!in_array($atts['style'],$style_allowed_values)) {
             $atts['style'] = 'basic';
         }
 
+        //Validate allowed row property
         $row_allowed_values = ['alternate-gray'];
         if(!in_array($atts['row'],$row_allowed_values)) {
             $atts['style'] = 'basic';
         }
 
-        if(!is_bool($atts['description'])){
-            $atts['description'] = false;
+        //Validate atts that have to be boolean
+        $bools = ['description','showtime','featured','past'];
+        foreach($bools as $bool) {
+            if(!is_bool($atts[$bool])){
+                $atts[$bool] = false;
+            }
         }
 
-        if(!is_bool($atts['showtime'])){
-            $atts['showtime'] = false;
+        //Check if bootstrap or normal view from settings
+        $options =  get_option('event_codes_settings');
+        if(empty($options)){
+            $options = [];
+            $options['template'] = 0;
         }
-
-        if(!is_bool($atts['featured'])){
-            $atts['featured'] = false;
-        }
-
-        if(!is_bool($atts['past'])){
-            $atts['past'] = false;
-        }
-
         $atts['template'] = $options['template'] == 1 ? 'bootstrap' : 'normal';
 
         //We do not use load more in older versions of WP, older than 4.4
         //admin-ajax code is still buggy - TODO
-        $atts['load-more'] = Event_Codes_Common::check_if_wp_rest_api();
+        $atts['show-load-more'] = Event_Codes_Common::check_if_wp_rest_api();
 
         //It all begins here
-        $ds = new Event_Codes_Datasource();
         $active_ds = Event_Codes_Datasources::get_active_datasource();
-        $ds->setActiveDataSource($active_ds);
+        $sc = new Event_Codes_Shortcode_Helper();
+        $sc->setActiveDataSource($active_ds);
         if($debug_atts) {
             echo "DEBUG Shortcode Atts Passed : ".json_encode($debug_atts);
         }
-        $ds->renderShortcodeMarkupAndData($atts);
-
-        //Call requested view and based on more selections other UI options
+        $sc->renderShortcodeMarkupAndData($atts);
     }
 }

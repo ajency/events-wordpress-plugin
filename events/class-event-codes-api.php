@@ -42,6 +42,32 @@ class Event_Codes_API
     {
         register_rest_route(
             'events/v1',
+            '/get-events',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this,'get_events'),
+                'permission_callback' => function () {
+                    return true;
+                }
+
+            )
+        );
+
+        register_rest_route(
+            'events/v1',
+            '/get-template',
+            array(
+                'methods' => 'GET',
+                'callback' => array($this,'get_template'),
+                'permission_callback' => function () {
+                    return true;
+                }
+
+            )
+        );
+
+        register_rest_route(
+            'events/v1',
             '/get-more-events',
             array(
                 'methods' => 'GET',
@@ -64,14 +90,48 @@ class Event_Codes_API
                 $atts[$k] = true;
             }
         }
-        $ds = new Event_Codes_Datasource();
+        $ds = new Event_Codes_Shortcode_Helper();
         $atts['offset'] = $atts['offset'] + $atts['count'];
-        $event_data = $ds->renderShortcodeMarkupAndData($atts,false);
-        ob_start();
-        $ds->renderLoadMoreEventsMarkupAndData($event_data,$atts);
-        $data['markup'] = ob_get_clean();
-        $data['atts'] = $atts;
-        $data['results_count'] = $event_data['count'];
-        return $data;
+        return $ds->renderShortcodeMarkupAndData($atts,true);
+    }
+
+    function get_template($request_data) {
+
+        $parameters = $request_data->get_params();
+        return file_get_contents(dirname( __FILE__ )  .'/views/'.$parameters['template'].'/'.$parameters['view'].'-view-item.php' );
+    }
+
+    function get_events($request_data) {
+        $atts = $request_data->get_params();
+        $data = new Event_Codes_Shortcode_Helper();
+        $atts['offset'] = $atts['offset'] + $atts['count'];
+        $d['event_data'] = $data->getEventData($atts);
+        $d['atts'] = $atts;
+        if(Event_Codes_Common::check_if_wp_rest_api()) {
+            return $d;
+        } else {
+            print_r($d);
+            wp_die();
+        }
+    }
+
+    function dummy_data_object() {
+
+        $event = new Event_Codes_Event();
+        $events = [];
+        $event->setDescription('Seamlessly actualize parallel technologies and multidisciplinary technologies...');
+        $event->setEndDate('15 Mar');
+        $event->setStartDate('23 Feb');
+        $event->setAddress('Kala Academy, Panjim, Goa');
+        $event->setTitle('sdfsdfsdfsdf sdfsdfsdfsfd');
+        $event->setPrice(100);
+        $event->setStartDateDay(16);
+        $event->setStartDateMon('May');
+        $event->setEndDateDay(18);
+        $event->setEndDateMon('May');
+        $event->setStartTime('10:00 AM');
+        $event->setEndTime('02:00 PM');
+        $events[] = $event->getEvent();
+        return $events;
     }
 }
