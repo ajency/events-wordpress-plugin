@@ -23,7 +23,7 @@
         <?php endforeach; ?>
     </div>
     <div class="text-center aj-table__navi">
-        <?php if($atts['show=load-more'] && $atts['count'] < $event_data->count) : ?>
+        <?php if($atts['show-load-more'] && $atts['count'] < $event_data->count) : ?>
             <a id="<?php echo $shortcode_id; ?>" href="" class="aj__link aj--loadmore">Load More</a>
         <?php endif; ?>
         <?php if($atts['show-view-all']) : ?>

@@ -81,7 +81,7 @@ class Event_Codes_Shortcode {
         //Validate allowed views
         $view_allowed_values = ['tabular'];
         if(!in_array($atts['view'],$view_allowed_values)) {
-            $atts['style'] = 'list';
+            $atts['view'] = 'tabular';
         }
 
         //Validate allowed styles
@@ -93,7 +93,7 @@ class Event_Codes_Shortcode {
         //Validate allowed row property
         $row_allowed_values = ['alternate-gray'];
         if(!in_array($atts['row'],$row_allowed_values)) {
-            $atts['style'] = 'basic';
+            $atts['row'] = false;
         }
 
         //Validate atts that have to be boolean
