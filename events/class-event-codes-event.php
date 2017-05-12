@@ -1,5 +1,11 @@
 <?php
 
+/*
+ * Event_Codes_Event
+ * Event instances for Event Codes that are passed to the view are created using this class
+ * Views can accept only objects of these classes, cannot enforce this at a parameter level
+ * This is a generated class hence camelCase
+ */
 class Event_Codes_Event {
 
 	private $title;
@@ -153,6 +159,7 @@ class Event_Codes_Event {
 	{
 		if($show_link && $this->address)
 		{
+			//TODO - unhardcode this
 			$this->address_link = 'http://maps.google.com/?q='.$this->address;
 		} else  {
 			$this->address_link = false;

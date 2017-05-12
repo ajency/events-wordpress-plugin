@@ -8,14 +8,14 @@ class Event_Codes_Datasources {
 
     /**
      * Define Constant names for each datasource
-     * Currently using characters from guardians of the galaxy
      */
-    const THE_EVENTS_CALENDAR = 'groot';
-    const EVENT_ESPRESSO = 'rocket';
+    const THE_EVENTS_CALENDAR = 'the-events-calendar';
+    const EVENT_ESPRESSO = 'event-espresso';
 
     /**
      * @param $source
      * @return array|bool
+     * Switch case makes sure only the required file is called
      */
     static function check_if_active_and_version_supported($source)
     {
@@ -25,14 +25,15 @@ class Event_Codes_Datasources {
         $return['data'] = false;
         switch ($source) {
             case self::THE_EVENTS_CALENDAR:
-                require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/the-events-calendar/class-event-codes-tec.php';
+                self::_load_dependencies('class-event-codes-the-events-calendar.php');
                 $tec = new Event_Codes_The_Events_Calender();
                 $check = $tec->is_active_and_version_supported();
                 if(!$check) {
+                    //return params to show message to install/activate/correct version
                     $return['data'] = $tec->is_not_active_message_params();
                 } else {
                     $return['is_support'] = true;
-                    $return['data'] = $check;
+                    $return['code_name'] = $check;
                 }
                 return $return;
                 break;
@@ -51,5 +52,10 @@ class Event_Codes_Datasources {
      */
     static function get_active_datasource(){
         return self::THE_EVENTS_CALENDAR;
+    }
+
+    static function _load_dependencies($ds_file_path) {
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/class-event-codes-datasource-config.php';
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/configs/'.$ds_file_path;
     }
 }

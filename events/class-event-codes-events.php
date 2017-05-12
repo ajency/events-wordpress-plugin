@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Class Event_Codes_Events
+ * This is a generated class hence camelCase
+ */
 class Event_Codes_Events {
 
 	public $events;

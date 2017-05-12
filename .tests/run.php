@@ -73,6 +73,9 @@ if($proceed) {
 	//Call original bs file
 	require $_tests_dir . '/includes/bootstrap.php';
 
+	//include additional commin fucntions in our suite
+	include 'ec-tests/Event_Code_Tests.php';
+
 	//unlink config file and plugin file, like a teardown after ending testing
 	function endScript(){
 /*		unlink(getenv('PLUGIN_LINK'));*/

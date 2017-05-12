@@ -39,6 +39,24 @@ class Event_Codes_Shortcode {
         add_shortcode( 'event_codes', array( $this, 'event_codes_shortcode' ) );
     }
 
+    public function default_atts() {
+        return array(
+            'view' => 'tabular',
+            'style' => 'basic',
+            'count' => 5,
+            'offset' => 0,
+            'showtime' => false,
+            'description' => false,
+            'row' => false,
+            'past' => false,
+            'featured' => false,
+            'tag' => false,
+            'cat' => false,
+            'show-load-more' => true,
+            'show-view-all' => true,
+        );
+    }
+
     public function event_codes_shortcode( $atts ) {
 
         //Debug mode set to false by default
@@ -61,21 +79,7 @@ class Event_Codes_Shortcode {
         }
 
         $atts = shortcode_atts(
-            array(
-                'view' => 'tabular',
-                'style' => 'basic',
-                'count' => 5,
-                'offset' => 0,
-                'showtime' => false,
-                'description' => false,
-                'row' => false,
-                'past' => false,
-                'featured' => false,
-                'tag' => false,
-                'cat' => false,
-                'show-load-more' => true,
-                'show-view-all' => true,
-            ), $atts, 'event_codes'
+            $this->default_atts(), $atts, 'event_codes'
         );
 
         //Validate allowed views
@@ -117,13 +121,11 @@ class Event_Codes_Shortcode {
         $atts['show-load-more'] = Event_Codes_Common::check_if_wp_rest_api();
 
         //It all begins here
-        $active_ds = Event_Codes_Datasources::get_active_datasource();
         $sc = new Event_Codes_Shortcode_Helper();
-        $sc->setActiveDataSource($active_ds);
         if($debug_atts) {
             echo "DEBUG Shortcode Atts Passed : ".json_encode($debug_atts)."\n";
             echo "DEBUG Shortcode Atts Accepted : ".json_encode($atts);
         }
-        $sc->renderShortcodeMarkupAndData($atts);
+        $sc->render_shortcode_markup_and_data($atts);
     }
 }

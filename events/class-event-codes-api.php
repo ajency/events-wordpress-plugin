@@ -92,7 +92,7 @@ class Event_Codes_API
         }
         $ds = new Event_Codes_Shortcode_Helper();
         $atts['offset'] = $atts['offset'] + $atts['count'];
-        return $ds->renderShortcodeMarkupAndData($atts,true);
+        return $ds->render_shortcode_markup_and_data($atts,true);
     }
 
     function get_template($request_data) {
