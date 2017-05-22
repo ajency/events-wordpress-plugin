@@ -12,6 +12,7 @@ class TEC_Versions_Check extends Event_Code_Tests
 
         //testing to see if your logic works assuming Tribe_Main class and VERSION const
         $res = Event_Codes_Datasources::check_if_active_and_version_supported(Event_Codes_Datasources::THE_EVENTS_CALENDAR);
+        $this->write_to_csv($res['is_support'],$this->getName());
         $this->assertTrue($res['is_support']);
     }
 
@@ -28,6 +29,7 @@ class TEC_Versions_Check extends Event_Code_Tests
         } else if(is_array($markup)) {
             $r = true;
         }
+        $this->write_to_csv($r,$this->getName());
         $this->assertTrue($r);
     }
 
