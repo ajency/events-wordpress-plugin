@@ -11,7 +11,8 @@ class Event_Codes_Shortcode_Helper {
      * Function to render shortcode, will inlude html
      * Seperate function made to isolate data from UI
      */
-    public function render_shortcode_markup_and_data($atts, $load_more_api = false) {
+    public function render_shortcode_markup_and_data($atts, $load_more_api = false)
+    {
 
         //TODO - Handle multiple datasource config
         $active_ds = Event_Codes_Datasources::get_active_datasource();
@@ -19,7 +20,7 @@ class Event_Codes_Shortcode_Helper {
         $check = Event_Codes_Datasources::check_if_active_and_version_supported($active_ds);
 
         //Do we support this version and plugin?
-        if($check['is_support']) {
+        if ($check['is_support']) {
             $this->_load_dependencies($check['code_name']);
 
             $ds_class = $this->_ds_class_name($check['code_name']);
@@ -32,9 +33,11 @@ class Event_Codes_Shortcode_Helper {
             $event_data = $ds->event_data_transformation($args, $atts);
 
             //If the query did fetch events
-            if ($event_data->count) {
+            if ($event_data === false) {
+                return false; //unsupported
+            } else if ($event_data->count > 0) {
 
-                if($load_more_api == false) {
+                if ($load_more_api == false) {
 
                     //We need a unique id if multiple shortcodes are placed on a page, used for load more ajax functionality
                     $shortcode_id = uniqid();
@@ -43,7 +46,7 @@ class Event_Codes_Shortcode_Helper {
 
                     //In case of API we cannot just echo our content
                     //We need to save content to a variable along with other data and show it in the UI for load more
-                    $load_more_api_data['markup'] = $this->return_load_more_events_markup_and_data($event_data,$atts);
+                    $load_more_api_data['markup'] = $this->return_load_more_events_markup_and_data($event_data, $atts);
                     $load_more_api_data['atts'] = $atts;
                     $load_more_api_data['results_count'] = $event_data->count;
                     return $load_more_api_data;
@@ -51,10 +54,10 @@ class Event_Codes_Shortcode_Helper {
 
             } else {
                 include plugin_dir_path(dirname(__FILE__)) . '/events/views/not-available.php';
+
             }
-        } else {
-            include plugin_dir_path(dirname(__FILE__)) . '/events/views/not-available.php';
         }
+        return false; //unsupported
     }
 
     public function return_load_more_events_markup_and_data($event_data,$atts) {

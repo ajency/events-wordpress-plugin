@@ -15,14 +15,23 @@ class TEC_Versions_Check extends Event_Code_Tests
         $this->assertTrue($res['is_support']);
     }
 
-    function test_event_calender_data()
+    function test_event_calender_data_query()
     {
-        $data = new Event_Codes_Datasource_Groot();
-        $scc = new Event_Codes_Shortcode();
+
+        $ev = new Event_Codes();
+        $scc = new Event_Codes_Shortcode($ev->get_plugin_name(),$ev->get_version());
+        $sch = new Event_Codes_Shortcode_Helper();
         $atts = $scc->default_atts();
-        $args = $data->construct_query_arguments($atts);
-        $events = $data->event_data_transformation($args,$atts);
-        print_r($events);
+        $markup = $sch->render_shortcode_markup_and_data($atts);
+        $expected = '<div class="aj__no-events">
+                        No events available :(
+                    </div>';
+/*        print_r($markup)."\n";
+        print_r($expected)."\n";*/
+        $this->assertEquals($expected,$markup);
+/*        $this->assert
+        print_r($markup);*/
+
     }
 
     public function setUp()
@@ -41,5 +50,12 @@ class TEC_Versions_Check extends Event_Code_Tests
         print "Tear Down End..."."\n";
     }
 
+    function shutdown()
+    {
+        // This is our shutdown function, in
+        // here we can do any last operations
+        // before the script is complete.
 
+        echo 'Script executed with success', PHP_EOL;
+    }
 }

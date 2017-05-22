@@ -31,4 +31,15 @@ class Event_Codes_Common {
 		return false;
 	}
 
+	static function is_true($meta_value) {
+
+		$meta_value = trim( $meta_value );
+
+		return (
+			'true' === strtolower( $meta_value )
+			|| 'yes' === strtolower( $meta_value )
+			|| true === $meta_value
+			|| 1 == $meta_value
+		);
+	}
 }

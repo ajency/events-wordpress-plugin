@@ -33,6 +33,8 @@
 
 		$('.aj--loadmore').click(function(e) {
 			e.preventDefault();
+			$('#'+e.target.id).hide();
+
 			var sc_params = window['event_codes_sc_atts_'+e.target.id]
 
 			if(event_codes.api_ver == 1) {
@@ -42,7 +44,7 @@
 				var url = event_codes.api_url + 'events/v1/get-more-events';
 			}
 
-//Send the AJAX call to the server
+			//Send the AJAX call to the server
 			$.ajax({
 				//The URL to process the request
 				'url' : url,
@@ -54,6 +56,9 @@
 				'data' : sc_params,
 				//The response from the server
 				'success' : function(data) {
+
+					$('#'+e.target.id).show();
+
 					console.log(data);
 
 					var markup1 = $(data.markup);

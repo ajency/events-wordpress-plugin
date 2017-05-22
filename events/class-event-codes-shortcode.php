@@ -78,35 +78,11 @@ class Event_Codes_Shortcode {
             }
         }
 
+        $atts = $this->_validate_atts($atts);
+
         $atts = shortcode_atts(
             $this->default_atts(), $atts, 'event_codes'
         );
-
-        //Validate allowed views
-        $view_allowed_values = ['tabular'];
-        if(!in_array($atts['view'],$view_allowed_values)) {
-            $atts['view'] = 'tabular';
-        }
-
-        //Validate allowed styles
-        $style_allowed_values = ['basic', 'shadow'];
-        if(!in_array($atts['style'],$style_allowed_values)) {
-            $atts['style'] = 'basic';
-        }
-
-        //Validate allowed row property
-        $row_allowed_values = ['alternate-gray'];
-        if(!in_array($atts['row'],$row_allowed_values)) {
-            $atts['row'] = false;
-        }
-
-        //Validate atts that have to be boolean
-        $bools = ['description','showtime','featured','past'];
-        foreach($bools as $bool) {
-            if(!is_bool($atts[$bool])){
-                $atts[$bool] = false;
-            }
-        }
 
         //Check if bootstrap or normal view from settings
         $options =  get_option('event_codes_settings');
@@ -118,7 +94,10 @@ class Event_Codes_Shortcode {
 
         //We do not use load more in older versions of WP, older than 4.4
         //admin-ajax code is still buggy - TODO
-        $atts['show-load-more'] = Event_Codes_Common::check_if_wp_rest_api();
+        //If true recehck if wp rest 2 version
+        if($atts['show-load-more']) {
+            $atts['show-load-more'] = Event_Codes_Common::check_if_wp_rest_api();
+        }
 
         //It all begins here
         $sc = new Event_Codes_Shortcode_Helper();
@@ -128,4 +107,45 @@ class Event_Codes_Shortcode {
         }
         $sc->render_shortcode_markup_and_data($atts);
     }
+
+    function _validate_atts($atts) {
+
+        //Make sure gebberish values are not sent to count and offset - has to be the first check
+        $numerics = ['count','offset'];
+        foreach($numerics as $numeric) {
+            if(isset($atts[$numeric]) && !is_numeric($atts[$numeric])){
+                unset($atts[$numeric]); //defaults will take over
+            }
+        }
+
+        //Validate atts that have to be boolean
+        $bools = ['description','showtime','featured','past'];
+        foreach($bools as $bool) {
+            if(isset($atts[$bool]) && !is_bool($atts[$bool])){
+                unset($atts[$bool]);
+            }
+        }
+
+        //Validate allowed views
+        $view_allowed_values = ['tabular'];
+        if(isset($atts['view']) && !in_array($atts['view'],$view_allowed_values)) {
+            unset($atts['view']);
+        }
+
+        //Validate allowed styles
+        $style_allowed_values = ['basic', 'shadow'];
+        if(isset($atts['style']) && !in_array($atts['style'],$style_allowed_values)) {
+            unset($atts['style']);
+        }
+
+        //Validate allowed row property
+        $row_allowed_values = ['alternate-gray'];
+        if(isset($atts['row']) && !in_array($atts['row'],$row_allowed_values)) {
+            unset($atts['row']);
+        }
+
+        return $atts;
+    }
+
+
 }
