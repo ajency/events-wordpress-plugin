@@ -1,7 +1,7 @@
 <div class="aj-table__info">
 	<div data-display="Event Title" class="aj-table__name">
 		<?php if($event['price']) : ?>
-			<span class="aj__price aj-table__price pull-right aj-list__price">
+			<span class="aj__price aj-table__price aj-list__price">
 							<?php if(!$event['currency_position'] || $event['currency_position'] == 'prefix') : ?>
 								<small class="aj__data-currency"><?php echo $event['currency']; ?></small>
 							<?php endif; ?>
