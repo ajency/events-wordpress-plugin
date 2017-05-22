@@ -35,29 +35,35 @@ class Event_Codes_Shortcode_Helper {
             //If the query did fetch events
             if ($event_data === false) {
                 return false; //unsupported
-            } else if ($event_data->count > 0) {
-
-                if ($load_more_api == false) {
-
-                    //We need a unique id if multiple shortcodes are placed on a page, used for load more ajax functionality
-                    $shortcode_id = uniqid();
-                    include plugin_dir_path(dirname(__FILE__)) . '/events/views/' . $atts['template'] . '/' . $atts['view'] . '-view.php';
-                } else {
-
-                    //In case of API we cannot just echo our content
-                    //We need to save content to a variable along with other data and show it in the UI for load more
-                    $load_more_api_data['markup'] = $this->return_load_more_events_markup_and_data($event_data, $atts);
-                    $load_more_api_data['atts'] = $atts;
-                    $load_more_api_data['results_count'] = $event_data->count;
-                    return $load_more_api_data;
-                }
-
-            } else {
-                include plugin_dir_path(dirname(__FILE__)) . '/events/views/not-available.php';
-
             }
+
+            $event_data_arr['atts'] = $atts;
+            $event_data_arr['results_count'] = $event_data->count;
+            if ($event_data->count > 0) {
+                if ($load_more_api == false) {
+                    $event_data_arr['markup'] = $this->return_events_markup_and_data($event_data, $atts);
+                } else {
+                    $event_data_arr['markup'] = $this->return_load_more_events_markup_and_data($event_data, $atts);
+                }
+            } else {
+                $event_data_arr['markup'] = $this->return_no_events_markup();
+            }
+            return $event_data_arr;
         }
         return false; //unsupported
+    }
+
+    public function return_no_events_markup() {
+        ob_start();
+        include plugin_dir_path(dirname(__FILE__)) . '/events/views/not-available.php';
+        return ob_get_clean();
+    }
+
+    public function return_events_markup_and_data($event_data,$atts) {
+        $shortcode_id = uniqid();
+        ob_start();
+        include plugin_dir_path(dirname(__FILE__)) . '/events/views/' . $atts['template'] . '/' . $atts['view'] . '-view.php';
+        return ob_get_clean();
     }
 
     public function return_load_more_events_markup_and_data($event_data,$atts) {

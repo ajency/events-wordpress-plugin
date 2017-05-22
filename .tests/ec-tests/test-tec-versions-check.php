@@ -23,15 +23,12 @@ class TEC_Versions_Check extends Event_Code_Tests
         $sch = new Event_Codes_Shortcode_Helper();
         $atts = $scc->default_atts();
         $markup = $sch->render_shortcode_markup_and_data($atts);
-        $expected = '<div class="aj__no-events">
-                        No events available :(
-                    </div>';
-/*        print_r($markup)."\n";
-        print_r($expected)."\n";*/
-        $this->assertEquals($expected,$markup);
-/*        $this->assert
-        print_r($markup);*/
-
+        if(is_bool($markup) && $markup == false) {
+            $r = $markup;
+        } else if(is_array($markup)) {
+            $r = true;
+        }
+        $this->assertTrue($r);
     }
 
     public function setUp()
