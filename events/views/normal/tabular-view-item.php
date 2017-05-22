@@ -1,4 +1,4 @@
-<div class="aj-table__info row">
+<div class="aj-table__info">
 	<div data-display="Event Title" class="aj-table__name">
 		<?php if($event['price']) : ?>
 			<span class="aj__price aj-table__price pull-right aj-list__price">

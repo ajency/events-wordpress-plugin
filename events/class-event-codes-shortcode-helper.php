@@ -41,32 +41,32 @@ class Event_Codes_Shortcode_Helper {
             $event_data_arr['results_count'] = $event_data->count;
             if ($event_data->count > 0) {
                 if ($load_more_api == false) {
-                    $event_data_arr['markup'] = $this->return_events_markup_and_data($event_data, $atts);
+                    $event_data_arr['markup'] = $this->_return_events_markup_and_data($event_data, $atts);
                 } else {
-                    $event_data_arr['markup'] = $this->return_load_more_events_markup_and_data($event_data, $atts);
+                    $event_data_arr['markup'] = $this->_return_load_more_events_markup_and_data($event_data, $atts);
                 }
             } else {
-                $event_data_arr['markup'] = $this->return_no_events_markup();
+                $event_data_arr['markup'] = $this->_return_no_events_markup();
             }
             return $event_data_arr;
         }
         return false; //unsupported
     }
 
-    public function return_no_events_markup() {
+    function _return_no_events_markup() {
         ob_start();
         include plugin_dir_path(dirname(__FILE__)) . '/events/views/not-available.php';
         return ob_get_clean();
     }
 
-    public function return_events_markup_and_data($event_data,$atts) {
+    function _return_events_markup_and_data($event_data,$atts) {
         $shortcode_id = uniqid();
         ob_start();
         include plugin_dir_path(dirname(__FILE__)) . '/events/views/' . $atts['template'] . '/' . $atts['view'] . '-view.php';
         return ob_get_clean();
     }
 
-    public function return_load_more_events_markup_and_data($event_data,$atts) {
+    function _return_load_more_events_markup_and_data($event_data,$atts) {
         ob_start();
         foreach ($event_data->events as $event) {
             include plugin_dir_path(dirname(__FILE__)) . '/events/views/' . $atts['template'] . '/' . $atts['view'] . '-view-item.php';
@@ -74,13 +74,13 @@ class Event_Codes_Shortcode_Helper {
         return ob_get_clean();
     }
 
-    public function _load_dependencies($code_name){
+    function _load_dependencies($code_name){
         //Bring out the datasource
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'datasources/class-event-codes-datasource.php';
         require_once plugin_dir_path(dirname(__FILE__)) . 'datasources/sources/class-event-codes-datasource-' . $code_name.'.php';
     }
 
-    public function _ds_class_name($code_name) {
+    function _ds_class_name($code_name) {
         return 'Event_Codes_Datasource_'.ucfirst($code_name);
     }
 

@@ -53,4 +53,20 @@ class Event_Code_Tests extends WP_UnitTestCase
         echo $data;
         return json_decode($data,true);
     }
+
+    function write_to_csv($bool,$file) {
+        $line = [];
+        $line['WHEN'] = date('d-M-Y H:i:s',time());
+        $line['WP_VER'] = getenv('WP_VER');
+        $line['PLUGIN'] = getenv('PLUGIN');
+        $line['PLUGIN_VER'] = getenv('PLUGIN_VER');
+        if($bool == false) {
+            $line['result'] = 'No';
+        } else {
+            $line['result'] = 'Yes';
+        }
+        $handle = fopen('ec-tests/logs/'.$file.".csv", "a");
+        fputcsv($handle, $line);
+        fclose($handle);
+    }
 }
