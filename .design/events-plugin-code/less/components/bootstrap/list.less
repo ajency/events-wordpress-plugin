@@ -19,15 +19,24 @@
         flex-direction: row;
     }
 	&__top {
-		// position: relative;
+		position: relative;
         width: 25%;
         // float: left;
 	}
 	&__image {
 		display: block;
 		font-size: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
 		img {
 			width: 100%;
+            display: none;
 		}
 	}
 	&__datein, &__time {
@@ -68,6 +77,12 @@
         &__inner {
             flex-direction: column;
         }
+        &__image {
+            position: relative;
+            img {
+                display: block;
+            }
+        }
 	}
 
 	// ============================
@@ -100,6 +115,7 @@
     	line-height: 1.5;
     	opacity: 0.6;
     	margin-top: 1.2em;
+        margin-bottom: 0;
     }
     &--basic &__datein {
     	font-size: 1.1em;
@@ -187,19 +203,21 @@
         width: 27%;
     }
     &--overlay &__image {
+        position: relative;
         height: 200px;
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        img {
-            display: none;
-        }
+        // background-size: cover;
+        // background-position: center;
+        // background-repeat: no-repeat;
+        // img {
+        //     display: none;
+        // }
     }
     &--overlay &__content {
         background: #fff;
         // margin-left: -25px;
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
         min-height: 160px;
+        z-index: 5;
     }
     &--overlay &__date {
         display: flex;
@@ -260,23 +278,26 @@
         &--complete &__content {
             width: 100%;
         }
+        &--complete &__top {
+            position: static;
+        }
         &--complete &__title a,
         &--complete &__desc,
         &--complete &__address a {
             color: #fff;
         }
         &--complete &__image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            img {
-                display: none;
-            }
+            // position: absolute;
+            // top: 0;
+            // left: 0;
+            // right: 0;
+            // bottom: 0;
+            // background-size: cover;
+            // background-position: center;
+            // background-repeat: no-repeat;
+            // img {
+            //     display: none;
+            // }
         }
         &--complete &__content {
             position: relative;
