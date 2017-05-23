@@ -8,7 +8,7 @@
             }
             ?>
 
-            <a href="#" class="aj-list__image aj__data-image" style="background-image: url(<?php echo $event['art_work']; ?>);">
+            <a href="<?php echo $event['title_link']; ?>" class="aj-list__image aj__data-image" style="background-image: url(<?php echo $event['art_work']; ?>);">
                 <img src="<?php echo $event['art_work']; ?>" alt="">
             </a>
         </div>

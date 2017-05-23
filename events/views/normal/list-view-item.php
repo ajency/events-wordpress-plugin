@@ -1,7 +1,14 @@
 <div class="aj-list__single">
     <div class="aj-list__inner">
         <div class="aj-list__top">
-            <a href="#" class="aj-list__image aj__data-image" style="background-image: url(img/dummyimg.png);">
+
+            <?php
+            if(!$event['art_work']){
+                $event['art_work'] = plugin_dir_url( __DIR__ ).'img/dummyimg.png';
+            }
+            ?>
+            
+            <a href="<?php echo $event['title_link']; ?>" class="aj-list__image aj__data-image" style="background-image: url(<?php echo $event['art_work']; ?>);">
                 <img src="<?php echo $event['art_work']; ?>"" alt="">
             </a>
         </div>
