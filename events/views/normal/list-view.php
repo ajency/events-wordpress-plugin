@@ -11,7 +11,7 @@
 		-->
 <div class="aj">
     <h3 class="aj__title"><?php echo $event_data->event_range_lbl; ?> Events</h3>
-    <div id="data-<?php echo $shortcode_id; ?>" class="aj-list aj-list--complete aj--hastime aj--hasprice aj--hasdesc">
+    <div id="data-<?php echo $shortcode_id; ?>" class="aj-list aj-list--complete <?php echo $atts['description'] ? 'aj--hasdesc':'' ?> <?php echo $atts['showtime'] ? 'aj--hastime':'' ?> aj--hasprice">
         <?php foreach($event_data->events as $event) : ?>
             <?php include(dirname( __FILE__ )  . '/list-view-item.php' ); ?>
         <?php endforeach; ?>

@@ -6,26 +6,47 @@
             </a>
         </div>
         <div class="aj-list__content">
-            <div class="aj__price aj-list__price">
-                <small class="aj__data-currency">&#8377;</small> <strong class="aj__data-price">35</strong>
-            </div>
+
+
+            <?php if($event['price']) : ?>
+                <div class="aj__price aj-list__price">
+                    <?php if(!$event['currency_position'] || $event['currency_position'] == 'prefix') : ?>
+
+                        <small class="aj__data-currency"><?php echo $event['currency']; ?></small>
+                    <?php endif; ?>
+
+                    <strong class="aj__data-price"><?php echo $event['price']; ?></strong>
+                    <?php if($event['currency_position'] == 'suffix') : ?>
+                        <small class="aj__data-currency"><?php echo $event['currency']; ?></small>
+                    <?php endif; ?>
+
+
+                </div>
+            <?php endif; ?>
             <div class="aj-list__date">
+
 								<span class="aj-list__datein">
 									<span class="aj-list__start">
-										<span class="aj-list__day aj__data-daystart">16</span>
-										<span class="aj__data-daystart-month">May</span>
+										<span class="aj-list__day aj__data-daystart"><?php echo $event['start_date_day']; ?></span>
+										<span class="aj__data-daystart-month"><?php echo $event['start_date_mon']; ?></span>
 									</span>
-									<span class="aj-list__div">-</span>
+                                    <?php if($event['end_date_day']) : ?>
+                                    <span class="aj-list__div">-</span>
 									<span class="aj-list__end">
-										<span class="aj-list__day aj__data-dayend">18</span>
-										<span class="aj__data-dayend-month">May</span>
+										<span class="aj-list__day aj__data-dayend"><?php echo $event['end_date_day']; ?></span>
+										<span class="aj__data-dayend-month"><?php echo $event['end_date_mon']; ?></span>
 									</span>
+                                    <?php endif; ?>
 								</span>
 								<span class="aj-list__time aj__data-time">
 									<span class="aj__data-time">
-										<span class="aj__data-timestart">09:30AM</span>
+                                        <?php if($event['start_time']) : ?>
+										<span class="aj__data-timestart"><?php echo $event['start_time']; ?></span>
+                                        <?php endif; ?>
+                                        <?php if($event['end_time']) : ?>
 										<span class="aj__data-hyphen">-</span>
-										<span class="aj__data-timeend">02:30PM</span>
+										<span class="aj__data-timeend"><?php echo $event['end_time']; ?></span>
+                                        <?php endif; ?>
 									</span>
 								</span>
             </div>
