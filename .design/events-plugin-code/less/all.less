@@ -10,7 +10,14 @@
 @import 'layout';
 @import 'components/standalone/components';
 
-.aj__link {
-	display: inline-block;
-	padding: 8px 0;
+.aj {
+	&__link {
+		display: inline-block;
+		padding: 8px 0;
+	}
+	&__navi:after {
+		content: '';
+		display: table;
+		clear: both;
+	}
 }

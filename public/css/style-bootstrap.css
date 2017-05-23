@@ -471,6 +471,7 @@
   width: 75%;
   padding: 15px 25px;
   border: 1px solid #eee;
+  min-height: 135px;
 }
 @media screen and (max-width: 991px) {
   .aj-list__top {
@@ -611,6 +612,7 @@
 .aj-list--overlay .aj-list__content {
   background: #fff;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  min-height: 160px;
 }
 .aj-list--overlay .aj-list__date {
   display: flex;
@@ -737,4 +739,9 @@
 }
 .aj .pull-right {
   float: right !important;
+}
+.aj__navi:after {
+  content: '';
+  display: table;
+  clear: both;
 }
