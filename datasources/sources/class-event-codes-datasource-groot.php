@@ -18,7 +18,7 @@ class Event_Codes_Datasource_Groot extends Event_Codes_Datasource {
                 $event_start_date = strtotime($post->EventStartDate);
                 $event_end_date = strtotime($post->EventEndDate);
                 $event->setDates($event_start_date,$event_end_date,Event_Codes_Common::is_true( get_post_meta( $post->ID, '_EventAllDay', true ) ), $atts['showtime']);
-
+                $event->setArtWork(get_the_post_thumbnail_url( $post));
                 $event->setAddress([tribe_get_address(),tribe_get_city(),tribe_get_region(),tribe_get_country()]);
                 //TODO set lat lng in a cleaner way
                 $show_link = get_post_meta($post->ID,'_EventShowMapLink',true);

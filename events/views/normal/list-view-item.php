@@ -2,7 +2,7 @@
     <div class="aj-list__inner">
         <div class="aj-list__top">
             <a href="#" class="aj-list__image aj__data-image" style="background-image: url(img/dummyimg.png);">
-                <img src="img/dummyimg.png" alt="">
+                <img src="<?php echo $event['art_work']; ?>"" alt="">
             </a>
         </div>
         <div class="aj-list__content">

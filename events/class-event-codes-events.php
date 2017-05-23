@@ -58,6 +58,4 @@ class Event_Codes_Events {
 		$this->event_range_lbl = $event_range_lbl;
 	}
 
-
-
 }

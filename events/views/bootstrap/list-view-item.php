@@ -1,8 +1,15 @@
 <div class="aj-list__single">
     <div class="aj-list__inner">
         <div class="aj-list__top">
-            <a href="#" class="aj-list__image aj__data-image" style="background-image: url(img/dummyimg.png);">
-                <img src="img/dummyimg.png" alt="">
+
+            <?php
+            if(!$event['art_work']){
+                $event['art_work'] = plugin_dir_url( __DIR__ ).'img/dummyimg.png';
+            }
+            ?>
+
+            <a href="#" class="aj-list__image aj__data-image" style="background-image: url(<?php echo $event['art_work']; ?>);">
+                <img src="<?php echo $event['art_work']; ?>" alt="">
             </a>
         </div>
         <div class="aj-list__content">
@@ -54,11 +61,11 @@
             <h4 class="aj-list__title aj__data-title"><a href="<?php echo $event['title_link']; ?>"><?php echo $event['title']; ?></a></h4>
             <?php if($event['address_link']): ?>
                 <div class="aj__address aj-list__address aj__data-address">
-                    <a href="<?php echo $event['address_link']; ?>"><img src="img/marker.png" alt=""><?php echo $event['address']; ?></a>
+                    <a href="<?php echo $event['address_link']; ?>"><img src="<?php echo plugin_dir_url( __DIR__ ); ?>img/marker.png" alt=""><?php echo $event['address']; ?></a>
                 </div>
             <?php else: ?>
                 <div class="aj__address aj-list__address aj__data-address">
-                    <img src="img/marker.png" alt=""><?php echo $event['address']; ?>
+                    <img src="<?php echo plugin_dir_url( __DIR__ ); ?>img/marker.png" alt=""><?php echo $event['address']; ?>
                 </div>
             <?php endif; ?>
 
