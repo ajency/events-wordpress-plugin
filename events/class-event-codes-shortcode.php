@@ -41,7 +41,7 @@ class Event_Codes_Shortcode {
 
     public function default_atts() {
         return array(
-            'view' => 'tabular',
+            'view' => 'list',
             'style' => 'basic',
             'count' => 5,
             'offset' => 0,
@@ -128,7 +128,7 @@ class Event_Codes_Shortcode {
         }
 
         //Validate allowed views
-        $view_allowed_values = ['tabular'];
+        $view_allowed_values = ['tabular','list'];
         if(isset($atts['view']) && !in_array($atts['view'],$view_allowed_values)) {
             unset($atts['view']);
         }
