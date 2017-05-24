@@ -61,7 +61,7 @@
             <h4 class="aj-list__title aj__data-title"><a href="<?php echo $event['title_link']; ?>"><?php echo $event['title']; ?></a></h4>
             <?php if($event['address_link']): ?>
                 <div class="aj__address aj-list__address aj__data-address">
-                    <a href="<?php echo $event['address_link']; ?>"><img src="<?php echo plugin_dir_url( __DIR__ ); ?>img/marker.png" alt=""><?php echo $event['address']; ?></a>
+                    <a target="_blank" href="<?php echo $event['address_link']; ?>"><img src="<?php echo plugin_dir_url( __DIR__ ); ?>img/marker.png" alt=""><?php echo $event['address']; ?></a>
                 </div>
             <?php else: ?>
                 <div class="aj__address aj-list__address aj__data-address">
