@@ -128,7 +128,7 @@ class Event_Codes_Shortcode {
         }
 
         //Validate allowed views
-        $view_allowed_values = ['tabular','list'];
+        $view_allowed_values = ['tabular','list', 'grid'];
         if(isset($atts['view']) && !in_array($atts['view'],$view_allowed_values)) {
             unset($atts['view']);
         }
