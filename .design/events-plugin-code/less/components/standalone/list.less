@@ -39,13 +39,16 @@
             display: none;
 		}
 	}
+    & &__image img {
+        display: none;
+    }
 	&__datein, &__time {
 		display: block;
 	}
 	&__datein {
 		font-weight: bold;
 	}
-	&__address img {
+	& &__address img {
 		display: inline-block;
 		vertical-align: bottom;
 		margin-right: 6px;
@@ -82,9 +85,9 @@
         }
         &__image {
             position: relative;
-            img {
-                display: block;
-            }
+        }
+        & &__image img {
+            display: block;
         }
 	}
 
