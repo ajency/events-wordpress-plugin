@@ -32,11 +32,17 @@
 			class for price: aj--hasprice
 			class for time: aj--hastime
 			class for desc: aj--hasdesc
+
+			===================================
+			to change the width as per the count set by the user,
+			in the div with class 'aj-grid__single' - style attribute
+			the width is being calculated using calc(100% * (1/3))
+			replace the '3' with the count per row
 		-->
 		<div class="aj">
 			<h3 class="aj__title">Upcoming Events</h3>
 			<div class="aj-grid aj-grid--overlay aj--hastime aj--hasprice aj--hasdesc">
-				<div class="aj-grid__single">
+				<div class="aj-grid__single" style="width: calc(100% * (1/3));">
 					<div class="aj-grid__inner">
 						<div class="aj-grid__top">
 							<a href="#" class="aj-grid__image aj__data-image" style="background-image: url(img/dummyimg.png);">
