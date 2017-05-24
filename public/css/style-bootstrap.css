@@ -62,7 +62,7 @@
   word-wrap: break-word;
   word-break: break-all;
 }
-.aj-table__desc {
+.aj-table .aj-table__desc {
   margin-top: 5px;
   margin-bottom: 5px;
 }
