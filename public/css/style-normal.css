@@ -511,6 +511,9 @@
   width: 100%;
   display: none;
 }
+.aj-list .aj-list__image img {
+  display: none;
+}
 .aj-list__datein,
 .aj-list__time {
   display: block;
@@ -518,7 +521,7 @@
 .aj-list__datein {
   font-weight: bold;
 }
-.aj-list__address img {
+.aj-list .aj-list__address img {
   display: inline-block;
   vertical-align: bottom;
   margin-right: 6px;
@@ -556,7 +559,7 @@
   .aj-list__image {
     position: relative;
   }
-  .aj-list__image img {
+  .aj-list .aj-list__image img {
     display: block;
   }
 }
