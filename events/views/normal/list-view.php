@@ -9,9 +9,19 @@
 			class for time: aj--hastime
 			class for desc: aj--hasdesc
 		-->
+
+<?php
+if($atts['style'] == 'big-date') {
+    $atts['style'] = 'bigdate';
+} else if($atts['style'] == 'card-overlay') {
+    $atts['style'] = 'overlay';
+} else if($atts['style'] == 'complete-overlay') {
+    $atts['style'] = 'complete';
+}
+?>
 <div class="aj">
     <h3 class="aj__title"><?php echo $event_data->event_range_lbl; ?> Events</h3>
-    <div id="data-<?php echo $shortcode_id; ?>" class="aj-list aj-list--complete <?php echo $atts['description'] ? 'aj--hasdesc':'' ?> <?php echo $atts['showtime'] ? 'aj--hastime':'' ?> aj--hasprice">
+    <div id="data-<?php echo $shortcode_id; ?>" class="aj-list aj-list--<?php echo $atts['style']; ?> <?php echo $atts['description'] ? 'aj--hasdesc':'' ?> <?php echo $atts['showtime'] ? 'aj--hastime':'' ?> aj--hasprice">
         <?php foreach($event_data->events as $event) : ?>
             <?php include(dirname( __FILE__ )  . '/list-view-item.php' ); ?>
         <?php endforeach; ?>

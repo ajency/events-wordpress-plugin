@@ -133,18 +133,27 @@ class Event_Codes_Shortcode {
             unset($atts['view']);
         }
 
-        //Validate allowed styles
-        $style_allowed_values = ['basic', 'shadow'];
-        if(isset($atts['style']) && !in_array($atts['style'],$style_allowed_values)) {
-            unset($atts['style']);
-        }
+        //based on views validate styles and other style related options
+        if(isset($atts['view']) && $atts['view'] == 'list') {
+            $list_style_allowed_values = ['basic', 'big-date', 'card-overlay', 'complete-overlay'];
+            if(isset($atts['style']) && !in_array($atts['style'],$list_style_allowed_values)) {
+                unset($atts['style']);
+            }
 
-        //Validate allowed row property
-        $row_allowed_values = ['alternate-gray'];
-        if(isset($atts['row']) && !in_array($atts['row'],$row_allowed_values)) {
-            unset($atts['row']);
-        }
+        } else if(isset($atts['view']) && $atts['view'] == 'tabular') {
+            //Validate allowed styles
+            $table_style_allowed_values = ['basic', 'shadow'];
+            if(isset($atts['style']) && !in_array($atts['style'],$table_style_allowed_values)) {
+                unset($atts['style']);
+            }
 
+            //Validate allowed row property
+            $table_row_allowed_values = ['alternate-gray'];
+            if(isset($atts['row']) && !in_array($atts['row'],$table_row_allowed_values)) {
+                unset($atts['row']);
+            }
+
+        }
         return $atts;
     }
 
