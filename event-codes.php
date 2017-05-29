@@ -29,6 +29,8 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
+define( 'EVENT_CODES_FILE', __FILE__ );
+
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-event-codes-activator.php

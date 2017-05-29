@@ -4,7 +4,7 @@
 
             <?php
             if(!$event['art_work']){
-                $event['art_work'] = plugin_dir_url( __DIR__ ).'img/dummyimg.png';
+                $event['art_work'] =  plugins_url( '/public/img/dummyimg.png', EVENT_CODES_FILE );
             }
             ?>
 
@@ -63,11 +63,11 @@
 
             <?php if($event['address_link']): ?>
                 <div target="_blank" class="aj__address aj-grid__address aj__data-address">
-                    <a href="<?php echo $event['address_link']; ?>"><img src="<?php echo plugin_dir_url( __DIR__ ); ?>img/marker.png" alt=""><?php echo $event['address']; ?></a>
+                    <a href="<?php echo $event['address_link']; ?>"><img src="<?php echo plugins_url( '/public/img/marker.png', EVENT_CODES_FILE ); ?>" alt=""><?php echo $event['address']; ?></a>
                 </div>
             <?php else: ?>
                 <div class="aj__address aj-grid__address aj__data-address">
-                    <img src="<?php echo plugin_dir_url( __DIR__ ); ?>img/marker.png" alt=""><?php echo $event['address']; ?>
+                    <img src="<?php echo plugins_url( '/public/img/marker.png', EVENT_CODES_FILE ); ?>" alt=""><?php echo $event['address']; ?>
                 </div>
             <?php endif; ?>
 
