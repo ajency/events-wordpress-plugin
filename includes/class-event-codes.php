@@ -6,7 +6,7 @@
  * A class definition that includes attributes and functions used across both the
  * public-facing side of the site and the admin area.
  *
- * @link       https://ajency.in
+ * @link       http://wpdwarves.com
  * @since      1.0.0
  *
  * @package    Event_Codes
@@ -69,7 +69,7 @@ class Event_Codes {
 	public function __construct() {
 
 		$this->plugin_name = 'event-codes';
-		$this->version = '0.4.9';
+		$this->version = '0.4.9.1';
 
 		$this->load_dependencies();
 		$this->set_locale();

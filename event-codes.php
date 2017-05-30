@@ -8,14 +8,14 @@
  * registers the activation and deactivation functions, and defines a function
  * that starts the plugin.
  *
- * @link              https://ajency.in
+ * @link              http://wpdwarves.com
  * @package           Event_Codes
  *
  * @wordpress-plugin
  * Plugin Name:       Event Codes - Shortcodes that work with other event plugins
  * Plugin URI:        http://wpdwarves.com/event-codes/
  * Description:       List your events anywhere by adding shortcodes to The Events Calendar Plugin (Free Version) by Modern Tribe.
- * Version:           0.4.9
+ * Version:           0.4.9.1
  * Author:            WPdwarves
  * Author URI:        http://wpdwarves.com/event-codes/
  * License:           GPL-2.0+
