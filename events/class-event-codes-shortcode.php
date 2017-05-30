@@ -128,7 +128,7 @@ class Event_Codes_Shortcode {
         }
 
         //Validate allowed views
-        $view_allowed_values = ['tabular','list', 'grid'];
+        $view_allowed_values = ['tabular','list'];
         if(isset($atts['view']) && !in_array($atts['view'],$view_allowed_values)) {
             unset($atts['view']);
         }
@@ -153,6 +153,10 @@ class Event_Codes_Shortcode {
                 unset($atts['row']);
             }
 
+            //Unset everything if view is not valid
+        } else {
+            unset($atts['style']);
+            unset($atts['row']);
         }
         return $atts;
     }
