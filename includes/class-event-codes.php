@@ -69,7 +69,7 @@ class Event_Codes {
 	public function __construct() {
 
 		$this->plugin_name = 'event-codes';
-		$this->version = '0.4.9.1';
+		$this->version = '0.5';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -173,7 +173,9 @@ class Event_Codes {
 		$this->loader->add_action( 'init', $event_shortcodes, 'load_shortcodes' );
 
 		$event_api = new Event_Codes_API( $this->get_plugin_name(), $this->get_version() );
+		$this->loader->add_action( 'rest_authentication_errors', $event_api, 'event_codes_api_auth' );
 		$this->loader->add_action( 'rest_api_init', $event_api, 'event_codes_api' );
+
 
 #		if(!function_exists('rest_url')) {
 			//Additional admin-ajax actions for depricated versions

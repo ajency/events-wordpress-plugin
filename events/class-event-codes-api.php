@@ -42,32 +42,6 @@ class Event_Codes_API
     {
         register_rest_route(
             'events/v1',
-            '/get-events',
-            array(
-                'methods' => 'GET',
-                'callback' => array($this,'get_events'),
-                'permission_callback' => function () {
-                    return true;
-                }
-
-            )
-        );
-
-        register_rest_route(
-            'events/v1',
-            '/get-template',
-            array(
-                'methods' => 'GET',
-                'callback' => array($this,'get_template'),
-                'permission_callback' => function () {
-                    return true;
-                }
-
-            )
-        );
-
-        register_rest_route(
-            'events/v1',
             '/get-more-events',
             array(
                 'methods' => 'GET',
@@ -79,6 +53,32 @@ class Event_Codes_API
             )
         );
     }
+
+    //Does not matter as API needs to be public
+    function event_codes_api_auth( $result )
+    {
+
+        // $result should be null. Any other value indicates something
+        // happened before we got here.
+        if (!is_null($result) || is_wp_error($result)) {
+            return $result;
+        }
+
+        // Make sure we need to authenticate at all.
+        if (empty($_REQUEST['_jilarx']) || empty($_REQUEST['_api_nonce'])) {
+            return $result;
+        }
+
+        // Verifiy the nonce.
+        $nonce = $_REQUEST['_api_nonce'];
+        if (wp_verify_nonce($nonce, 'api_nonce')) {
+            return true;
+        }
+
+        // If we're still here, just return the original result.
+        return $result;
+    }
+
 
     function get_more_events($request_data) {
 
@@ -95,25 +95,6 @@ class Event_Codes_API
         return $ds->render_shortcode_markup_and_data($atts,true);
     }
 
-    function get_template($request_data) {
-
-        $parameters = $request_data->get_params();
-        return file_get_contents(dirname( __FILE__ )  .'/views/'.$parameters['template'].'/'.$parameters['view'].'-view-item.php' );
-    }
-
-    function get_events($request_data) {
-        $atts = $request_data->get_params();
-        $data = new Event_Codes_Shortcode_Helper();
-        $atts['offset'] = $atts['offset'] + $atts['count'];
-        $d['event_data'] = $data->getEventData($atts);
-        $d['atts'] = $atts;
-        if(Event_Codes_Common::check_if_wp_rest_api()) {
-            return $d;
-        } else {
-            print_r($d);
-            wp_die();
-        }
-    }
 
     function dummy_data_object() {
 

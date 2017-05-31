@@ -32,10 +32,15 @@
 	jQuery(document).ready(function() {
 
 		$('.aj--loadmore').click(function(e) {
+
+			console.log(event_codes);
+
 			e.preventDefault();
 			$('#'+e.target.id).hide();
 
 			var sc_params = window['event_codes_sc_atts_'+e.target.id]
+			sc_params._jilarx = true;
+			sc_params._api_nonce = event_codes.api_nonce;
 
 			if(event_codes.api_ver == 1) {
 				var url = event_codes.api_url;
@@ -53,13 +58,16 @@
 				'type' : 'GET',
 				//Any post-data/get-data parameters
 				//This is optional
+				beforeSend : function ( xhr ) {
+					xhr.setRequestHeader( 'X-WP-Nonce', event_codes.api_nonce );
+				},
 				'data' : sc_params,
 				//The response from the server
 				'success' : function(data) {
 
-					$('#'+e.target.id).show();
-
 					console.log(data);
+
+					$('#'+e.target.id).show();
 
 					var markup1 = $(data.markup);
 					$('#data-' + e.target.id).append(markup1);

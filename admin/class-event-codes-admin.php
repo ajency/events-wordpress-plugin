@@ -189,7 +189,7 @@ class Event_Codes_Admin {
 	} //
 
 	function settings_init(  ) {
-		add_settings_section("event_codes_section", sprintf( esc_html( __("This section gives you quick access to settings that will help us make our services work better for you.",'event-codes'))), null, "event_codes_settings");
+		add_settings_section("event_codes_section", sprintf( esc_html( __("This section gives you quick access to settings that will help you get a better plugin experience.",'event-codes'))), null, "event_codes_settings");
 		add_settings_field("event_codes_settings", sprintf( esc_html( __('Enable Bootstrap','event-codes'))), array($this,"template_select_checkbox_display"), "event_codes_settings", "event_codes_section");
 		register_setting("event_codes_section", "event_codes_settings");
 	}

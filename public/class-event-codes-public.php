@@ -56,7 +56,9 @@ class Event_Codes_Public {
 
 	public function construct_local_js_object() {
 		//Added a place holder function incase we need to pass additional data like nonce or home url for future
-		return Event_Codes_Common::get_wp_api_version();
+		$data = Event_Codes_Common::get_wp_api_version();
+		$data['api_nonce'] = wp_create_nonce('api_nonce');
+		return $data;
 	}
 
 }

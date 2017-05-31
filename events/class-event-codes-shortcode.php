@@ -155,8 +155,12 @@ class Event_Codes_Shortcode {
 
             //Unset everything if view is not valid
         } else {
-            unset($atts['style']);
-            unset($atts['row']);
+            if(isset($atts['style'])) {
+                unset($atts['style']);
+            }
+            if(isset($atts['style'])) {
+                unset($atts['row']);
+            }
         }
         return $atts;
     }
