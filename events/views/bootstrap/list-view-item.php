@@ -58,7 +58,7 @@
 								</span>
             </div>
 
-            <h4 class="aj-list__title aj__data-title"><a href="<?php echo $event['title_link']; ?>"><?php echo $event['title']; ?></a></h4>
+            <h4 class="aj-list__title aj__data-title"><a title="<?php echo $event['title']; ?>" href="<?php echo $event['title_link']; ?>"><?php echo $event['title']; ?></a></h4>
             <?php if($event['address_link']): ?>
                 <div class="aj__address aj-list__address aj__data-address">
                     <a target="_blank" href="<?php echo $event['address_link']; ?>"><img src="<?php echo plugins_url( '/public/img/marker.png', EVENT_CODES_FILE ); ?>" alt=""><?php echo $event['address']; ?></a>
