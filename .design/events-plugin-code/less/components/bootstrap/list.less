@@ -45,10 +45,14 @@
 	&__datein {
 		font-weight: bold;
 	}
+    &__price strong {
+        color: #fff;
+    }
 	&__address img {
 		display: inline-block;
 		// vertical-align: bottom;
 		margin-right: 6px;
+        margin-bottom: 0;
 	}
 	&__title {
 		white-space: nowrap;
@@ -61,6 +65,7 @@
         padding: 15px 25px;
         border: 1px solid #eee;
         min-height: 135px;
+        z-index: 1;
     }
 	@media screen and (max-width: 991px) {
         &__top {
@@ -95,10 +100,11 @@
     }
     &--basic &__price,
     &--bigdate &__price {
-    	position: absolute;
-    	right: 15px;
-    	top: 15px;
-    	font-size: 1.4em;
+    	// position: absolute;
+        // right: 15px;
+        // top: 15px;
+        font-size: 1.2em;
+        margin-top: -68px;
     }
     &--basic &__title,
     &--bigdate &__title,
@@ -137,6 +143,13 @@
         &--bigdate &__title,
         &--overlay &__title {
             padding-right: 64px;
+        }
+        &--basic &__price,
+        &--bigdate &__price {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            margin-top: 0;
         }
     }
 
@@ -255,7 +268,7 @@
         &--overlay &__price {
             right: 15px;
             bottom: auto;
-            top: 150px;
+            top: 146px;
         }
         &--overlay &__top {
             margin-right: 0;
@@ -263,6 +276,11 @@
         }
         &--overlay &__content {
             width: 100%;
+        }
+        &--overlay &__image {
+            img {
+                display: none;
+            }
         }
     }
 

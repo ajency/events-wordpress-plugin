@@ -5,6 +5,7 @@
 .aj h5,
 .aj h6 {
   margin: 0;
+  padding-bottom: 0;
   clear: none;
 }
 .aj h4.aj__data-title {
@@ -18,6 +19,9 @@
   font-size: 16px;
   color: #aaa;
 }
+.aj__title {
+  margin-bottom: 15px !important;
+}
 .aj,
 .aj * {
   box-sizing: border-box;
@@ -30,7 +34,7 @@
   padding-right: 15px;
 }
 .aj__price {
-  padding: 0.25em 0.7em;
+  padding: 0.05em 0.7em;
   border-radius: 25px;
   background: #414141;
   color: #fff;
@@ -467,9 +471,13 @@
 .aj-list__datein {
   font-weight: bold;
 }
+.aj-list__price strong {
+  color: #fff;
+}
 .aj-list__address img {
   display: inline-block;
   margin-right: 6px;
+  margin-bottom: 0;
 }
 .aj-list__title {
   white-space: nowrap;
@@ -481,6 +489,7 @@
   padding: 15px 25px;
   border: 1px solid #eee;
   min-height: 135px;
+  z-index: 1;
 }
 @media screen and (max-width: 991px) {
   .aj-list__top {
@@ -512,10 +521,8 @@
 }
 .aj-list--basic .aj-list__price,
 .aj-list--bigdate .aj-list__price {
-  position: absolute;
-  right: 15px;
-  top: 15px;
-  font-size: 1.4em;
+  font-size: 1.2em;
+  margin-top: -68px;
 }
 .aj-list--basic .aj-list__title,
 .aj-list--bigdate .aj-list__title,
@@ -556,6 +563,13 @@
   .aj-list--bigdate .aj-list__title,
   .aj-list--overlay .aj-list__title {
     padding-right: 64px;
+  }
+  .aj-list--basic .aj-list__price,
+  .aj-list--bigdate .aj-list__price {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    margin-top: 0;
   }
 }
 .aj-list--bigdate .aj-list__content,
@@ -656,7 +670,7 @@
   .aj-list--overlay .aj-list__price {
     right: 15px;
     bottom: auto;
-    top: 150px;
+    top: 146px;
   }
   .aj-list--overlay .aj-list__top {
     margin-right: 0;
@@ -664,6 +678,9 @@
   }
   .aj-list--overlay .aj-list__content {
     width: 100%;
+  }
+  .aj-list--overlay .aj-list__image img {
+    display: none;
   }
 }
 @media screen and (min-width: 768px) {
