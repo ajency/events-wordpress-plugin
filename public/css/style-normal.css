@@ -489,6 +489,7 @@
 .aj-list__image img {
   width: 100%;
   display: none;
+  margin-bottom: 0;
 }
 .aj-list .aj-list__image img {
   display: none;
@@ -509,7 +510,7 @@
   float: right;
 }
 .aj-list__price strong {
-  color: #fff;
+  color: #fff !important;
 }
 .aj-list__title {
   white-space: nowrap;

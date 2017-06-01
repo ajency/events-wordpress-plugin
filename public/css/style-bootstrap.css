@@ -463,6 +463,7 @@
 .aj-list__image img {
   width: 100%;
   display: none;
+  margin-bottom: 0;
 }
 .aj-list__datein,
 .aj-list__time {
@@ -472,7 +473,7 @@
   font-weight: bold;
 }
 .aj-list__price strong {
-  color: #fff;
+  color: #fff !important;
 }
 .aj-list__address img {
   display: inline-block;
@@ -635,6 +636,7 @@
   height: 200px;
 }
 .aj-list--overlay .aj-list__content {
+  width: 77%;
   background: #fff;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   min-height: 160px;

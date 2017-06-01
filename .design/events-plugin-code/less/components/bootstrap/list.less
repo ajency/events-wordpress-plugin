@@ -37,6 +37,7 @@
 		img {
 			width: 100%;
             display: none;
+            margin-bottom: 0;
 		}
 	}
 	&__datein, &__time {
@@ -46,7 +47,7 @@
 		font-weight: bold;
 	}
     &__price strong {
-        color: #fff;
+        color: #fff !important;
     }
 	&__address img {
 		display: inline-block;
@@ -226,6 +227,7 @@
         // }
     }
     &--overlay &__content {
+        width: 77%;
         background: #fff;
         // margin-left: -25px;
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
