@@ -1,11 +1,13 @@
 <?php
 
-class Event_Codes_The_Events_Calender {
+class Event_Codes_The_Events_Calender extends Event_Codes_Datasource_Config {
 
-    //Each codebase is given a codename so that we can mention which versions of The Event Calender pro we support with a sicngle codebase
+    //Each codebase is given a codename so that we can mention which versions of The Event Calender pro we support with a single codebase
     //Guardians of the galaxy
     const GROOT = 'groot';
     const ROCKET = 'rocket';
+    const MIN_VERSION_SUPPORT = 3.10;
+    const DEFAULT_VERSION_SUPPORT = 3.10;
 
     public function supported_versions_config()
     {
@@ -15,6 +17,8 @@ class Event_Codes_The_Events_Calender {
             //We changed this array as its easier to array search by key -- less expensive
             //The earlier would lead to MD array and array search below 5.5 is bad
             [
+                '4.5.2.1' => self::GROOT,
+
                 '4.5.0.2' => self::GROOT,
                 '4.5.0.1' => self::GROOT,
                 '4.5' => self::GROOT,
@@ -131,11 +135,15 @@ class Event_Codes_The_Events_Calender {
             defined('Tribe__Events__Main::VERSION')
         ) {
             $version = Tribe__Events__Main::VERSION;
-            $supported_versions = $this->supported_versions_config();
-            if(in_array($version,array_keys($supported_versions)))
+#            $supported_versions = $this->supported_versions_config();
+/*            if(in_array($version,array_keys($supported_versions)))
             {
                 //return the codename
                 return $supported_versions[$version];
+            }*/
+            $min_version = self::MIN_VERSION_SUPPORT;
+            if($version > $min_version) {
+                return self::GROOT;
             }
         }
         return false;
