@@ -52,14 +52,19 @@
 		display: inline-block;
 		// vertical-align: bottom;
 		margin-right: 6px;
+        margin-bottom: 0;
 	}
 	&__price {
 		float: right;
+        strong {
+            color: #fff;
+        }
 	}
 	&__title {
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+        margin-bottom: 5px !important;
 	}
     &__content {
         // float: left;
@@ -67,6 +72,7 @@
         padding: 15px 25px;
         border: 1px solid #eee;
         min-height: 135px;
+        z-index: 1;
     }
 	@media screen and (max-width: 991px) {
         &__top {
@@ -101,10 +107,11 @@
     }
     &--basic &__price,
     &--bigdate &__price {
-    	position: absolute;
-    	right: 15px;
-    	top: 15px;
-    	font-size: 1.4em;
+    	// position: absolute;
+    	// right: 15px;
+    	// top: 15px;
+    	font-size: 1.2em;
+        margin-top: -68px;
     }
     &--basic &__title,
     &--bigdate &__title,
@@ -119,7 +126,7 @@
     &--complete &__desc {
     	font-size: 0.9em;
     	line-height: 1.5;
-    	opacity: 0.6;
+    	// opacity: 0.6;
     	margin-top: 1.2em;
         margin-bottom: 0;
     }
@@ -143,6 +150,13 @@
         &--bigdate &__title,
         &--overlay &__title {
             padding-right: 64px;
+        }
+        &--basic &__price,
+        &--bigdate &__price {
+            position: absolute;
+            right: 15px;
+            top: 15px;
+            margin-top: 0;
         }
     }
 
@@ -219,6 +233,7 @@
         // }
     }
     &--overlay &__content {
+        width: 77%;
         background: #fff;
         // margin-left: -25px;
         box-shadow: 0 0 15px rgba(0,0,0,0.1);
@@ -261,7 +276,7 @@
         &--overlay &__price {
             right: 15px;
             bottom: auto;
-            top: 150px;
+            top: 146px;
         }
         &--overlay &__top {
             margin-right: 0;
@@ -269,6 +284,11 @@
         }
         &--overlay &__content {
             width: 100%;
+        }
+        &--overlay &__image {
+            img {
+                display: none;
+            }
         }
     }
 
