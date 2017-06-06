@@ -34,15 +34,15 @@
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
-		img {
-			width: 100%;
-            display: none;
-            margin-bottom: 0;
-		}
+		// img {
+		// 	width: 100%;
+  //           display: none;
+  //           margin-bottom: 0;
+		// }
 	}
-    & &__image img {
-        display: none;
-    }
+    // & &__image img {
+    //     display: none;
+    // }
 	&__datein, &__time {
 		display: block;
 	}
@@ -93,9 +93,9 @@
         &__image {
             position: relative;
         }
-        & &__image img {
-            display: block;
-        }
+        // & &__image img {
+        //     display: block;
+        // }
 	}
 
 	// ============================
@@ -111,7 +111,7 @@
     	// position: absolute;
     	// right: 15px;
     	// top: 15px;
-    	font-size: 1.2em;
+    	font-size: 1em;
         margin-top: -68px;
     }
     &--basic &__title,
@@ -136,7 +136,7 @@
     	margin-bottom: 3px;
     }
     &--basic &__time {
-    	font-size: 0.9em;
+    	font-size: 0.8em;
     }
     &--basic &__date {
     	.whiteDate();
@@ -178,7 +178,8 @@
     	left: -15px;
     	font-size: 0.9em;
     	text-align: center;
-    	width: 145px;
+    	// width: 145px;
+        width: auto;
     }
     &--bigdate &__datein,
     &--complete &__datein {
@@ -186,7 +187,7 @@
     }
     &--bigdate &__day,
     &--complete &__day {
-    	font-size: 1.8em;
+    	font-size: 1.2em;
     	display: block;
     	font-weight: bold;
     }
@@ -286,11 +287,11 @@
         &--overlay &__content {
             width: 100%;
         }
-        &--overlay &__image {
-            img {
-                display: none;
-            }
-        }
+        // &--overlay &__image {
+        //     img {
+        //         display: none;
+        //     }
+        // }
     }
 
     // ============================

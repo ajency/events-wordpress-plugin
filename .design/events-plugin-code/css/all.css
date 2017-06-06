@@ -22,6 +22,10 @@
 .aj__title {
   margin-bottom: 15px !important;
 }
+.aj--viewall:after {
+  content: '\2192';
+  margin-left: 5px;
+}
 .aj,
 .aj * {
   box-sizing: border-box;
@@ -34,7 +38,7 @@
   padding-right: 15px;
 }
 .aj__price {
-  padding: 0.05em 0.7em;
+  padding: 0.05em 0.5em;
   border-radius: 25px;
   background: #414141;
   color: #fff;
@@ -362,8 +366,8 @@
   font-size: 0.9em;
 }
 .aj-grid--basic .aj-grid__date {
-  background: #fff;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px;
   box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
 }
 .aj-grid--bigdate .aj-grid__content {
@@ -373,7 +377,7 @@
 }
 .aj-grid--bigdate .aj-grid__date {
   border-radius: 3px;
-  background: #414141;
+  background: rgba(65, 65, 65, 0.75);
   color: #fff;
   padding: 10px;
   box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
@@ -486,14 +490,6 @@
   background-position: center;
   background-repeat: no-repeat;
 }
-.aj-list__image img {
-  width: 100%;
-  display: none;
-  margin-bottom: 0;
-}
-.aj-list .aj-list__image img {
-  display: none;
-}
 .aj-list__datein,
 .aj-list__time {
   display: block;
@@ -544,9 +540,6 @@
   .aj-list__image {
     position: relative;
   }
-  .aj-list .aj-list__image img {
-    display: block;
-  }
 }
 .aj-list--basic .aj-list__date {
   position: absolute;
@@ -555,7 +548,7 @@
 }
 .aj-list--basic .aj-list__price,
 .aj-list--bigdate .aj-list__price {
-  font-size: 1.2em;
+  font-size: 1em;
   margin-top: -68px;
 }
 .aj-list--basic .aj-list__title,
@@ -579,11 +572,11 @@
   margin-bottom: 3px;
 }
 .aj-list--basic .aj-list__time {
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 .aj-list--basic .aj-list__date {
-  background: #fff;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px;
   box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
 }
 @media screen and (max-width: 1199px) {
@@ -614,7 +607,7 @@
 .aj-list--bigdate .aj-list__date,
 .aj-list--complete .aj-list__date {
   border-radius: 3px;
-  background: #414141;
+  background: rgba(65, 65, 65, 0.75);
   color: #fff;
   padding: 10px;
   box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
@@ -623,7 +616,7 @@
   left: -15px;
   font-size: 0.9em;
   text-align: center;
-  width: 145px;
+  width: auto;
 }
 .aj-list--bigdate .aj-list__datein,
 .aj-list--complete .aj-list__datein {
@@ -631,7 +624,7 @@
 }
 .aj-list--bigdate .aj-list__day,
 .aj-list--complete .aj-list__day {
-  font-size: 1.8em;
+  font-size: 1.2em;
   display: block;
   font-weight: bold;
 }
@@ -712,9 +705,6 @@
   }
   .aj-list--overlay .aj-list__content {
     width: 100%;
-  }
-  .aj-list--overlay .aj-list__image img {
-    display: none;
   }
 }
 @media screen and (min-width: 768px) {
