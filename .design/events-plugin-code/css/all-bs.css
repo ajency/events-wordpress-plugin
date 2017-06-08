@@ -25,6 +25,10 @@
 .aj--viewall:after {
   content: '\2192';
   margin-left: 5px;
+  text-decoration: none;
+}
+.aj__button {
+  text-decoration: none;
 }
 .aj,
 .aj * {
@@ -40,7 +44,7 @@
 .aj__price {
   padding: 0.05em 0.5em;
   border-radius: 25px;
-  background: #414141;
+  background: rgba(65, 65, 65, 0.75);
   color: #fff;
   font-size: 16px;
   white-space: nowrap;
@@ -67,8 +71,6 @@
 .aj-table__title {
   margin-bottom: 5px;
   margin-top: 0;
-  word-wrap: break-word;
-  word-break: break-all;
 }
 .aj-table .aj-table__desc {
   margin-top: 5px;
@@ -515,7 +517,7 @@
 .aj-list--basic .aj-list__date {
   position: absolute;
   top: 15px;
-  left: -15px;
+  left: 0;
 }
 .aj-list--basic .aj-list__price,
 .aj-list--bigdate .aj-list__price {
@@ -585,7 +587,7 @@
   box-shadow: 0 3px 18px rgba(0, 0, 0, 0.15);
   position: absolute;
   bottom: 15px;
-  left: -15px;
+  left: 0;
   font-size: 0.9em;
   text-align: center;
   width: auto;
